@@ -10,6 +10,7 @@ module.exports = {
       },
       backgroundImage: (theme) => ({
         "hero-pattern": "url('/public/static/images/HeroImage.png')",
+        filter: "linear-gradient(180deg, rgba(0, 35, 125, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%)",
       }),
 
       keyframes: {

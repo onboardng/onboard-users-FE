@@ -1,7 +1,5 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import Hero from "./components/Hero";
 import HomePage from "./pages/school/HomePage";
 
 function App() {

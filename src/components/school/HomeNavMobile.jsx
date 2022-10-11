@@ -1,0 +1,50 @@
+import React, { useEffect } from "react";
+import { useMediaQuery } from "usehooks-ts";
+
+export const navItem = ["SignIn", "Sign Up"];
+
+const NavMobile = ({ toggleMenu, setToggleMenu }) => {
+  const matches = useMediaQuery("(min-width: 768px)");
+
+  useEffect(() => {
+    if (matches) {
+      setToggleMenu("close");
+    }
+  }, [toggleMenu, matches, setToggleMenu]);
+
+  return (
+    <ul
+      className={`z-100 mx-auto fixed w-[100vw] top-0  md:w-[300px] bg-white lg:hidden  left-0 p-3 h-screen shadow-2xl list-none flex flex-col justify-start text-white ${
+        toggleMenu === "open" ? "animate-slide-in" : toggleMenu === "close" ? " animate-slide-out" : "hidden -w-[100vw]"
+      }`}
+    >
+      <div onClick={() => setToggleMenu("close")} className="md:hidden w-fit ml-[21px] cursor-pointer mt-[55px]">
+        {toggleMenu === "open" && <img src="/static/svgs/Close.svg" alt="logo" />}
+      </div>
+      <div className="mt-24">
+        <div>
+          <div
+            className={`flex items-center mx-auto text-green text-lg mb-[36px] font-semibold px-5 cursor-pointer py-3 border-green border rounded-lg `}
+            onClick={() => {
+              setToggleMenu("close");
+            }}
+          >
+            <button className="w-[300px]  mx-auto min-h-[50px] bg-orange trans rounded-full">Sign In</button>{" "}
+          </div>
+        </div>
+        <div>
+          <div
+            className={`flex items-center mx-auto text-white text-lg mb-[36px] font-semibold px-5 cursor-pointer py-3 bg-green rounded-lg `}
+            onClick={() => {
+              setToggleMenu("close");
+            }}
+          >
+            <button className="w-[300px]  mx-auto min-h-[50px] bg-orange trans rounded-full text-white">Sign Up</button>{" "}
+          </div>
+        </div>
+      </div>
+    </ul>
+  );
+};
+
+export default NavMobile;

@@ -18,9 +18,8 @@
 .env.test.local
 .env.production.local
 
-public/static
-public/static/
 
+public/static/
 
 npm-debug.log*
 yarn-debug.log*
