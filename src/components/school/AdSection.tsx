@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "../Icons";
 
 const AddSection = () => {
   return (
@@ -10,7 +11,7 @@ const AddSection = () => {
           <p className="text-[16px] md:text-[24px]">Sub text</p>
           <button className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
             <p className="text-center">Go now</p>
-            <img src="/static/svgs/ArrowRight.svg" alt="" className="w-[9px] h-[16px]" />
+            <Icon width={24} height={24} id="arrow-right-icon" />
           </button>
         </div>
       </div>

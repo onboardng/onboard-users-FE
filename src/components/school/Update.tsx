@@ -1,4 +1,5 @@
 import React from "react";
+import InputBox from "../InputBox";
 
 const Update = () => {
   return (
@@ -8,14 +9,7 @@ const Update = () => {
         <h4 className="text-[20px] md:text-[28px] w-[239px] md:w-auto font-medium md:leading-[39px]">Get the update on your booking.</h4>
         <p className="text-[16px] md:text-[20px] md:leading-[32px] mt-5 mb-12">Track your school admission to know it’s status</p>
         <div className="flex gap-5 flex-col xl:flex-row justify-center xl:justify-start xl:items-center items-center relative">
-          <div className="flex gap-4 items-center justify-center relative md:justify-start w-full md:w-auto">
-            <input
-              type="text"
-              placeholder="Booking ID Here"
-              className=" focus:outline-none w-full md:w-[408px] pl-[40px] pr-[20px] py-[17px] border-[1.5px] border-[#DADAE7]"
-            />{" "}
-            <img src="/static/svgs/Card.svg" alt="card" className="w-[18px] h-[14px] absolute left-[15px]" />
-          </div>
+          <InputBox placeholder="Booking ID Here" iconId="booking-icon" height={24} width={24} />
           <button className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
             <p className="text-center">Track Booking</p>
           </button>
