@@ -4,7 +4,8 @@ import HeaderWidget from "./HeaderWidget";
 import Hero from "./Hero";
 import Navbar from "./Navbar";
 
-const slides = ["/static/images/HotelImage1.png", "/static/images/HotelImage2.png", "/static/images/HotelImage3.png"];
+const slides = ["/static/images/SchoolImage1.png", "/static/images/SchoolImage3.png", "/static/images/SchoolImage2.png"];
+
 const Header = () => {
   const [index, setIndex] = React.useState(0);
   const [bgIndex, setBgIndex] = useState(0);

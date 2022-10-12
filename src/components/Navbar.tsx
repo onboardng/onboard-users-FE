@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <div className="mx-[57px]  relative md:pt-[17px] flex justify-between items-center ">
       <div className="hidden md:block">
-        <img src="/static/images/Logo.png" alt="logo" />
+        <img src="/svgs/Onboard Logo - White 1.svg" alt="logo" />
       </div>
       <div className=" gap-[27px] items-center hidden md:flex">
         <button className="border text-white border-white rounded-lg px-4 py-2">Sign In</button>

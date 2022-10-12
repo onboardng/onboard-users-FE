@@ -3,7 +3,7 @@ import InputBox from '../InputBox'
 
 const Subscribe = () => {
   return (
-    <div className='bg-[#DCDCFF] mx-4 md:mx-12 space-x-0 md:mt-0 my-10' >
+    <div className='bg-[#DCDCFF] mx-4 md:mx-12 space-x-0 md:mt-0 mt-10' >
         <div className='flex justify-center py-5 md:py-14' >
             <section className='text-center p-[20px] md:p-[50px]' >
                 <h3 className='font-semibold text-[20px] leading-[28px] md:text-[28px] md:leading-[39.2px] ' >Interersted in Travel deals?</h3>

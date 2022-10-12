@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useTransition, animated } from "react-spring";
+import Icon from "../Icons";
 import Navbar from "../Navbar";
 import HeaderWidget from "./HeaderWidget";
 
@@ -32,12 +33,12 @@ const Header = ({ toggleMenu, setToggleMenu }: { toggleMenu: string; setToggleMe
     <div className="relative">
       <div className="md:hidden z-50 mb-[31px] pt-[55px] flex items-center">
         <div onClick={() => setToggleMenu("close")} className="px-[21px] cursor-pointer">
-          <img src="/static/svgs/Logo.svg" alt="logo" className="h-12 w-12" />
+          <img src="/svgs/OnboardLogoBlue.svg" alt="logo" className="h-12 w-12" />
         </div>
         {toggleMenu === "close" && (
           <div className="cursor-pointer  flex justify-end px-[21px] w-full  ">
             <div onClick={toggleNav} className="hover:scale-110 transition ease-in-out w-12 h-12 flex flex-col items-end justify-center gap-2">
-              <img src="/static/svgs/Hamburger.svg" alt="close" className="w-6 h-6" />
+              <Icon width={20} height={14} id="hamburger-icon" />
             </div>
           </div>
         )}

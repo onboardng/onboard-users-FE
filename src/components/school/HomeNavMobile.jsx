@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import Icon from "../Icons";
 
 export const navItem = ["SignIn", "Sign Up"];
 
@@ -19,7 +20,7 @@ const NavMobile = ({ toggleMenu, setToggleMenu }) => {
       }`}
     >
       <div onClick={() => setToggleMenu("close")} className="md:hidden w-fit ml-[21px] cursor-pointer mt-[55px]">
-        {toggleMenu === "open" && <img src="/static/svgs/Close.svg" alt="logo" />}
+        {toggleMenu === "open" && <Icon width={14} height={14} id="close-icon" />}
       </div>
       <div className="mt-24">
         <div>
