@@ -6,7 +6,7 @@ const Subscribe = () => {
     <div className='bg-[#DCDCFF] mx-4 md:mx-12 space-x-0 md:mt-0 mt-10' >
         <div className='flex justify-center py-5 md:py-14' >
             <section className='text-center p-[20px] md:p-[50px]' >
-                <h3 className='font-semibold text-[20px] leading-[28px] md:text-[28px] md:leading-[39.2px] ' >Interersted in Travel deals?</h3>
+                <h3 className='font-semibold text-[20px] leading-[28px] md:text-[28px] md:leading-[39.2px] ' >Interested in Travel deals?</h3>
                 <h5 className='font-bold text-[16px] leading-[25.6px] md:text-[20px] md:leading-[32px] ' >We’ll be notifying you as they drop</h5>
                 <aside className='md:flex md:justify-center py-5 md:py-10' >
                     <div className="flex gap-5 flex-col xl:flex-row justify-center xl:justify-start xl:items-center items-center relative">
