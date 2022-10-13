@@ -1,9 +1,20 @@
-import React from 'react'
+import "./style.css";
 
 const PageLoader = () => {
   return (
-    <div>PageLoader</div>
-  )
-}
+    <div className="wave-center">
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
+    </div>
+  );
+};
 
-export default PageLoader
+export default PageLoader;
