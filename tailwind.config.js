@@ -8,6 +8,17 @@ module.exports = {
         grey: { 600: "#F7F7F7", 500: "#8B8BA4" },
         green: "#6FA7B4;",
       },
+      fontSize: {
+        xs: "10px",
+        base: "14px",
+        sm: "16px",
+        md: "18px",
+        lg: "20px",
+        xl: "24px",
+        xxl: "32px",
+        xxxl: "40px",
+        "2xl": "48px",
+      },
       backgroundImage: (theme) => ({
         "hero-pattern": "url('/public/static/images/HeroImage.png')",
         filter: "linear-gradient(180deg, rgba(0, 35, 125, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%)",

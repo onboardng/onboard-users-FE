@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useTransition, animated } from "react-spring";
 import HeaderWidget from "./HeaderWidget";
 import Hero from "./Hero";
-import Navbar from "./Navbar";
 
 const slides = ["/static/images/SchoolImage1.png", "/static/images/SchoolImage3.png", "/static/images/SchoolImage2.png"];
 
@@ -40,7 +39,7 @@ const Header = () => {
             />
           ))}
         </div>
-        <Navbar />
+        {/* <Navbar /> */}
         <Hero index={index} setIndex={setIndex} />
       </header>
       <HeaderWidget index={index} setIndex={setIndex} />

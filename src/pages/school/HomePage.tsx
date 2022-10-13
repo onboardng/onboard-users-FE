@@ -9,14 +9,15 @@ import Update from "../../components/school/Update";
 
 const HomePage = () => {
   const [toggleMenu, setToggleMenu] = useState("close");
+  const [initial, setInitial] = useState(false);
 
   return (
     <div className="bg-grey-600 relative">
-      <Header toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
-      <Update />
+      <Header toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} setInitial={setInitial} />
+      <Update imgSrc="/static/images/Update.png" />
       <Explore />
       <AddSection />
-      <NavMobile toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
+      <NavMobile toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} initial={initial} />
       <Subscribe />
       <Footer />
     </div>
