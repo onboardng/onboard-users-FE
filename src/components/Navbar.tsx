@@ -1,35 +1,22 @@
-import { Dispatch, SetStateAction } from "react";
-import Icon from "./Icons";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = ({
-  toggleMenu,
-  setToggleMenu,
-  setInitial,
-}: {
-  bg?: boolean;
-  toggleMenu: string;
-  setToggleMenu: Dispatch<SetStateAction<string>>;
-  setInitial: Dispatch<SetStateAction<boolean>>;
-}) => {
+const Navbar = ({ home }: { home?: boolean }) => {
+  const navigate = useNavigate();
+
   return (
     <>
-      <div className="md:hidden z-50 pb-[31px] pt-[55px] bg-white md:bg-none flex items-center">
-        <div className="px-[21px] cursor-pointer">
-          <img src="/svgs/OnboardLogoBlue.svg" alt="logo" className="h-12 w-12" />
+      <div
+        className={`tab:hidden relative md:pt-[17px] flex justify-between items-center ${
+          !home ? "bg-white sticky top-0 z-[10] px-[57px] py-3" : "mx-[57px]"
+        }`}
+      >
+        <div className="hidden md:block cursor-pointer" onClick={() => navigate("/")}>
+          <img src={`${!home ? "/svgs/OnboardLogoBlue.svg" : "/svgs/Onboard Logo - White 1.svg"}`} alt="logo" />
         </div>
-        {toggleMenu === "close" && (
-          <div className="cursor-pointer  flex justify-end px-[21px] w-full  ">
-            <div
-              onClick={() => {
-                setToggleMenu("open");
-                setInitial(true);
-              }}
-              className="hover:scale-110 z-50 transition ease-in-out w-12 h-12 flex flex-col items-end justify-center gap-2"
-            >
-              <Icon width={20} height={14} id="hamburger-icon" />
-            </div>
-          </div>
-        )}
+        <div className=" gap-[27px] items-center hidden md:flex">
+          <button className={`${!home ? "text-primary border-primary" : "text-white border-white"} border rounded-lg px-4 py-2`}>Sign In</button>
+          <button className={`${!home ? "bg-primary text-white" : "bg-white text-primary"} rounded-lg px-4 py-2`}>Sign Up</button>
+        </div>
       </div>
     </>
   );

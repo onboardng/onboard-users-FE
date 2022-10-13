@@ -1,10 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
+import { useNavigate } from "react-router-dom";
 import Icon from "../Icons";
 
 const SearchMain = ({ showEdit, setShowFilter }: { showEdit: Dispatch<SetStateAction<boolean>>; setShowFilter: typeof showEdit }) => {
+  const navigate = useNavigate();
   return (
     <div className="md:w-[70%] w-full mx-5">
-      <div className="py-7 px-5 flex md:flex-row flex-col items-center justify-between bg-white rounded-xl md:rounded-none">
+      <div className="py-7 px-5 flex md:flex-row flex-col items-center justify-between bg-white rounded-xl">
         <p className="text-md">
           University in <b>Lagos Nigeria,</b> offering <b>BSc.</b> for <b>Political Science</b>
         </p>
@@ -63,7 +65,10 @@ const SearchMain = ({ showEdit, setShowFilter }: { showEdit: Dispatch<SetStateAc
                   <Icon width={18} height={20} id="location-icon-green" />
                   <p className="text-md">Lagos, Nigeria</p>{" "}
                 </div>
-                <button className="mt-10 mb-10 col-span-2 justify-center bg-green text-white flex gap-2 rounded-md items-center w-full md:px-[74.5px] py-[17px]">
+                <button
+                  onClick={() => navigate(`/schools/${index}`)}
+                  className="mt-10 mb-10 col-span-2 justify-center bg-green text-white flex gap-2 rounded-md items-center w-full md:px-[74.5px] py-[17px]"
+                >
                   <p className="text-center">View School</p>
                   <Icon width={24} height={24} id="arrow-right-icon" />
                 </button>

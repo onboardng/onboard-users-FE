@@ -1,7 +1,8 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import Icon from "../Icons";
 
 const Explore = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-white mt-[50px] mx-4 md:mx-12">
       <div className=" w-full p-[20px] md:p-[50px] text-center flex flex-col justify-center items-center">
@@ -20,8 +21,11 @@ const Explore = () => {
                     <p className="text-[10px]">Lagos, Nigeria</p>{" "}
                   </div>
                 </div>
-                <button className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center w-full md:px-[74.5px] py-[17px]">
-                  <p className="text-center">View School Profile</p>
+                <button
+                  onClick={() => navigate(`/schools/${index}`)}
+                  className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center w-full md:px-[74.5px] py-[17px]"
+                >
+                  <p className="text-center">View School Profile</p>{" "}
                 </button>
               </div>
             ))}

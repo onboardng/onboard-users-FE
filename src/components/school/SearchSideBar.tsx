@@ -4,9 +4,9 @@ import InputBox from "../InputBox";
 const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
   return (
     <div
-      className={` bg-white ${
+      className={` bg-white rounded-xl  ${
         showFilter
-          ? "absolute md:relative md:h-[793px] ml-5 mx-auto w-[93%] md:w-[30%] md:mx-5 z-50 rounded-xl overflow-hidden"
+          ? "absolute md:relative md:h-[793px] ml-5 mx-auto w-[93%] md:w-[30%] md:mx-5 z-50 overflow-hidden"
           : " h-[793px] first-letter:w-[30%] hidden md:block mx-5"
       } `}
     >
