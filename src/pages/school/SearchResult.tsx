@@ -7,6 +7,7 @@ import EditDropDown from "../../components/school/EditDropDown";
 import Footer from "../../components/school/Footer";
 import SearchMain from "../../components/school/SearchMain";
 import SearchSideBar from "../../components/school/SearchSideBar";
+import Subscribe from "../../components/school/Subscribe";
 import Update from "../../components/school/Update";
 import Goback from "../../components/ViewSchool/Goback";
 
@@ -57,6 +58,7 @@ const SearchResult = () => {
       </div>
       <Update imgSrc={"./static/images/school2.png"} />
       <AddSection />
+      <Subscribe />
       <Footer />
     </div>
   );
