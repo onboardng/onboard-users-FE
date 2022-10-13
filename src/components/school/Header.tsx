@@ -1,12 +1,19 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useTransition, animated } from "react-spring";
-import Icon from "../Icons";
 import Navbar from "../Navbar";
 import HeaderWidget from "./HeaderWidget";
 
 const slides = ["/static/images/SchoolImage1.png", "/static/images/SchoolImage3.png", "/static/images/SchoolImage2.png"];
 
-const Header = ({ toggleMenu, setToggleMenu }: { toggleMenu: string; setToggleMenu: Dispatch<SetStateAction<string>> }) => {
+const Header = ({
+  toggleMenu,
+  setToggleMenu,
+  setInitial,
+}: {
+  toggleMenu: string;
+  setToggleMenu: Dispatch<SetStateAction<string>>;
+  setInitial: Dispatch<SetStateAction<boolean>>;
+}) => {
   const [bgIndex, setBgIndex] = useState(0);
   const transitions = useTransition(bgIndex, {
     key: bgIndex,
@@ -25,27 +32,11 @@ const Header = ({ toggleMenu, setToggleMenu }: { toggleMenu: string; setToggleMe
     exitBeforeEnter: true,
   });
 
-  const toggleNav = () => {
-    toggleMenu === "open" ? setToggleMenu("close") : setToggleMenu("open");
-  };
-
   return (
-    <div className="relative">
-      <div className="md:hidden z-50 mb-[31px] pt-[55px] flex items-center">
-        <div onClick={() => setToggleMenu("close")} className="px-[21px] cursor-pointer">
-          <img src="/svgs/OnboardLogoBlue.svg" alt="logo" className="h-12 w-12" />
-        </div>
-        {toggleMenu === "close" && (
-          <div className="cursor-pointer  flex justify-end px-[21px] w-full  ">
-            <div onClick={toggleNav} className="hover:scale-110 transition ease-in-out w-12 h-12 flex flex-col items-end justify-center gap-2">
-              <Icon width={20} height={14} id="hamburger-icon" />
-            </div>
-          </div>
-        )}
-      </div>
-
+    <div className="relative mb-[300px] md:mb-[368px] ">
       <div>
-        <header className="h-[84vh] overflow-hidden w-[100vw]">
+        {/* <Navbar toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} setInitial={setInitial} /> */}
+        <header className="h-[84vh] overflow-hidden w-[100vw] ">
           <div className="absolute h-[84vh] w-full overflow-hidden">
             {transitions((style: any, i: any) => (
               <animated.div

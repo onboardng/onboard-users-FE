@@ -1,9 +1,14 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = ({home}: {home?: boolean}) => {
+const Navbar = ({ home }: { home?: boolean }) => {
+  const navigate = useNavigate();
   return (
-    <div className={`tab:hidden relative md:pt-[17px] flex justify-between items-center ${!home ? "bg-white sticky top-0 z-[10] px-[57px] py-3" : "mx-[57px]"}`}>
-      <div className="hidden md:block">
+    <div
+      className={`tab:hidden relative md:pt-[17px] flex justify-between items-center ${
+        !home ? "bg-white sticky top-0 z-[10] px-[57px] py-3" : "mx-[57px]"
+      }`}
+    >
+      <div className="hidden md:block cursor-pointer" onClick={() => navigate("/")}>
         <img src={`${!home ? "/svgs/OnboardLogoBlue.svg" : "/svgs/Onboard Logo - White 1.svg"}`} alt="logo" />
       </div>
       <div className=" gap-[27px] items-center hidden md:flex">

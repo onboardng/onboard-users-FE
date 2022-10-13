@@ -3,39 +3,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageLoader from "../components/Loader/PageLoader";
 
 const AllRoutes = () => {
-    const HomePage = lazy(() => import("../pages/HomePage"));
-    const SchoolHomePage = lazy(() => import("../pages/school/HomePage"));
-    const ViewSchool = lazy(() => import("../pages/ViewSchool"));
+  const SchoolHomePage = lazy(() => import("../pages/school/HomePage"));
+  const SchoolSearchPage = lazy(() => import("../pages/school/SearchResult"));
+  const ViewSchool = lazy(() => import("../pages/ViewSchool"));
   return (
     <>
-        <Suspense fallback={
-            <PageLoader />
-        }>
-            <BrowserRouter>
-                <Routes>
-                    <Route 
-                        path="/"
-                        element={
-                            <HomePage />
-                        }
-                    />
-                    <Route 
-                        path="/schools"
-                        element={
-                            <SchoolHomePage  />
-                        }
-                    />
-                    <Route 
-                        path="/schools/:id"
-                        element={
-                            <ViewSchool  />
-                        }
-                    />
-                </Routes>
-            </BrowserRouter>
-        </Suspense>
+      <Suspense fallback={<PageLoader />}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SchoolHomePage />} />
+            <Route path="/search" element={<SchoolSearchPage />} />
+            <Route path="/schools/:id" element={<ViewSchool />} />
+          </Routes>
+        </BrowserRouter>
+      </Suspense>
     </>
-  )
-}
+  );
+};
 
-export default AllRoutes
+export default AllRoutes;

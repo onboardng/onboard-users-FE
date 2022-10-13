@@ -1,25 +1,21 @@
-import React, { useEffect } from "react";
-import { useMediaQuery } from "usehooks-ts";
+import React from "react";
 import Icon from "../Icons";
 
 export const navItem = ["SignIn", "Sign Up"];
 
-const NavMobile = ({ toggleMenu, setToggleMenu }) => {
-  const matches = useMediaQuery("(min-width: 768px)");
-
-  useEffect(() => {
-    if (matches) {
-      setToggleMenu("close");
-    }
-  }, [toggleMenu, matches, setToggleMenu]);
-
+const NavMobile = ({ toggleMenu, setToggleMenu, initial }) => {
   return (
     <ul
       className={`z-100 mx-auto fixed w-[100vw] top-0  md:w-[300px] bg-white lg:hidden  left-0 p-3 h-screen shadow-2xl list-none flex flex-col justify-start text-white ${
-        toggleMenu === "open" ? "animate-slide-in" : toggleMenu === "close" ? " animate-slide-out" : "hidden -w-[100vw]"
+        toggleMenu === "open" ? "animate-slide-in" : toggleMenu === "close" && initial ? "animate-slide-out" : "hidden -w-[100vw]"
       }`}
     >
-      <div onClick={() => setToggleMenu("close")} className="md:hidden w-fit ml-[21px] cursor-pointer mt-[55px]">
+      <div
+        onClick={() => {
+          setToggleMenu("close");
+        }}
+        className="md:hidden w-fit ml-[21px] cursor-pointer mt-[55px]"
+      >
         {toggleMenu === "open" && <Icon width={14} height={14} id="close-icon" />}
       </div>
       <div className="mt-24">
