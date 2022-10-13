@@ -57,7 +57,7 @@ const Header = ({ toggleMenu, setToggleMenu }: { toggleMenu: string; setToggleMe
               />
             ))}
           </div>
-          <Navbar />
+          <Navbar home />
           <div className="h-[100%] -mt-[170px] md:-mt-[150px] flex items-center justify-center">
             <h2
               className={`animate-fade-in block w-[286px]  md:w-[609px] text-[24px] md:text-[48px] text-white mx-auto font-bold md:leading-[67px] text-center`}

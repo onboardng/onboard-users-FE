@@ -1,14 +1,14 @@
 import React from "react";
 
-const Navbar = () => {
+const Navbar = ({home}: {home?: boolean}) => {
   return (
-    <div className="mx-[57px]  relative md:pt-[17px] flex justify-between items-center ">
+    <div className={`tab:hidden relative md:pt-[17px] flex justify-between items-center ${!home ? "bg-white sticky top-0 z-[10] px-[57px] py-3" : "mx-[57px]"}`}>
       <div className="hidden md:block">
-        <img src="/svgs/Onboard Logo - White 1.svg" alt="logo" />
+        <img src={`${!home ? "/svgs/OnboardLogoBlue.svg" : "/svgs/Onboard Logo - White 1.svg"}`} alt="logo" />
       </div>
       <div className=" gap-[27px] items-center hidden md:flex">
-        <button className="border text-white border-white rounded-lg px-4 py-2">Sign In</button>
-        <button className="bg-white rounded-lg text-primary px-4 py-2">Sign Up</button>
+        <button className={`${!home ? "text-primary border-primary" : "text-white border-white"} border rounded-lg px-4 py-2`}>Sign In</button>
+        <button className={`${!home ? "bg-primary text-white" : "bg-white text-primary"} rounded-lg px-4 py-2`}>Sign Up</button>
       </div>
     </div>
   );

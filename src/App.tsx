@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import HomePage from "./pages/school/HomePage";
+import AllRoutes from "./config/routes";
 
 function App() {
   return (
     <div className="min-h-screen">
-      <HomePage />
+      <AllRoutes />
     </div>
   );
 }
