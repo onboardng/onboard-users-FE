@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        tab: { 'max': '768px' },
+        tab: { max: "768px" },
       },
       colors: {
         primary: "#6FA7B4",
