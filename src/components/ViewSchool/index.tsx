@@ -8,7 +8,7 @@ import ReviewComments from './ReviewComments'
 const ViewSchool = () => {
     const comments = ["1", "2", "3", "4", "5"]
   return (
-    <div className='mx-4 md:mx-12 flex flex-col md:flex-row ' >
+    <div className='mx-4 md:mx-12 flex flex-col md:flex-row py-5' >
         <div>
             <img src={carouselImage} alt="carousel" />
             <section className='tab:hidden py-10' >
