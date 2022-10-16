@@ -35,7 +35,7 @@ const Footer = () => {
             </aside>
           </aside>
         </div>
-        <div className="md:flex md:items-center text-white">
+        <div className="md:flex md:items-center text-white md:mt-10">
           <aside>
             <div className="flex">
               <span className="px-1">

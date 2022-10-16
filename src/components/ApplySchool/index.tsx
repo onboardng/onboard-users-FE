@@ -24,8 +24,8 @@ const ApplySchoolCom = () => {
                         </div>
                         <div>
                             <div className='flex items-center' >
-                                <span className='' >
-                                    <input type="checkbox" className='h-4 w-4 border-[1px] border-[#DADAE7] rounded-[6px]' />
+                                <span className='checkbox' >
+                                    <input type="checkbox" className='h-[24px] w-[24px] border-[1px] border-[#DADAE7] rounded-[6px] cursor-pointer' />
                                 </span>
                                 <p className='font-medium text-[14px] leading-[22.4px] px-3' >Receive text alerts about this trip. Message and data rates may apply.</p>
                             </div>

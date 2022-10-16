@@ -42,3 +42,32 @@
   background-repeat: repeat-x;
   background-position: center bottom;
 }
+
+/* .checkbox {
+  display: flex;
+  cursor: pointer;
+  position: relative;
+} */
+
+input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type=checkbox]:after {
+  content: url("../public/svgs/check.svg");
+  display: none;
+  margin-bottom: 4px;
+}
+
+input[type=checkbox]:checked {
+  background-color: #6FA7B4;
+  border-color: #6FA7B4;
+}
+
+input[type=checkbox]:checked:after {
+  display: block;
+}

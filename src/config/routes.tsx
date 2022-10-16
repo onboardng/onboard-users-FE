@@ -7,6 +7,7 @@ const AllRoutes = () => {
   const SchoolSearchPage = lazy(() => import("../pages/school/SearchResult"));
   const ViewSchool = lazy(() => import("../pages/ViewSchool"));
   const ApplySchool = lazy(() => import("../pages/ApplySchool"));
+  const ApplicationSuccessful = lazy(() => import("../pages/ApplicationSuccessful"));
   return (
     <>
       <Suspense fallback={<PageLoader />}>
@@ -15,7 +16,8 @@ const AllRoutes = () => {
             <Route path="/" element={<SchoolHomePage />} />
             <Route path="/search" element={<SchoolSearchPage />} />
             <Route path="/schools/:id" element={<ViewSchool />} />
-            <Route path="apply/schools/:id" element={<ApplySchool />} />
+            <Route path="/apply/schools/:id" element={<ApplySchool />} />
+            <Route path="/applicationsuccess/schools" element={<ApplicationSuccessful />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
