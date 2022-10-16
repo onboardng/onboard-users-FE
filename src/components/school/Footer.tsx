@@ -6,7 +6,7 @@ const Footer = () => {
   const services = ["Flights", "Hotels", "Schools", "Visas"];
   const onboard = ["About Us", "Contact Us"];
   return (
-    <div className="bg-[#6FA7B4] p-5 md:p-10">
+    <div className="bg-[#6FA7B4] p-5 md:p-10 set-bg-img">
       <div className="flex md:flex-row flex-col md:justify-between w-full h-full">
         <div className="h-full">
           <aside>

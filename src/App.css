@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.set-bg-img{
+  background-image: url(../public/svgs/Frame\ 133.svg);
+  background-repeat: repeat-x;
+  background-position: center bottom;
+}
