@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import ApplicationSuccessSchool from '../../../components/ApplicationSuccessSchool'
-import Navbar from '../../../components/school/Navbar'
-import Footer from '../../../components/school/Footer'
-import Icon from '../../../components/Icons'
-import NavMobile from '../../../components/school/HomeNavMobile'
+import React, { useState } from "react";
+import ApplicationSuccessSchool from "../../../components/ApplicationSuccessSchool";
+import Navbar from "../../../components/School/Navbar";
+import Footer from "../../../components/School/Footer";
+import Icon from "../../../components/Icons";
+import NavMobile from "../../../components/School/HomeNavMobile";
 
 const ApplicationSuccessful = () => {
   const [toggleMenu, setToggleMenu] = useState("close");
-    const [initial, setInitial ] = useState(false);
+  const [initial, setInitial] = useState(false);
   return (
-    <div className="bg-grey-600" >
+    <div className="bg-grey-600">
       {toggleMenu === "close" ? (
         <div className="md:hidden sticky top-0 z-50 pb-[31px] pt-[55px] bg-white md:bg-none flex items-center">
           <>
@@ -32,12 +32,12 @@ const ApplicationSuccessful = () => {
       ) : (
         toggleMenu === "open" && <div className="h-[134px]"></div>
       )}
-        <Navbar />
-        <NavMobile toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} initial={initial} />
-        <ApplicationSuccessSchool />
-        <Footer />
+      <Navbar />
+      <NavMobile toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} initial={initial} />
+      <ApplicationSuccessSchool />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default ApplicationSuccessful
+export default ApplicationSuccessful;
