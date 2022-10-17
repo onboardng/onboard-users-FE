@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        tab: { 'max': '768px' },
+        tab: { max: "768px" },
       },
       colors: {
         primary: "#6FA7B4",
@@ -24,7 +24,9 @@ module.exports = {
       },
       backgroundImage: (theme) => ({
         "hero-pattern": "url('/public/static/images/HeroImage.png')",
-        filter: "linear-gradient(180deg, rgba(0, 35, 125, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%)",
+        filter:
+          "linear-gradient(180deg, rgba(0, 35, 125, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%)",
+        register: "url('/public/static/images/aeroplane.png')",
       }),
 
       keyframes: {
