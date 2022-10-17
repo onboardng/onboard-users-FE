@@ -3,6 +3,7 @@ import Icon from "../Icons";
 const InputBox = ({
   placeholder,
   iconId,
+  iconId2,
   height,
   width,
   label,
@@ -22,6 +23,7 @@ const InputBox = ({
   label?: string;
   placeholder: string;
   iconId?: string;
+  iconId2?: string;
   height?: number;
   width?: number;
 }) => {
@@ -40,9 +42,14 @@ const InputBox = ({
             iconId ? "pl-[40px]" : "pl-[20px]"
           } pr-[20px] py-[17px] border-[1.5px] border-[#DADAE7]`}
         />{" "}
-        {password && <i onClick={togglePassword} className={`text-gray-500 absolute right-[15px] fa-solid fa-eye${showPassword ? "" : "-slash"}`}></i>}
+        {password && (
+          <i onClick={togglePassword} className={`text-gray-500 absolute right-[15px] fa-solid fa-eye${showPassword ? "" : "-slash"}`}></i>
+        )}
         <div className={`${iconId ? "block" : "hidden"} absolute left-[15px]`}>
           <Icon width={width} height={height} id={iconId} />
+        </div>
+        <div className={`${iconId2 ? "block" : "hidden"} absolute right-[15px]`}>
+          <Icon width={width} height={height} id={iconId2} />
         </div>
       </div>
     </div>

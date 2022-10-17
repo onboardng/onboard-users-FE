@@ -1,42 +1,41 @@
-import { HiOutlineChevronRight } from "react-icons/hi";
-import { FcGoogle } from "react-icons/fc";
 import InputBox from "../../components/InputBox";
-import { Link } from "react-router-dom";
 import AuthScreen from "../../components/Authentication/AuthScreen";
+import useUploadImage from "../../hooks/useUploadImage";
 
 const BasicDetails = () => {
-  return (
-    <AuthScreen title="" subtitle="">
-      <form action="" className="mt-5">
-        <div className="mb-5">
-          <InputBox placeholder="Email here" iconId="green-mail-icon" height={18} width={15} whole label="Email Address" />
-        </div>
-        <div className="mb-5 w-full">
-          <InputBox placeholder="Password here" iconId="padlock-icon" height={19} width={14} whole label="Enter Password" />
-          <p className="text-end mt-1">Forgot Password?</p>
-        </div>
-        <div className="flex items-center justify-center text-white bg-green py-4 gap-3 px-5 text-sm cursor-pointer rounded hover:border-2 hover:border-green hover:bg-transparent hover:text-green">
-          <p className="text-sm font-medium">Sign In</p>
-          <HiOutlineChevronRight className="text-xl" />
-        </div>
-      </form>
+  const { handleClick, onChange, imageRef, image } = useUploadImage();
 
-      <div className="flex justify-center md:justify-end mt-5">
-        <div className="flex items-center gap-4 text-base md:flex-row flex-col">
-          <p>You can also sign in with</p>
-          <div className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
-            <FcGoogle />
-            <p className="text-sm font-medium text-green">Google</p>
+  return (
+    <AuthScreen title="Welcome 👋🏽" subtitle="Let us know a little about you">
+      <form action="" className="mt-5">
+        <div className="w-full flex items-center justify-start gap-2 mb-5">
+          <div className="flex items-center self-start justify-between">
+            <img
+              src={image.preview ? image.preview : "/svgs/profileHolder.svg"}
+              alt=""
+              className=" h-[100px] w-[100px] bg-jumbleng-primary-light object-cover rounded-full"
+            />
+          </div>
+          <label htmlFor="imageUpload" onClick={handleClick} className="text-[#8B8BA4] text-[14px] cursor-pointer">
+            Tap to upload
+          </label>
+          <input id="imageUpload" type="file" accept="image/*" className="overflow-hidden hidden" ref={imageRef} onChange={onChange} />
+        </div>
+        <div className="mb-5">
+          <InputBox placeholder="Name here" whole label="First Name" />
+        </div>
+        <div className="mb-5">
+          <InputBox placeholder="Name here" whole label="Last Name" />
+        </div>
+        <div className="mb-5">
+          <InputBox placeholder="Lagos, Nigeria" whole label="Location" width={16} height={16} iconId2="location-black-icon" />
+        </div>
+        <div className="flex justify-end mb-4">
+          <div className="flex items-center justify-center  text-white bg-green py-3 gap-3 px-5 text-sm cursor-pointer rounded hover:border-2 hover:border-green hover:bg-transparent hover:text-green">
+            <p className="text-sm font-medium">Continue</p>
           </div>
         </div>
-      </div>
-
-      <div className="mt-12 flex flex-col justify-center items-center">
-        <p className="text-base">Don’t have an account?</p>
-        <Link to="/register" className="text-base text-green font-semibold cursor-pointer mt-1">
-          Create an account
-        </Link>
-      </div>
+      </form>
     </AuthScreen>
   );
 };
