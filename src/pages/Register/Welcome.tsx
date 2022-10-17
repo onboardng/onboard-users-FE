@@ -9,7 +9,7 @@ const Welcome = () => {
     <div className="w-full flex justify-between">
       <RegisterImage />
       <div className="w-full md:w-[40%] h-screen bg-[#f5f5f5] flex flex-col justify-center py-5">
-        <div className="bg-white mx-4 md:mx-16 mt-7 p-7 rounded-2xl h-[85%] flex flex-col">
+        <div className="bg-white mx-4 md:mx-16 mt-7 p-7 rounded-2xl h-[85%] flex flex-col justify-between">
           <div>
             <p className="text-sm font-bold">Create Account</p>
             <p className="text-[#8B8BA4] font-medium text-[12px] mt-2">A verification code has been sent to your mail. Kindly input it below.</p>
