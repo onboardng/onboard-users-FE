@@ -9,8 +9,8 @@ const Register = () => {
   return (
     <div className="w-full flex justify-between">
       <RegisterImage />
-      <div className="w-[40%] h-screen bg-[#f5f5f5] flex flex-col justify-between py-5">
-        <div className="bg-white  mx-16 mt-7 p-7 rounded-2xl">
+      <div className="w-full md:w-[40%] h-screen bg-[#f5f5f5] flex flex-col justify-center py-5">
+        <div className="bg-white mx-4  md:mx-16 md:mt-7 p-7 rounded-2xl">
           <p className="text-sm font-bold">Create Account</p>
           <p className="text-[#8B8BA4] font-medium text-[12px] mt-2">Create Account to have an history of all you do on Onboard</p>
           <form action="" className="mt-5">
@@ -34,8 +34,8 @@ const Register = () => {
             </div>
           </form>
 
-          <div className="flex justify-end mt-5">
-            <div className="flex items-center gap-4 text-base">
+          <div className="flex justify-center md:justify-end mt-5">
+            <div className="flex items-center gap-4 text-base md:flex-row flex-col">
               <p>You can also sign in with</p>
               <div className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
                 <FcGoogle />
