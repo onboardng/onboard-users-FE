@@ -1,8 +1,8 @@
-import React from 'react'
-import ApplySchoolCom from '../../../components/ApplySchool'
-import Navbar from '../../../components/school/Navbar'
-import Footer from '../../../components/school/Footer'
-import Goback from '../../../components/ViewSchool/Goback'
+import React from "react";
+import ApplySchoolCom from "../../../components/ApplySchool";
+import Footer from "../../../components/school/Footer";
+import Navbar from "../../../components/school/Navbar";
+import Goback from "../../../components/ViewSchool/Goback";
 
 const ApplySchool = () => {
   return (
@@ -12,7 +12,7 @@ const ApplySchool = () => {
       <ApplySchoolCom />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default ApplySchool
+export default ApplySchool;
