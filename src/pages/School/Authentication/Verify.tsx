@@ -1,9 +1,9 @@
 import RegisterImage from "../../../components/RegisterImage";
 import InputBox from "../../../components/InputBox";
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../../../components/Footer";
 
-const Welcome = () => {
+const Verify = () => {
   return (
     <div className="w-full flex justify-between">
       <RegisterImage />
@@ -38,4 +38,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default Verify;

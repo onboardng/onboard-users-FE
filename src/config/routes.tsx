@@ -3,9 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageLoader from "../components/Loader/PageLoader";
 
 const AllRoutes = () => {
-  const Welcome = lazy(() => import("../pages/School/Register/Welcome"));
-  const Register = lazy(() => import("../pages/School/Register/Register"));
-  const Login = lazy(() => import("../pages/School/Register/Login"));
+  const Welcome = lazy(() => import("../pages/School/Authentication/Verify"));
+  const Register = lazy(() => import("../pages/School/Authentication/Register"));
+  const Login = lazy(() => import("../pages/School/Authentication/Login"));
   const SchoolHomePage = lazy(() => import("../pages/School/HomePage"));
   const SchoolSearchPage = lazy(() => import("../pages/School/SearchResult"));
   const ViewSchool = lazy(() => import("../pages/School/ViewSchool"));
