@@ -12,6 +12,8 @@ const AllRoutes = () => {
   const ApplySchool = lazy(() => import("../pages/School/ApplySchool"));
   const ApplicationSuccessful = lazy(() => import("../pages/School/ApplicationSuccessful"));
   const TrackSchoolBooking = lazy(() => import("../pages/School/TrackSchoolBooking"));
+  const ForgotPassword = lazy(() => import("../pages/Authentication/ForgotPassword"));
+  const ResetPassword = lazy(() => import("../pages/Authentication/ResetPassword"));
   return (
     <>
       <Suspense fallback={<PageLoader />}>
@@ -26,6 +28,8 @@ const AllRoutes = () => {
             <Route path="/schools/:id/apply" element={<ApplySchool />} />
             <Route path="/schools/success" element={<ApplicationSuccessful />} />
             <Route path="/booking/schools/:id" element={<TrackSchoolBooking />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
