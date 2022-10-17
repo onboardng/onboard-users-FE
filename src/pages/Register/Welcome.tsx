@@ -1,5 +1,4 @@
 import RegisterImage from "../../components/RegisterImage";
-import { HiHome } from "react-icons/hi";
 import InputBox from "../../components/InputBox";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
