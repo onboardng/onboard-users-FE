@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Icon from "../../../components/Icons";
 import AddSection from "../../../components/School/AdSection";
 import Explore from "../../../components/School/Explore";
 import Footer from "../../../components/School/Footer";
