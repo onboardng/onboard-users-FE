@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import Icon from "../../../components/Icons";
-import Navbar from "../../../components/Navbar";
+import Navbar from "../../../components/school/Navbar";
 import AddSection from "../../../components/school/AdSection";
 import EditDropDown from "../../../components/school/EditDropDown";
 import Footer from "../../../components/school/Footer";

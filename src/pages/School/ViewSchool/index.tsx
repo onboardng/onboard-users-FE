@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../../components/Navbar";
+import Navbar from "../../../components/school/Navbar";
 import AddSection from "../../../components/school/AdSection";
 import Footer from "../../../components/school/Footer";
 import Subscribe from "../../../components/school/Subscribe";

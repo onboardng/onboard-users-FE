@@ -1,6 +1,6 @@
 import React from 'react'
 import ApplySchoolCom from '../../../components/ApplySchool'
-import Navbar from '../../../components/Navbar'
+import Navbar from '../../../components/school/Navbar'
 import Footer from '../../../components/school/Footer'
 import Goback from '../../../components/ViewSchool/Goback'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import ApplicationSuccessSchool from '../../../components/ApplicationSuccessSchool'
-import Navbar from '../../../components/Navbar'
+import Navbar from '../../../components/school/Navbar'
 import Footer from '../../../components/school/Footer'
 
 const ApplicationSuccessful = () => {

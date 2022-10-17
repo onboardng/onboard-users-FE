@@ -1,7 +1,7 @@
-import RegisterImage from "../../../components/RegisterImage";
+import RegisterImage from "../../../components/Authentication/RegisterImage";
 import InputBox from "../../../components/InputBox";
 import { Link } from "react-router-dom";
-import Footer from "../../../components/Footer";
+import Footer from "../../../components/Authentication/Footer";
 
 const Verify = () => {
   return (
