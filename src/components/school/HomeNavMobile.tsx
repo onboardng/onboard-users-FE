@@ -1,9 +1,10 @@
 import React from "react";
+import { ISetState } from "../../utils/interfaces";
 import Icon from "../Icons";
 
 export const navItem = ["SignIn", "Sign Up"];
 
-const NavMobile = ({ toggleMenu, setToggleMenu, initial }) => {
+const NavMobile = ({ toggleMenu, setToggleMenu, initial }: { toggleMenu: string; setToggleMenu: ISetState<string>; initial: boolean }) => {
   return (
     <ul
       className={`z-[100] mx-auto fixed w-[100vw] top-0  md:w-[300px] bg-white lg:hidden  left-0 p-3 h-screen shadow-2xl list-none flex flex-col justify-start text-white ${

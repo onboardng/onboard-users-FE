@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTransition, animated } from "react-spring";
-import Navbar from "../Navbar";
 import HeaderWidget from "./HeaderWidget";
+import Navbar from "./Navbar";
 
 const slides = ["/static/images/SchoolImage1.png", "/static/images/SchoolImage3.png", "/static/images/SchoolImage2.png"];
 

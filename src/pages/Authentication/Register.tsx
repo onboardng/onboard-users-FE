@@ -1,9 +1,9 @@
-import RegisterImage from "../../components/RegisterImage";
+import RegisterImage from "../../components/Authentication/RegisterImage";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import InputBox from "../../components/InputBox";
-import Footer from "./Footer";
+import Footer from "../../components/Authentication/Footer";
 
 const Register = () => {
   return (
@@ -25,7 +25,7 @@ const Register = () => {
             </div>
             <div className="flex justify-end">
               <Link
-                to="/welcome"
+                to="/verify"
                 className="flex items-center justify-center text-white bg-green py-4 gap-3 px-5 text-sm cursor-pointer rounded hover:border-2 hover:border-green hover:bg-transparent hover:text-green"
               >
                 <p className="text-sm font-medium">Create Account</p>

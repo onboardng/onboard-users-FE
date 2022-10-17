@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import ApplicationSuccessSchool from '../../components/ApplicationSuccessSchool'
-import Icon from '../../components/Icons'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/school/Footer'
-import NavMobile from '../../components/school/HomeNavMobile'
+import ApplicationSuccessSchool from '../../../components/ApplicationSuccessSchool'
+import Navbar from '../../../components/school/Navbar'
+import Footer from '../../../components/school/Footer'
+import Icon from '../../../components/Icons'
+import NavMobile from '../../../components/school/HomeNavMobile'
 
 const ApplicationSuccessful = () => {
-    const [toggleMenu, setToggleMenu] = useState("close");
+  const [toggleMenu, setToggleMenu] = useState("close");
     const [initial, setInitial ] = useState(false);
   return (
     <div className="bg-grey-600" >
-        {toggleMenu === "close" ? (
+      {toggleMenu === "close" ? (
         <div className="md:hidden sticky top-0 z-50 pb-[31px] pt-[55px] bg-white md:bg-none flex items-center">
           <>
             <div className="px-[21px] cursor-pointer">

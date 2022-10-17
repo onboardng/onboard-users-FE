@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../../components/Navbar'
 import Footer from '../../components/school/Footer'
+import Navbar from '../../components/school/Navbar'
 import TrackSchoolBookingComp from '../../components/TrackSchoolBookingComp'
 import Goback from '../../components/ViewSchool/Goback'
 

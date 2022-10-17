@@ -41,7 +41,7 @@ const ViewSchool = () => {
             </div>
             <div className='md:pt-10 pt-2 relative' >
                 <h4 className='text-[24px] leading-[38.4px] font-medium' >Admissions</h4>
-                {comments.map(comment => <AdmissionsCard />)}
+                {comments.map(comment => <AdmissionsCard key={comment}/>)}
             </div>
         </div>
     </div>

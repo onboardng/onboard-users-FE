@@ -2,9 +2,7 @@ import React from 'react'
 import Icon from '../Icons'
 import InputBox from '../InputBox';
 import BookingCard from './BookingCard';
-
 const ApplicationSuccessSchool = () => {
-
   return (
     <div className='mx-4 md:mx-12 flex md:justify-between flex-col lg:flex-row py-5 ' >
         <BookingCard />
@@ -38,7 +36,7 @@ const ApplicationSuccessSchool = () => {
             </div>
         </div>
     </div>
-  )
-}
+  );
+};
 
-export default ApplicationSuccessSchool
+export default ApplicationSuccessSchool;
