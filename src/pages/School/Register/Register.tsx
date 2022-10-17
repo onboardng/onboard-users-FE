@@ -1,8 +1,8 @@
-import RegisterImage from "../../components/RegisterImage";
+import RegisterImage from "../../../components/RegisterImage";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import InputBox from "../../components/InputBox";
+import InputBox from "../../../components/InputBox";
 import Footer from "./Footer";
 
 const Register = () => {

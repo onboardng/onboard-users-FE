@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageLoader from "../components/Loader/PageLoader";
 
 const AllRoutes = () => {
-  const Welcome = lazy(() => import("../pages/Register/Welcome"));
-  const Register = lazy(() => import("../pages/Register/Register"));
-  const Login = lazy(() => import("../pages/Register/Login"));
-  const SchoolHomePage = lazy(() => import("../pages/school/HomePage"));
-  const SchoolSearchPage = lazy(() => import("../pages/school/SearchResult"));
-  const ViewSchool = lazy(() => import("../pages/ViewSchool"));
-  const ApplySchool = lazy(() => import("../pages/ApplySchool"));
-  const ApplicationSuccessful = lazy(() => import("../pages/ApplicationSuccessful"));
+  const Welcome = lazy(() => import("../pages/School/Register/Welcome"));
+  const Register = lazy(() => import("../pages/School/Register/Register"));
+  const Login = lazy(() => import("../pages/School/Register/Login"));
+  const SchoolHomePage = lazy(() => import("../pages/School/HomePage"));
+  const SchoolSearchPage = lazy(() => import("../pages/School/SearchResult"));
+  const ViewSchool = lazy(() => import("../pages/School/ViewSchool"));
+  const ApplySchool = lazy(() => import("../pages/School/ApplySchool"));
+  const ApplicationSuccessful = lazy(() => import("../pages/School/ApplicationSuccessful"));
   return (
     <>
       <Suspense fallback={<PageLoader />}>

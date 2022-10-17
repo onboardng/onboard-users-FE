@@ -1,5 +1,5 @@
-import RegisterImage from "../../components/RegisterImage";
-import InputBox from "../../components/InputBox";
+import RegisterImage from "../../../components/RegisterImage";
+import InputBox from "../../../components/InputBox";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 

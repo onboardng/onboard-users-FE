@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import Icon from "../../components/Icons";
-import Navbar from "../../components/Navbar";
-import AddSection from "../../components/school/AdSection";
-import EditDropDown from "../../components/school/EditDropDown";
-import Footer from "../../components/school/Footer";
-import SearchMain from "../../components/school/SearchMain";
-import SearchSideBar from "../../components/school/SearchSideBar";
-import Subscribe from "../../components/school/Subscribe";
-import Update from "../../components/school/Update";
-import Goback from "../../components/ViewSchool/Goback";
+import Icon from "../../../components/Icons";
+import Navbar from "../../../components/Navbar";
+import AddSection from "../../../components/school/AdSection";
+import EditDropDown from "../../../components/school/EditDropDown";
+import Footer from "../../../components/school/Footer";
+import SearchMain from "../../../components/school/SearchMain";
+import SearchSideBar from "../../../components/school/SearchSideBar";
+import Subscribe from "../../../components/school/Subscribe";
+import Update from "../../../components/school/Update";
+import Goback from "../../../components/ViewSchool/Goback";
 
 const SearchResult = () => {
   const [edit, showEdit] = useState(false);

@@ -1,8 +1,8 @@
 import React from 'react'
-import ApplySchoolCom from '../../components/ApplySchool'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/school/Footer'
-import Goback from '../../components/ViewSchool/Goback'
+import ApplySchoolCom from '../../../components/ApplySchool'
+import Navbar from '../../../components/Navbar'
+import Footer from '../../../components/school/Footer'
+import Goback from '../../../components/ViewSchool/Goback'
 
 const ApplySchool = () => {
   return (
