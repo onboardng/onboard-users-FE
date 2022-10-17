@@ -25,7 +25,7 @@ const Register = () => {
             </div>
             <div className="flex justify-end">
               <Link
-                to="/welcome"
+                to="/verify"
                 className="flex items-center justify-center text-white bg-green py-4 gap-3 px-5 text-sm cursor-pointer rounded hover:border-2 hover:border-green hover:bg-transparent hover:text-green"
               >
                 <p className="text-sm font-medium">Create Account</p>
