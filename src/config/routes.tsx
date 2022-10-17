@@ -11,7 +11,7 @@ const AllRoutes = () => {
   const ViewSchool = lazy(() => import("../pages/School/ViewSchool"));
   const ApplySchool = lazy(() => import("../pages/School/ApplySchool"));
   const ApplicationSuccessful = lazy(() => import("../pages/School/ApplicationSuccessful"));
-  const TrackSchoolBooking = lazy(() => import("../pages/TrackSchoolBooking"));
+  const TrackSchoolBooking = lazy(() => import("../pages/School/TrackSchoolBooking"));
   return (
     <>
       <Suspense fallback={<PageLoader />}>
