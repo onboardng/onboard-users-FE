@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import Icon from "../../../components/Icons";
-import Navbar from "../../../components/school/Navbar";
-import AddSection from "../../../components/school/AdSection";
-import EditDropDown from "../../../components/school/EditDropDown";
-import Footer from "../../../components/school/Footer";
-import SearchMain from "../../../components/school/SearchMain";
-import SearchSideBar from "../../../components/school/SearchSideBar";
-import Subscribe from "../../../components/school/Subscribe";
-import Update from "../../../components/school/Update";
+import Navbar from "../../../components/School/Navbar";
+import AddSection from "../../../components/School/AdSection";
+import EditDropDown from "../../../components/School/EditDropDown";
+import Footer from "../../../components/School/Footer";
+import SearchMain from "../../../components/School/SearchMain";
+import SearchSideBar from "../../../components/School/SearchSideBar";
+import Subscribe from "../../../components/School/Subscribe";
+import Update from "../../../components/School/Update";
 import Goback from "../../../components/ViewSchool/Goback";
 
 const SearchResult = () => {

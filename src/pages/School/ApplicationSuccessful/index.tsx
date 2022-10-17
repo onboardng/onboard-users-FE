@@ -1,7 +1,7 @@
 import React from 'react'
 import ApplicationSuccessSchool from '../../../components/ApplicationSuccessSchool'
-import Navbar from '../../../components/school/Navbar'
-import Footer from '../../../components/school/Footer'
+import Navbar from '../../../components/School/Navbar'
+import Footer from '../../../components/School/Footer'
 
 const ApplicationSuccessful = () => {
   return (

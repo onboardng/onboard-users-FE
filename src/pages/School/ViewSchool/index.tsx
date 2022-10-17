@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../../../components/school/Navbar";
-import AddSection from "../../../components/school/AdSection";
-import Footer from "../../../components/school/Footer";
-import Subscribe from "../../../components/school/Subscribe";
+import Navbar from "../../../components/School/Navbar";
+import AddSection from "../../../components/School/AdSection";
+import Footer from "../../../components/School/Footer";
+import Subscribe from "../../../components/School/Subscribe";
 import ViewSchoolComp from "../../../components/ViewSchool";
 import Goback from "../../../components/ViewSchool/Goback";
 
