@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageLoader from "../components/Loader/PageLoader";
-import Login from "../pages/Register/Login";
-import Register from "../pages/Register/Register";
-import Welcome from "../pages/Register/Welcome";
 
 const AllRoutes = () => {
+  const Welcome = lazy(() => import("../pages/Register/Welcome"));
+  const Register = lazy(() => import("../pages/Register/Register"));
+  const Login = lazy(() => import("../pages/Register/Login"));
   const SchoolHomePage = lazy(() => import("../pages/school/HomePage"));
   const SchoolSearchPage = lazy(() => import("../pages/school/SearchResult"));
   const ViewSchool = lazy(() => import("../pages/ViewSchool"));
@@ -22,8 +22,8 @@ const AllRoutes = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/search" element={<SchoolSearchPage />} />
             <Route path="/schools/:id" element={<ViewSchool />} />
-            <Route path="/apply/schools/:id" element={<ApplySchool />} />
-            <Route path="/applicationsuccess/schools" element={<ApplicationSuccessful />} />
+            <Route path="/schools/:id/apply" element={<ApplySchool />} />
+            <Route path="/schools/success" element={<ApplicationSuccessful />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
