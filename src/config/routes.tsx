@@ -17,9 +17,7 @@ const AllRoutes = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SchoolHomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/register" element={<Register />} />
+       
             <Route path="/search" element={<SchoolSearchPage />} />
             <Route path="/schools/:id" element={<ViewSchool />} />
             <Route path="/apply/schools/:id" element={<ApplySchool />} />
