@@ -1,0 +1,18 @@
+import React from 'react'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/school/Footer'
+import TrackSchoolBookingComp from '../../components/TrackSchoolBookingComp'
+import Goback from '../../components/ViewSchool/Goback'
+
+const TrackSchoolBooking = () => {
+  return (
+    <div className="bg-grey-600">
+        <Navbar />
+        <Goback isback track />
+        <TrackSchoolBookingComp />
+        <Footer />
+    </div>
+  )
+}
+
+export default TrackSchoolBooking

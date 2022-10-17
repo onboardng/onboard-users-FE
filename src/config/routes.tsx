@@ -11,6 +11,7 @@ const AllRoutes = () => {
   const ViewSchool = lazy(() => import("../pages/ViewSchool"));
   const ApplySchool = lazy(() => import("../pages/ApplySchool"));
   const ApplicationSuccessful = lazy(() => import("../pages/ApplicationSuccessful"));
+  const TrackSchoolBooking = lazy(() => import("../pages/TrackSchoolBooking"));
   return (
     <>
       <Suspense fallback={<PageLoader />}>
@@ -24,6 +25,7 @@ const AllRoutes = () => {
             <Route path="/schools/:id" element={<ViewSchool />} />
             <Route path="/apply/schools/:id" element={<ApplySchool />} />
             <Route path="/applicationsuccess/schools" element={<ApplicationSuccessful />} />
+            <Route path="/booking/schools/:id" element={<TrackSchoolBooking />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
