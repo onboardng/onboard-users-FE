@@ -1,10 +1,9 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
 import Icon from "../Icons";
+import Modal from "../Modal/Modal";
+import ModalClose from "../Modal/ModalClose";
+import ApplySchool from "../school/PopUpContent/ApplySchool";
 
 const AdmissionsCard = () => {
-  const { id } = useParams();
-
   return (
     <div className="my-5 bg-white relative">
       <div className="md:px-10 px-5 pt-5">
@@ -13,13 +12,23 @@ const AdmissionsCard = () => {
             <p className="text-[16px] leading-[25.6px] font-medium md:text-[20px] md:leading-[32px]">Bachelor of Science in Marketing</p>
             <p className="md:text-[16px] md:leading-[25.6px] text-[14px] leading-[22.4px] text-[#8B8BA4]">Application closes on Jan 1, 2023</p>
           </div>
-          <Link
-            to={`/schools/${id}/apply`}
-            className="tab:hidden col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] w-full md:w-auto"
+          <Modal
+            trigger={
+              <div className="tab:hidden col-span-2 justify-center cursor-pointer bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
+                <p className="text-center">Apply Now</p>
+                <Icon width={24} height={24} id="arrow-right-icon" />
+              </div>
+            }
           >
-            <p className="text-center">Apply Now</p>
-            <Icon width={24} height={24} id="arrow-right-icon" />
-          </Link>
+            {(close: () => void) => (
+              <div>
+                <ModalClose close={close} />
+                <div className="p-[20px] md:p-[30px] w-[80vw] md:w-[50vw] max-h-[76vh] overflow-scroll">
+                  <ApplySchool />
+                </div>
+              </div>
+            )}
+          </Modal>
         </div>
       </div>
       <p className="text-[14px] leading-[22.4px] text-[#8B8BA4] p-5 md:px-10">
@@ -27,13 +36,23 @@ const AdmissionsCard = () => {
         seit 1500, als ein unbekannter Schriftsteller eine Hand voll Wörter nahm und diese durcheinander warf um ein Musterbuch zu erstellen.
       </p>
       <div className="py-3 px-5 md:hidden">
-        <Link
-          to={`/schools/${id}/apply`}
-          className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] w-full md:w-auto"
+        <Modal
+          trigger={
+            <div className="col-span-2 cursor-pointer justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
+              <p className="text-center">Apply Now</p>
+              <Icon width={24} height={24} id="arrow-right-icon" />
+            </div>
+          }
         >
-          <p className="text-center">Apply Now</p>
-          <Icon width={24} height={24} id="arrow-right-icon" />
-        </Link>
+          {(close: () => void) => (
+            <div>
+              <ModalClose close={close} />
+              <div className="p-[20px] md:p-[30px] w-[80vw] md:w-[50vw] max-h-[76vh] overflow-scroll">
+                <ApplySchool />
+              </div>
+            </div>
+          )}
+        </Modal>
       </div>
     </div>
   );

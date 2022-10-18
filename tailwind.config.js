@@ -24,16 +24,11 @@ module.exports = {
       },
       backgroundImage: (theme) => ({
         "hero-pattern": "url('/public/static/images/HeroImage.png')",
-        filter:
-          "linear-gradient(180deg, rgba(0, 35, 125, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%)",
+        filter: "linear-gradient(180deg, rgba(0, 35, 125, 0.6) 0%, rgba(0, 0, 0, 1) 100%)",
         register: "url('/public/static/images/aeroplane.png')",
       }),
 
       keyframes: {
-        "ltr-linear-infinite": {
-          // from: { "background-position": "0 0" },
-          // to: { "background-position": "400% 0%" },
-        },
         "slide-in": {
           "0%": {
             "-webkit-transform": "translateX(-120%)",

@@ -27,9 +27,9 @@ const SearchMain = ({ showEdit, setShowFilter }: { showEdit: Dispatch<SetStateAc
           </div>
         </div>
       </div>
-      <div className="md:hidden mt-[42px] mb-3 rounded-xl flex gap-4 px-5 pt-2 items-start bg-filter bg-no-repeat bg-cover bg-blend-multiply w-full h-[101px] relative  ">
-        {/* <img src="/static/images/school.png" alt="card" className="w-full opacity-50" /> */}
-        <div className="absolute flex gap-4 items-center">
+      <div className="md:hidden mt-[42px] mb-3 rounded-xl flex gap-4 items-start bg-filter bg-no-repeat bg-cover bg-blend-multiply w-full h-[101px] relative  ">
+        <img src="/static/images/SchoolImage2.png" alt="card" className="h-full w-full object-cover opacity-20" />
+        <div className="absolute flex gap-4 items-center px-5 mt-3">
           <div className="rounded-full flex items-center justify-center h-[35px] w-[35px] bg-white bg-opacity-5">
             <Icon width={16} height={18} id="search-icon" />{" "}
           </div>
