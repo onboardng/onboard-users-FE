@@ -24,7 +24,7 @@ const AdmissionsCard = () => {
               <div>
                 <ModalClose close={close} />
                 <div className="p-[20px] md:p-[30px] w-[80vw] md:w-[50vw] max-h-[76vh] overflow-scroll">
-                  <ApplySchool />
+                  <ApplySchool close={close} />
                 </div>
               </div>
             )}
@@ -48,7 +48,7 @@ const AdmissionsCard = () => {
             <div>
               <ModalClose close={close} />
               <div className="p-[20px] md:p-[30px] w-[80vw] md:w-[50vw] max-h-[76vh] overflow-scroll">
-                <ApplySchool />
+                <ApplySchool close={close} />
               </div>
             </div>
           )}

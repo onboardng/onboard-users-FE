@@ -1,9 +1,10 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Icon from "../../Icons";
 
-const ApplySchool = () => {
+const ApplySchool = ({ close }: { close: () => void }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   return (
     <>
       <h4 className="text-[16px] md:text-[24px] md:leading-[38px] font-semibold mb-4">Bachelor of Science in Marketing</h4>
@@ -32,13 +33,16 @@ const ApplySchool = () => {
         </div>
       </div>
       <div className=" w-full flex tab:justify-center justify-end mt-[30px]">
-        <Link
-          to={`/schools/${id}/apply`}
+        <div
+          onClick={async () => {
+            await close();
+            navigate(`/schools/${id}/apply`);
+          }}
           className="col-span-2 focus:outline-none justify-center cursor-pointer bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px]"
         >
           <p className="text-center">Apply </p>
           <Icon width={24} height={24} id="arrow-right-icon" />
-        </Link>
+        </div>
       </div>
     </>
   );
