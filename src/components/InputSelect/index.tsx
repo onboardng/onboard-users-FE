@@ -4,8 +4,8 @@ import Select from 'react-select';
 const customStyles = {
     control: (provided: any, state: any) => ({
       ...provided,
-      height: "46px",
-      border: "1px solid #E4EAF0",
+      height: "60px",
+      border: "1px solid #DADAE7",
       padding: "5px",
       background: "transparent",
       transitionDuration: "300ms",
@@ -40,11 +40,23 @@ const customStyles = {
     }),
   };
 
-const InputSelect = () => {
+const InputSelect = ({options, handleChange, disabled, value, placeholder, name, loading }:{options: {label: string; value: string}[]; handleChange: Function; disabled?: boolean; value?: string; placeholder?: string; name: string; loading?: boolean;}) => {
   return (
-    <div>
+    <div className='bg-[#DADAE7] rounded-[4px]' >
         <Select
         styles={customStyles}
+        id={name}
+            options={options}
+            defaultValue={
+              value
+                ? { label: value, value: value }
+                : placeholder
+            }
+            name={name}
+            placeholder={value ? "" : placeholder}
+            onChange={()=>handleChange}
+            isDisabled={disabled}
+            isLoading={loading}
         />
     </div>
   )

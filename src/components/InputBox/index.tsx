@@ -38,7 +38,7 @@ const InputBox = ({
         <input
           type={`${password ? (showPassword ? "text" : "password") : "text"}`}
           placeholder={placeholder}
-          className={`focus:outline-none w-full ${whole ? "xl:w-full md:w-[408px]" : "md:w-[408px]"} ${classname && classname} ${
+          className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
             iconId ? "pl-[40px]" : "pl-[20px]"
           } pr-[20px] py-[17px] border-[1.5px] border-[#DADAE7]`}
         />{" "}

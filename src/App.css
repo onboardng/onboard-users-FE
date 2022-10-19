@@ -75,3 +75,8 @@ input[type=checkbox]:checked:after {
 .bg-modal2 {
   background-color: rgba(0, 0, 0, 0.21);
 }
+
+.css-ndtfpb-control, .css-12b3jm2-control {
+  outline: none !important;
+  border-color: #DADAE7 !important;
+}

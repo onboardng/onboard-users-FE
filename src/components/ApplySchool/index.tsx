@@ -1,10 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import carouselImage from '../../assets/Image Card.svg'
+import { countryCodes } from '../../utils/countrycodes';
 import Icon from '../Icons';
 import InputBox from '../InputBox';
 import InputSelect from '../InputSelect';
 
 const ApplySchoolCom = () => {
+    const navigate = useNavigate();
   return (
     <div className='mx-4 md:mx-12 flex flex-col md:flex-row py-5 ' >
         <div className='md:w-[70%] bg-white rounded-[20px]' >
@@ -21,8 +24,15 @@ const ApplySchoolCom = () => {
                             <InputBox placeholder='Name here' label="Last Name" label2='*' classname='rounded-[4px] ' />
                         </div>
                         <div className='w-full' >
-                            <div className='py-2 flex w-full' >
-                                <InputSelect />
+                            <div className='py-2 flex w-full xl:w-full md:w-[408px]' >
+                                <div className='mr-1 w-[15%]' >
+                                    <InputSelect
+                                        options={countryCodes}
+                                        value="+234"
+                                        name='countryCode'
+                                        handleChange={()=> {}}
+                                    />
+                                </div>
                                 <div className='w-full' >
                                     <InputBox placeholder='Phone number here' whole={true} classname='rounded-[4px]' />
                                 </div>
@@ -44,7 +54,7 @@ const ApplySchoolCom = () => {
                                     <InputBox iconId='upload-icon' height={24} width={24} placeholder='Click here to upload or drag files here' whole={true} label="Upload School Result" label2='*' classname='rounded-[4px] ' />
                                 </div>
                                 <div className='py-3 flex justify-end tab:hidden' >
-                                    <button className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto">
+                                    <button onClick={()=> navigate("/schools/success")} className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto">
                                         <p className="text-center">Proceed</p>
                                         <Icon width={24} height={24} id="arrow-right-icon" />
                                     </button>
@@ -56,7 +66,7 @@ const ApplySchoolCom = () => {
             </div>
         </div>
         <div className='py-10 flex justify-end md:hidden' >
-            <button className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto">
+            <button onClick={()=> navigate("/schools/success")} className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto">
                 <p className="text-center">Proceed</p>
                 <Icon width={24} height={24} id="arrow-right-icon" />
             </button>
