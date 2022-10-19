@@ -4,9 +4,11 @@ import Popup from "reactjs-popup";
 interface Iprops {
   children: unknown;
   trigger: string | JSX.Element;
+  borderRadius?: string;
 }
 
 const Modal = ({ children, trigger, ...rest }: Iprops) => {
+  const { borderRadius } = rest;
   return (
     <Popup
       trigger={<div>{trigger}</div>}
@@ -16,9 +18,11 @@ const Modal = ({ children, trigger, ...rest }: Iprops) => {
       nested
       contentStyle={{
         maxHeight: "80%",
-        borderRadius: "12px",
+        padding: 0,
+        borderRadius: borderRadius || "12px",
         backgroundColor: "white",
         width: "fit-content",
+        boxShadow: "none",
       }}
     >
       {children as ReactNode}
