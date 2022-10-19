@@ -71,3 +71,7 @@ input[type=checkbox]:checked {
 input[type=checkbox]:checked:after {
   display: block;
 }
+
+.bg-modal2 {
+  background-color: rgba(0, 0, 0, 0.21);
+}

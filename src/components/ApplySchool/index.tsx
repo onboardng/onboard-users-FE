@@ -2,6 +2,7 @@ import React from 'react';
 import carouselImage from '../../assets/Image Card.svg'
 import Icon from '../Icons';
 import InputBox from '../InputBox';
+import InputSelect from '../InputSelect';
 
 const ApplySchoolCom = () => {
   return (
@@ -19,8 +20,13 @@ const ApplySchoolCom = () => {
                             <InputBox placeholder='Name here' label="First Name" label2='*' classname='rounded-[4px] ' />
                             <InputBox placeholder='Name here' label="Last Name" label2='*' classname='rounded-[4px] ' />
                         </div>
-                        <div className='py-2' >
-                            <InputBox placeholder='Phone number here' whole={true} label="Phone Number" label2='*' classname='rounded-[4px] ' />
+                        <div className='w-full' >
+                            <div className='py-2 flex w-full' >
+                                <InputSelect />
+                                <div className='w-full' >
+                                    <InputBox placeholder='Phone number here' whole={true} classname='rounded-[4px]' />
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <div className='flex items-center' >
@@ -32,10 +38,10 @@ const ApplySchoolCom = () => {
                             <div>
                                 <p className='font-medium text-[14px] leading-[22.4px] text-[#8B8BA4] py-4' >Please enter the email address where you would like to receive your confirmation.</p>
                                 <div className='py-3' >
-                                    <InputBox iconId='mail-icon' height={24} width={24} placeholder='Email here' whole={true} label="Email Address" label2='*' classname='rounded-[4px] ' />
+                                    <InputBox iconId='green-mail-icon' height={24} width={24} placeholder='Email here' whole={true} label="Email Address" label2='*' classname='rounded-[4px] ' />
                                 </div>
                                 <div className='py-3' >
-                                    <InputBox iconId='mail-icon' height={24} width={24} placeholder='Click here to upload or drag files here' whole={true} label="Upload School Result" label2='*' classname='rounded-[4px] ' />
+                                    <InputBox iconId='upload-icon' height={24} width={24} placeholder='Click here to upload or drag files here' whole={true} label="Upload School Result" label2='*' classname='rounded-[4px] ' />
                                 </div>
                                 <div className='py-3 flex justify-end tab:hidden' >
                                     <button className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto">
