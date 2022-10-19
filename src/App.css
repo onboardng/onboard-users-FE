@@ -80,3 +80,7 @@ input[type=checkbox]:checked:after {
   outline: none !important;
   border-color: #DADAE7 !important;
 }
+
+.largeselect .css-319lph-ValueContainer {
+  padding: 0px !important;
+}
