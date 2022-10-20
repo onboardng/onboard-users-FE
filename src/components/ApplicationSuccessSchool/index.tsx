@@ -5,7 +5,7 @@ import BookingCard from './BookingCard';
 const ApplicationSuccessSchool = () => {
   return (
     <div className='mx-4 md:mx-12 flex md:justify-between flex-col lg:flex-row py-5 ' >
-        <BookingCard />
+        <BookingCard track />
         <div className='py-5' >
             <div className='bg-white rounded-[20px] p-5 md:px-10 max-w-[473px] lg:w-[473px] ' >
                 <h1 className='text-[16px] leading-[25.6px] font-bold' >Create Account</h1>
