@@ -1,12 +1,13 @@
 import { combineReducers } from "redux";
 import persistReducer from "redux-persist/es/persistReducer";
-import { authApi } from "./services/index";
+import { authApi, schoolApi } from "./services/index";
 
 import authReducer, { persistConfig } from "./slices/auth";
 
 export const reducers = combineReducers({
   authStore: persistReducer(persistConfig, authReducer),
   [authApi.reducerPath]: authApi.reducer,
+  [schoolApi.reducerPath]: schoolApi.reducer,
 });
 
 export const rootReducer = (state: any, action: any) => {

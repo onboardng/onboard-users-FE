@@ -1,3 +1,4 @@
+import { schoolApi } from "./../services/schoolApi";
 import { reduxBatch } from "@manaflair/redux-batch";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore } from "redux-persist";
@@ -16,6 +17,7 @@ export const store = configureStore({
       thunk: true,
     }),
     authApi.middleware,
+    schoolApi.middleware,
   ],
   devTools: process.env.NODE_ENV !== "production",
   enhancers: [reduxBatch],

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import carouselImage from "../../assets/Image Card.svg";
+import { UniversityData } from "../../utils/interfaces";
 import Icon from "../Icons";
 import Modal from "../Modal/Modal";
 import Modal2 from "../Modal/Modal2";
@@ -10,15 +11,16 @@ import RatingLarge from "./RatingLarge";
 import ReviewComments from "./ReviewComments";
 import WriteReview from "./WriteReview";
 
-const ViewSchool = () => {
+const ViewSchool = ({ university }: { university: UniversityData }) => {
   const comments = ["1", "2", "3", "4", "5"];
   const [modal, setModal] = useState<boolean>(false);
   const [reviewModal, setReviewModal] = useState<boolean>(false);
+
   return (
     <>
       <div className="mx-4 md:mx-12 flex flex-col md:flex-row py-5 overflow-hidden">
         <div>
-          <img src={carouselImage} alt="carousel" />
+          <img src={university?.picture || carouselImage} alt="carousel" />
           <section className="tab:hidden py-10">
             <div className="bg-white">
               <div className="bg-[#E7FAFF] h-[62px] flex items-center justify-between">
@@ -54,13 +56,13 @@ const ViewSchool = () => {
         </div>
         <div className="md:pl-10 w-full tab:pt-5">
           <div>
-            <h1 className="text-[24px] leading-[38.4px] font-medium md:font-semibold md:text-[40px] md:leading-[56px]">University of Lagos</h1>
+            <h1 className="text-[24px] leading-[38.4px] font-medium md:font-semibold md:text-[40px] md:leading-[56px]">{university?.name}</h1>
             <span className="flex">
               {comments.map((comment) => (
                 <RatingLarge key={comment} />
               ))}
             </span>
-            <p className="text-[#8B8BA4] text-[16px] leading-[25.6px] py-1">20 ratings total</p>
+            <p className="text-[#8B8BA4] text-[16px] leading-[25.6px] py-1">{university.ratings} ratings total</p>
             <p
               onClick={() => {
                 setModal(true);
@@ -72,16 +74,9 @@ const ViewSchool = () => {
             </p>
             <p className="flex items-center py-2 text-[16px] leading-[25.6px] font-medium md:text-[20px] md:leading-[32px]">
               <Icon id="location-pin-icon" width={24} height={24} />
-              <span className="pl-2">9, Ebinpejo Lane, Idumota, Lagos, Nigeria</span>
+              <span className="pl-2">{university?.country}</span>
             </p>
-            <p className="text-[#8B8BA4] text-[14px] leading-[22.4px] font-medium py-1">
-              The University of Lagos, popularly known as UNILAG, is a public research university located in Lagos, Nigeria and was founded in 1962.
-              UNILAG is one of the first generation universities in Nigeria and is ranked among the top universities in the world in major education
-              publications. The university presently has three campuses in the mainland of Lagos. Whereas two of its campuses are located at Yaba (the
-              main campus in Akoka and the recently created campus at the former school of radiography), it's college of medicine is located at
-              Idi-Araba, Surulere. Its main campus is largely surrounded by the Lagos lagoon and has 802 acres of land. The University of Lagos
-              currently[when?] admits over 9,000 undergraduate students annually and enrolls over 57,000 students.
-            </p>
+            <p className="text-[#8B8BA4] text-[14px] leading-[22.4px] font-medium py-1">{university.description}</p>
           </div>
           <div className="md:pt-10 pt-2 relative">
             <h4 className="text-[24px] leading-[38.4px] font-medium">Admissions</h4>

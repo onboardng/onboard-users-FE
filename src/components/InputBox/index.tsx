@@ -52,7 +52,7 @@ const InputBox = ({
           onChange={onChange}
           name={name}
           onBlur={onBlur}
-          value={value || ""}
+          defaultValue={value || ""}
           placeholder={placeholder}
           className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
             iconId ? "pl-[40px]" : "pl-[20px]"
