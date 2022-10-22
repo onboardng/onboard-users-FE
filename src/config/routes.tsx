@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 import PageLoader from "../components/Loader/PageLoader";
+import { persistor } from "../redux/store";
 
 const AllRoutes = () => {
   const Welcome = lazy(() => import("../pages/Authentication/Verify"));
@@ -16,7 +18,7 @@ const AllRoutes = () => {
   const ForgotPassword = lazy(() => import("../pages/Authentication/ForgotPassword"));
   const ResetPassword = lazy(() => import("../pages/Authentication/ResetPassword"));
   return (
-    <>
+    <PersistGate loading={null} persistor={persistor}>
       <Suspense fallback={<PageLoader />}>
         <BrowserRouter>
           <Routes>
@@ -35,7 +37,7 @@ const AllRoutes = () => {
           </Routes>
         </BrowserRouter>
       </Suspense>
-    </>
+    </PersistGate>
   );
 };
 

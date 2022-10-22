@@ -3,24 +3,68 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import InputBox from "../../components/InputBox";
 import AuthScreen from "../../components/Authentication/AuthScreen";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { iniitalSignupValues, SignupSchema } from "../../schemas/AuthSchema";
+import { useSignupUserMutation } from "../../redux/services";
+import { toast } from "react-toastify";
+import Button from "../../components/Button/Button";
 
 const Register = () => {
+  const [signup, { data, isLoading, isSuccess, isError, error }] = useSignupUserMutation();
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
+
+  const { values, handleChange, handleSubmit, handleBlur, touched, errors, resetForm } = useFormik({
+    initialValues: iniitalSignupValues,
+    validationSchema: SignupSchema,
+    onSubmit: (values) => {
+      signup(values);
+    },
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Store Successfully Created");
+      resetForm();
+    }
+    if (isError && error && "status" in error) {
+      toast.error(error?.data?.message);
+    }
+  }, [data, isLoading, isSuccess, isError, error, resetForm]);
+
   return (
     <AuthScreen title="Create Account" subtitle="Create Account to have an history of all you do on Onboard">
-      <form action="" className="mt-5">
+      <form className="mt-5" onSubmit={handleSubmit}>
         <div className="mb-5">
-          <InputBox placeholder="Email here" iconId="green-mail-icon" height={24} width={20} whole label="Email Address" />
+          <InputBox
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
+            error={errors.email}
+            touched={touched.email}
+            name="email"
+            placeholder="Email here"
+            iconId="green-mail-icon"
+            height={24}
+            width={20}
+            whole
+            label="Email Address"
+          />
         </div>
         <div className="mb-5">
           <InputBox
             placeholder="Password here"
             iconId="padlock-icon"
             height={19}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+            error={errors.password}
+            touched={touched.password}
+            name="password"
             width={14}
             whole
             label="Enter Password"
@@ -34,6 +78,12 @@ const Register = () => {
             placeholder="Password here"
             iconId="padlock-icon"
             height={19}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.confirm_password}
+            error={errors.confirm_password}
+            touched={touched.confirm_password}
+            name="confirm_password"
             width={14}
             whole
             label="Confirm Password"
@@ -43,13 +93,13 @@ const Register = () => {
           />
         </div>
         <div className="flex justify-end">
-          <Link
-            to="/verify"
+          <Button
+            loader={isLoading}
             className="flex items-center justify-center text-white bg-green py-4 gap-3 px-5 text-sm cursor-pointer rounded hover:border-2 hover:border-green hover:bg-transparent hover:text-green"
           >
             <p className="text-sm font-medium">Create Account</p>
             <HiOutlineChevronRight className="text-xl" />
-          </Link>
+          </Button>
         </div>
       </form>
 

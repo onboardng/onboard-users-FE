@@ -3,24 +3,67 @@ import { FcGoogle } from "react-icons/fc";
 import InputBox from "../../components/InputBox";
 import { Link } from "react-router-dom";
 import AuthScreen from "../../components/Authentication/AuthScreen";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUserLoginMutation } from "../../redux/services";
+import { useFormik } from "formik";
+import { initialSigninValues, LoginSchema } from "../../schemas/AuthSchema";
+import { toast } from "react-toastify";
+import Button from "../../components/Button/Button";
 
 const Login = () => {
+  const [login, { data, isLoading, isSuccess, isError, error }] = useUserLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
+
+  const { values, handleChange, handleSubmit, handleBlur, touched, errors, resetForm } = useFormik({
+    initialValues: initialSigninValues,
+    validationSchema: LoginSchema,
+    onSubmit: (values) => {
+      login(values);
+    },
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Store Successfully Created");
+      resetForm();
+    }
+    if (isError && error && "status" in error) {
+      toast.error(error?.data?.message);
+    }
+  }, [data, isLoading, isSuccess, isError, error, resetForm]);
   return (
     <AuthScreen title={"Welcome Back"} subtitle={"Sign in to have access to your account"}>
-      <form action="" className="mt-5">
+      <form action="" className="mt-5" onSubmit={handleSubmit}>
         <div className="mb-5">
-          <InputBox placeholder="Email here" iconId="green-mail-icon" height={20} width={20} whole label="Email Address" />
+          <InputBox
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
+            error={errors.email}
+            touched={touched.email}
+            name="email"
+            placeholder="Email here"
+            iconId="green-mail-icon"
+            height={20}
+            width={20}
+            whole
+            label="Email Address"
+          />
         </div>
         <div className="mb-5 w-full">
           <InputBox
             placeholder="Password here"
             iconId="padlock-icon"
             height={19}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+            error={errors.password}
+            touched={touched.password}
+            name="password"
             width={14}
             whole
             label="Enter Password"
@@ -32,10 +75,13 @@ const Login = () => {
             <p className="text-end mt-1 ">Forgot Password?</p>
           </Link>
         </div>
-        <div className="flex items-center justify-center text-white bg-green py-4 gap-3 px-5 text-sm cursor-pointer rounded hover:border-2 hover:border-green hover:bg-transparent hover:text-green">
+        <Button
+          loader={isLoading}
+          className="flex items-center w-full justify-center text-white bg-green py-4 gap-3 px-5 text-sm cursor-pointer rounded hover:border-2 hover:border-green hover:bg-transparent hover:text-green"
+        >
           <p className="text-sm font-medium">Sign In</p>
           <HiOutlineChevronRight className="text-xl" />
-        </div>
+        </Button>
       </form>
 
       <div className="flex justify-center md:justify-end mt-5">
