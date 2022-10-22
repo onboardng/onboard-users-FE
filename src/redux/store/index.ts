@@ -2,11 +2,12 @@ import { schoolApi } from "./../services/schoolApi";
 import { reduxBatch } from "@manaflair/redux-batch";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore } from "redux-persist";
-
+import { courseApi } from "./../services/courseApi";
 import { rootReducer } from "../root-reducer";
 import { authApi } from "../services/index";
 import { Action, ThunkDispatch } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { applicationApi } from "../services/applicationApi";
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -18,6 +19,8 @@ export const store = configureStore({
     }),
     authApi.middleware,
     schoolApi.middleware,
+    courseApi.middleware,
+    applicationApi.middleware,
   ],
   devTools: process.env.NODE_ENV !== "production",
   enhancers: [reduxBatch],

@@ -1,16 +1,16 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { CourseData } from "../../../utils/interfaces";
 import Icon from "../../Icons";
 
-const ApplySchool = ({ close }: { close: () => void }) => {
+const ApplySchool = ({ close, course }: { close: () => void, course: Partial<CourseData> }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   return (
     <>
-      <h4 className="text-[16px] md:text-[24px] md:leading-[38px] font-semibold mb-4">Bachelor of Science in Marketing</h4>
+      <h4 className="text-[16px] md:text-[24px] md:leading-[38px] font-semibold mb-4">{course?.name}</h4>
       <p className="text-[14px] md:leading-[22.4px] text-[#8B8BA4] pb-4 border-b-[1px]">
-        Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie. Lorem Ipsum ist in der Industrie bereits der Standard Demo-Text
-        seit 1500, als ein unbekannter Schriftsteller eine Hand voll Wörter nahm und diese durcheinander warf um ein Musterbuch zu erstellen.
+        {course?.description}
       </p>
       <div className="tab:flex w-full ">
         <div className="flex flex-col py-4 gap-3 border-b w-full">
@@ -35,7 +35,7 @@ const ApplySchool = ({ close }: { close: () => void }) => {
       <div className=" w-full flex tab:justify-center justify-end mt-[30px]">
         <div
           onClick={async () => {
-            await close();
+            close();
             navigate(`/schools/${id}/apply`);
           }}
           className="col-span-2 focus:outline-none justify-center cursor-pointer bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px]"

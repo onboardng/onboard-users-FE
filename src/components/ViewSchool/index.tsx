@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import carouselImage from "../../assets/Image Card.svg";
-import { UniversityData } from "../../utils/interfaces";
+import { CourseData, ListCoursesResponse, UniversityData } from "../../utils/interfaces";
 import Icon from "../Icons";
 import Modal from "../Modal/Modal";
 import Modal2 from "../Modal/Modal2";
@@ -11,7 +11,7 @@ import RatingLarge from "./RatingLarge";
 import ReviewComments from "./ReviewComments";
 import WriteReview from "./WriteReview";
 
-const ViewSchool = ({ university }: { university: UniversityData }) => {
+const ViewSchool = ({ university, courses }: { university: UniversityData, courses: ListCoursesResponse }) => {
   const comments = ["1", "2", "3", "4", "5"];
   const [modal, setModal] = useState<boolean>(false);
   const [reviewModal, setReviewModal] = useState<boolean>(false);
@@ -80,8 +80,8 @@ const ViewSchool = ({ university }: { university: UniversityData }) => {
           </div>
           <div className="md:pt-10 pt-2 relative">
             <h4 className="text-[24px] leading-[38.4px] font-medium">Admissions</h4>
-            {comments.map((comment) => (
-              <AdmissionsCard key={comment} />
+            {courses.rows?.map((course: Partial<CourseData>, index) => (
+              <AdmissionsCard course={course} key={index} />
             ))}
           </div>
         </div>

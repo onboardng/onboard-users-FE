@@ -28,6 +28,21 @@ export type UniversityData = {
   updated_at: string;
 };
 
+export type CourseData = {
+  id: string;
+  description: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  UniversityId: string;
+  ProgramId: string;
+}
+
+export interface ListCoursesResponse {
+  count: number;
+  rows: Partial<CourseData>[];
+}
+
 export interface ListUniversitiesResponse {
   count: number;
   rows: Partial<UniversityData>[];
