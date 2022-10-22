@@ -27,7 +27,7 @@ const Register = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Store Successfully Created");
+      toast.success("Registration Successful");
       resetForm();
     }
     if (isError && error && "status" in error) {

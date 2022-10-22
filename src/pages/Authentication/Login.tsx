@@ -27,7 +27,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Store Successfully Created");
+      toast.success("Login successful");
       resetForm();
     }
     if (isError && error && "status" in error) {
