@@ -12,7 +12,7 @@ const ReviewComments = ({comments}: {comments: string[]}) => {
                     <div className='pl-5' >
                         <p className='text-[#1B1B1B] text-[14px] leading-[22.4px]' >John Doe</p>
                         <span className='flex' >
-                            {comments.map(comment => <Rating key={comment}  />)}
+                            <Rating rating={3}  />
                         </span>
                     </div>
                     <p className='pr-5 text-[#8B8BA4] text-[14px] leading-[22.4px]' >Jan 1, 2020</p>

@@ -1,9 +1,13 @@
 import React from 'react'
 import Icon from '../Icons'
 
-const RatingLarge = () => {
+const RatingLarge = ({rating}: {rating: number}) => {
   return (
-    <Icon id='big-rating-full-icon' width={24} height={24} />
+    <>
+      {[...new Array(5)].map((ratingArr, index)=>{
+      return index < rating ? <Icon key={index} id='big-rating-full-icon' width={24} height={24} /> : <Icon key={index} id='big-rating-empty-icon' width={24} height={24} />
+      })}
+    </>
   )
 }
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import carouselImage from "../../assets/Image Card.svg";
 import { CourseData, ListCoursesResponse, UniversityData } from "../../utils/interfaces";
 import Icon from "../Icons";
+import InputBox from "../InputBox";
 import Modal from "../Modal/Modal";
 import Modal2 from "../Modal/Modal2";
 import ModalClose from "../Modal/ModalClose";
@@ -58,9 +59,7 @@ const ViewSchool = ({ university, courses }: { university: UniversityData, cours
           <div>
             <h1 className="text-[24px] leading-[38.4px] font-medium md:font-semibold md:text-[40px] md:leading-[56px]">{university?.name}</h1>
             <span className="flex">
-              {comments.map((comment) => (
-                <RatingLarge key={comment} />
-              ))}
+              <RatingLarge rating={2} />
             </span>
             <p className="text-[#8B8BA4] text-[16px] leading-[25.6px] py-1">{university.ratings} ratings total</p>
             <p
@@ -79,7 +78,12 @@ const ViewSchool = ({ university, courses }: { university: UniversityData, cours
             <p className="text-[#8B8BA4] text-[14px] leading-[22.4px] font-medium py-1">{university.description}</p>
           </div>
           <div className="md:pt-10 pt-2 relative">
-            <h4 className="text-[24px] leading-[38.4px] font-medium">Admissions</h4>
+            <div className="flex justify-between items-center" >
+              <h4 className="text-[24px] leading-[38.4px] font-medium">Admissions</h4>
+              <div>
+                <InputBox placeholder="Search here" iconId="search-icon2" height={24} width={24} />
+              </div>
+            </div>
             {courses.rows?.map((course: Partial<CourseData>, index) => (
               <AdmissionsCard course={course} key={index} />
             ))}

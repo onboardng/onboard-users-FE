@@ -242,3 +242,8 @@ export const countryCodes = [
   { label: "+260", value: "+260" },
   { label: "+263", value: "+263" },
 ];
+
+export const schoolPrograms: {label: string; value: string}[] = [
+  { label: "Undergraduate", value: "undergraduate" },
+  { label: "Postgraduate", value: "postgraduate" },
+]

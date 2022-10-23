@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import carouselImage from "../../assets/Image Card.svg";
-import { countryCodes } from "../../utils/countrycodes";
+import { countryCodes } from "../../utils/selectOptions";
 import Icon from "../Icons";
 import InputBox from "../InputBox";
 import InputSelect from "../InputSelect";
