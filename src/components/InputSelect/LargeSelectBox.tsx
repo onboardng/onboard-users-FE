@@ -52,7 +52,7 @@ const LargeSelectBox = ({ placeholder, options, handleChange, disabled, value, n
             }
             name={name}
             placeholder={value ? "" : placeholder}
-            onChange={()=>handleChange}
+            onChange={(val)=>handleChange(val)}
             isDisabled={disabled}
             isLoading={loading}
         />

@@ -7,28 +7,32 @@ import Navbar from "../../../components/school/Navbar";
 import Subscribe from "../../../components/school/Subscribe";
 import ViewSchoolComp from "../../../components/ViewSchool";
 import Goback from "../../../components/ViewSchool/Goback";
-import { useGetAUniversityQuery, useGetUniversityCoursesQuery } from "../../../redux/services";
+import { useGetAllUniversityReviewsQuery, useGetAUniversityQuery, useGetUniversityCoursesQuery } from "../../../redux/services";
 import { IRootQueryParams, ListUniversitiesResponse, UniversityData } from "../../../utils/interfaces";
 
 const initialQueryParams: IRootQueryParams = { page: 1, limit: 10 };
 const ViewSchool = () => {
   const id = useParams().id as string;
   const { data, isLoading } = useGetAUniversityQuery(id);
-  const { data: courseData, isLoading: courseLoading } = useGetUniversityCoursesQuery({ ...initialQueryParams, id })
+  const { data: courseData, isLoading: courseLoading } = useGetUniversityCoursesQuery({ ...initialQueryParams, id });
+  const { data: reviewData, isLoading: reviewLoading } = useGetAllUniversityReviewsQuery({ id, ...initialQueryParams })
 
   const university = useMemo<UniversityData>(() => data?.data.university, [data]);
   const universityCourses = useMemo<ListUniversitiesResponse>(() => {
     return courseData?.data?.courses.data;
   }, [courseData?.data?.courses.data]);
+  const reviews = useMemo<any>(() => {
+    return reviewData?.data?.result.data
+  },[reviewData?.data?.result.data])
 
-  if (isLoading || courseLoading) {
+  if (isLoading || courseLoading || reviewLoading ) {
     return <PageLoader />;
   }
   return (
     <div className="bg-grey-600">
       <Navbar />
       <Goback isback />
-      <ViewSchoolComp courses={universityCourses} university={university} />
+      <ViewSchoolComp id={id} reviews={reviews} courses={universityCourses} university={university} />
       <AddSection />
       <Subscribe />
       <Footer />

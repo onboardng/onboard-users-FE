@@ -3,7 +3,7 @@ import { BaseQueryFn, createApi, FetchArgs } from "@reduxjs/toolkit/query/react"
 
 export const schoolApi = createApi({
   reducerPath: "schoolApi",
-  tagTypes: ["universities"],
+  tagTypes: ["universities", "reviews"],
   baseQuery: baseQueryWithReauth as BaseQueryFn<string | FetchArgs, unknown, CustomError, Record<string, any>>,
   endpoints: (builder) => ({
     getAllUniverisities: builder.query<any, { page: number; limit: number }>({
@@ -18,7 +18,22 @@ export const schoolApi = createApi({
       query: (id) => createRequest(`university/view/${id}`),
       providesTags: (_result, _error, id) => [{ type: "universities", id }],
     }),
+    getAllUniversityReviews: builder.query<any, {id: string; page: number; limit: number}>({
+      query: ({ id, page, limit }) => createRequestWithParams(`review/all/${id}`,{ page, limit }),
+      providesTags: (result, _error, _arg) => result?.data ? [...result?.data?.result.data?.map(({ id }: { id: string }) => ({ type: "reviews", id })), "reviews"] : ["reviews"]
+    }),
+    createReview: builder.mutation<any, { id: string, body: { text:string, rating:number }}>({
+      query: (data) => {
+        return {
+          url: `review/new/${data?.id}`,
+          method: "post",
+          body: data?.body,
+        };
+      },
+      invalidatesTags: ["reviews"]
+    }),
+
   }),
 });
 
-export const { useGetAUniversityQuery, useGetAllUniverisitiesQuery } = schoolApi;
+export const { useGetAUniversityQuery, useGetAllUniverisitiesQuery, useCreateReviewMutation, useGetAllUniversityReviewsQuery } = schoolApi;

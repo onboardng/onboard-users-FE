@@ -6,7 +6,7 @@ import ApplySchool from "../school/PopUpContent/ApplySchool";
 
 const AdmissionsCard = ({course}: { course: Partial<CourseData> }) => {
   return (
-    <div className="my-5 bg-white relative">
+    <div className="my-5 bg-white relative rounded-[10px]">
       <div className="md:px-10 px-5 pt-5">
         <div className="flex w-full justify-between items-center border-b-[1px] pb-5">
           <div className="">

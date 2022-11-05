@@ -19,7 +19,7 @@ export const applicationApi = createApi({
         searchApplication: builder.mutation<any, {tracking_id: string}>({
             query: (data) => {
               return {
-                url: `application/searchn`,
+                url: `application/search`,
                 method: "post",
                 body: data,
               };

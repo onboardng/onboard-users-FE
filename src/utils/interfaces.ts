@@ -47,3 +47,14 @@ export interface ListUniversitiesResponse {
   count: number;
   rows: Partial<UniversityData>[];
 }
+
+// interface IObjectKeys {
+//   [key: string]: string | number;
+// }
+
+export interface ISearchObject {
+  school_name: string; 
+  country_name: string; 
+  course_name: string; 
+  program_name: string
+}

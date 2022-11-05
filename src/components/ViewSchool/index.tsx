@@ -12,7 +12,7 @@ import RatingLarge from "./RatingLarge";
 import ReviewComments from "./ReviewComments";
 import WriteReview from "./WriteReview";
 
-const ViewSchool = ({ university, courses }: { university: UniversityData, courses: ListCoursesResponse }) => {
+const ViewSchool = ({ university, courses, reviews, id }: { university: UniversityData, courses: ListCoursesResponse, reviews:any; id: string }) => {
   const comments = ["1", "2", "3", "4", "5"];
   const [modal, setModal] = useState<boolean>(false);
   const [reviewModal, setReviewModal] = useState<boolean>(false);
@@ -42,16 +42,17 @@ const ViewSchool = ({ university, courses }: { university: UniversityData, cours
                     <div>
                       <ModalClose close={close} />
                       <div className="tab:hidden w-[80vw] md:w-[50vw] max-h-[76vh] overflow-scroll">
-                        <WriteReview close={close} />
+                        <WriteReview id={id} close={close} />
                       </div>
                     </div>
                   )}
                 </Modal>
               </div>
               <p className="pb-2"></p>
-              {comments.map((comment) => (
-                <ReviewComments comments={comments} key={comment}></ReviewComments>
+              {reviews.map((comment: any) => (
+                <ReviewComments comments={comments} key={comment?.id}></ReviewComments>
               ))}
+              {reviews?.length < 1 && <p className="text-center py-5" >No Reviews yet</p>}
             </div>
           </section>
         </div>
@@ -59,9 +60,9 @@ const ViewSchool = ({ university, courses }: { university: UniversityData, cours
           <div>
             <h1 className="text-[24px] leading-[38.4px] font-medium md:font-semibold md:text-[40px] md:leading-[56px]">{university?.name}</h1>
             <span className="flex">
-              <RatingLarge rating={2} />
+              <RatingLarge rating={university.ratings || 1} />
             </span>
-            <p className="text-[#8B8BA4] text-[16px] leading-[25.6px] py-1">{university.ratings} ratings total</p>
+            <p className="text-[#8B8BA4] text-[16px] leading-[25.6px] py-1">{university.ratings || 0} ratings total</p>
             <p
               onClick={() => {
                 setModal(true);
@@ -106,8 +107,8 @@ const ViewSchool = ({ university, courses }: { university: UniversityData, cours
               <p className="mx-auto">Reviews</p>
             </aside>
             <div className=" overflow-y-auto h-[85%] px-2">
-              {comments.map((comment) => (
-                <ReviewComments comments={comments} key={comment}></ReviewComments>
+              {reviews.map((comment: any) => (
+                <ReviewComments comments={comments} key={comment?.id}></ReviewComments>
               ))}
             </div>
             <div className="px-5 py-10 shadow-[0px_-4px_20px_rgba(0,0,0,0.08)]">
@@ -134,7 +135,7 @@ const ViewSchool = ({ university, courses }: { university: UniversityData, cours
                 document.body.style.overflow = "auto";
               }}
             />
-            <WriteReview setModal={setReviewModal} />
+            <WriteReview id={id} setModal={setReviewModal} />
           </div>
         </Modal2>
       )}

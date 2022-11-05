@@ -10,11 +10,18 @@ import SearchSideBar from "../../../components/school/SearchSideBar";
 import SearchMain from "../../../components/school/SearchMain";
 import Update from "../../../components/school/Update";
 import Navbar from "../../../components/school/Navbar";
+import { useSearchCourseQuery } from "../../../redux/services";
+import { useSearchParams } from "react-router-dom";
+import PageLoader from "../../../components/Loader/PageLoader";
 
 const SearchResult = () => {
   const [edit, showEdit] = useState(false);
+  const [searchParams,] = useSearchParams();
+  const [ page, ] = useState(1);
   const [showFilter, setShowFilter] = useState(false);
   const matches = useMediaQuery("(min-width: 768px)");
+  let searchQuery = Object.fromEntries([...searchParams])
+  const { data, isLoading } = useSearchCourseQuery({page, limit: 10, ...searchQuery})
 
   useEffect(() => {
     if (matches) {
@@ -50,11 +57,17 @@ const SearchResult = () => {
                 <Icon width={14} height={14} id="close-green-icon" />
               </div>
             </div>
-            <EditDropDown showFilter={showFilter} />{" "}
+            <EditDropDown setEdit={showEdit} showFilter={showFilter} />{" "}
           </>
         )}
-        <SearchSideBar showFilter={showFilter} />
-        <SearchMain showEdit={showEdit} setShowFilter={setShowFilter} />
+        {
+          isLoading ? 
+          <PageLoader /> : 
+          <>
+            <SearchSideBar showFilter={showFilter} />
+            <SearchMain data={data?.data?.courses?.data} showEdit={showEdit} setShowFilter={setShowFilter} />
+          </>
+        }
       </div>
       <Update imgSrc={"./static/images/school2.png"} />
       <AddSection />

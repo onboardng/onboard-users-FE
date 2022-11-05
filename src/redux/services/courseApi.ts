@@ -21,17 +21,10 @@ export const courseApi = createApi({
             providesTags: (result, _error, id) => result?.data ? [{type: "courses", id}] : ["courses"],
         }),
 
-        searchCourse: builder.mutation<any, {page: number, limit: number, body: {course_name: string, program_name?: string}}>({
-            query: ({page, limit, body}) => {
-                return {
-                    url: `course/search`,
-                    method: "POST",
-                    body,
-                    params: {page, limit}
-                }
-            }
+        searchCourse: builder.query<any, {page: number, limit: number, course_name?: string, program_name?: string, school_name?: string, country_name?: string}>({
+            query: (params) => createRequestWithParams("course/search", params)
         })
     })
 })
 
-export const { useGetACourseQuery, useGetAllCoursesQuery, useGetUniversityCoursesQuery, useSearchCourseMutation } = courseApi
+export const { useGetACourseQuery, useGetAllCoursesQuery, useGetUniversityCoursesQuery, useSearchCourseQuery } = courseApi

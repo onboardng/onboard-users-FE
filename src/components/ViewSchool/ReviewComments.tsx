@@ -1,8 +1,9 @@
 import React from 'react'
 import Rating from './Rating'
-import carouselImage from '../../assets/Image Card.svg'
+import carouselImage from '../../assets/Image Card.svg';
+import dayjs from 'dayjs'
 
-const ReviewComments = ({comments}: {comments: string[]}) => {
+const ReviewComments = ({comments}: {comments: any}) => {
   return (
     <div className='px-5 py-3' >
         <div className='flex w-full' >
@@ -12,12 +13,12 @@ const ReviewComments = ({comments}: {comments: string[]}) => {
                     <div className='pl-5' >
                         <p className='text-[#1B1B1B] text-[14px] leading-[22.4px]' >John Doe</p>
                         <span className='flex' >
-                            <Rating rating={3}  />
+                            <Rating rating={comments?.rating}  />
                         </span>
                     </div>
-                    <p className='pr-5 text-[#8B8BA4] text-[14px] leading-[22.4px]' >Jan 1, 2020</p>
+                    <p className='pr-5 text-[#8B8BA4] text-[14px] leading-[22.4px]' >{dayjs(comments?.created_at).format('MMM DD, YYYY')}</p>
                 </div>
-                <p className='px-5 py-2 text-[#1B1B1B] text-[14px] leading-[22.4px]' >The hotel has a really nice ambience and architecture. But they need to work more on their staffs’ hospitality skills</p>
+                <p className='px-5 py-2 text-[#1B1B1B] text-[14px] leading-[22.4px]' >{comments?.text}</p>
             </div>
         </div>
     </div>
