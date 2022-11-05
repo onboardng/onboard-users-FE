@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import storageSession from "redux-persist/lib/storage/session";
 
 const initialState = {
-  user: {},
+  user: {
+    full_name: "",
+    email: "",
+    profile_picture: "",
+  },
   authorization: { access_token: "" },
 };
 

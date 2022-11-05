@@ -32,7 +32,16 @@ export const authApi = createApi({
         };
       },
     }),
+    updateProfile: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/auth/edit`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
-export const { useSignupUserMutation, useUserLoginMutation, useActivateOtpMutation } = authApi;
+export const { useSignupUserMutation, useUserLoginMutation, useActivateOtpMutation, useUpdateProfileMutation } = authApi;

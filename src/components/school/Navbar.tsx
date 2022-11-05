@@ -10,11 +10,10 @@ const Navbar = ({ home }: { home?: boolean }) => {
   const navigate = useNavigate();
   const [dropDown, setDropDown] = useState(false);
   const [dropDownNotification, setDropDownNotification] = useState(false);
-  const { authorization } = useSelector((state: RootState) => state.authStore);
+  const { authorization, user } = useSelector((state: RootState) => state.authStore);
   const ref = useRef<HTMLDivElement | null>(null);
   const notificationRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
-
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
   };
@@ -51,7 +50,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
             <div ref={ref} className="group relative ">
               <div className="pl-8">
                 <li className="flex items-center pt-2 cursor-pointer" onClick={() => setDropDown((val) => !val)}>
-                  <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={`/static/images/dummyUser.jpg`} />
+                  <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `/static/images/dummyUser.jpg`} />
 
                   <span className="pl-3">
                     <Icon id={"arrow-down-icon"} width={24} height={24} />
@@ -70,9 +69,9 @@ const Navbar = ({ home }: { home?: boolean }) => {
                       setDropDown((val) => !val);
                     }}
                   >
-                    <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={`/static/images/dummyUser.jpg`} />
+                    <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `/static/images/dummyUser.jpg`} />
                     <aside>
-                      <h1 className=" text-sm text-black font-semibold">{`Onboard User`}</h1>
+                      <h1 className=" text-sm text-black font-semibold">{user?.full_name || `Onboard User`}</h1>
                       <p className=" font-medium text-[#959595] text-[12px] leading-[14.52px] capitalize">{"User"}</p>
                     </aside>
                   </li>
