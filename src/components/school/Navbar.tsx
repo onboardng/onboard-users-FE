@@ -52,10 +52,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
               <div className="pl-8">
                 <li className="flex items-center pt-2 cursor-pointer" onClick={() => setDropDown((val) => !val)}>
                   <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={`/static/images/dummyUser.jpg`} />
-                  {/* <aside>
-                            <h1 className=" text-sm text-black font-semibold">{`Onboard Admin`}</h1>
-                            <p className=" font-medium text-[#959595] text-[12px] leading-[14.52px] ">{capitalize('SuperAdmin') || "No Role"}</p>
-                        </aside> */}
+
                   <span className="pl-3">
                     <Icon id={"arrow-down-icon"} width={24} height={24} />
                   </span>
@@ -75,8 +72,8 @@ const Navbar = ({ home }: { home?: boolean }) => {
                   >
                     <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={`/static/images/dummyUser.jpg`} />
                     <aside>
-                      <h1 className=" text-sm text-black font-semibold">{`Onboard Admin`}</h1>
-                      <p className=" font-medium text-[#959595] text-[12px] leading-[14.52px] capitalize">{"SuperAdmin" || "No Role"}</p>
+                      <h1 className=" text-sm text-black font-semibold">{`Onboard User`}</h1>
+                      <p className=" font-medium text-[#959595] text-[12px] leading-[14.52px] capitalize">{"User"}</p>
                     </aside>
                   </li>
                   <li className="text-[#959595] flex mt-5 mb-5 cursor-pointer" onClick={handleLogout}>
