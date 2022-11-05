@@ -21,3 +21,17 @@ export const initialSigninValues: Partial<ISignUpDetails> = {
   email: "",
   password: "",
 };
+
+export const UpdateProfileSchema = Yup.object({
+  first_name: Yup.string().required("First name is required"),
+  last_name: Yup.string().required("Last name is required"),
+  profile_picture: Yup.string().notRequired(),
+  location: Yup.string().required("Location is required"),
+});
+
+export const initialUpdateProfileValues = {
+  first_name: "",
+  last_name: "",
+  profile_picture: "",
+  location: "",
+};

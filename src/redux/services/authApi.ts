@@ -8,7 +8,7 @@ export const authApi = createApi({
     signupUser: builder.mutation({
       query: (data) => {
         return {
-          url: `user/signup`,
+          url: `auth/signup`,
           method: "post",
           body: data,
         };
@@ -17,8 +17,26 @@ export const authApi = createApi({
     userLogin: builder.mutation({
       query: (data) => {
         return {
-          url: `user/login`,
+          url: `auth/login`,
           method: "post",
+          body: data,
+        };
+      },
+    }),
+    activateOtp: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/auth/signup/confirm`,
+          method: "post",
+          body: data,
+        };
+      },
+    }),
+    updateProfile: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/auth/edit`,
+          method: "PATCH",
           body: data,
         };
       },
@@ -26,4 +44,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useSignupUserMutation, useUserLoginMutation } = authApi;
+export const { useSignupUserMutation, useUserLoginMutation, useActivateOtpMutation, useUpdateProfileMutation } = authApi;
