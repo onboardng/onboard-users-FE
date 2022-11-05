@@ -1,7 +1,7 @@
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
 import InputBox from "../../components/InputBox";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthScreen from "../../components/Authentication/AuthScreen";
 import { useEffect, useState } from "react";
 import { useUserLoginMutation } from "../../redux/services";
@@ -9,10 +9,15 @@ import { useFormik } from "formik";
 import { initialSigninValues, LoginSchema } from "../../schemas/AuthSchema";
 import { toast } from "react-toastify";
 import Button from "../../components/Button/Button";
+import { useDispatch } from "react-redux";
+import { setLoginUser } from "../../redux/slices/auth";
 
 const Login = () => {
   const [login, { data, isLoading, isSuccess, isError, error }] = useUserLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
@@ -28,12 +33,14 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Login successful");
-      resetForm();
+      dispatch(setLoginUser(data));
+      navigate("/");
     }
     if (isError && error && "status" in error) {
       toast.error(error?.data?.message);
     }
-  }, [data, isLoading, isSuccess, isError, error, resetForm]);
+  }, [data, isLoading, isSuccess, isError, error, resetForm, navigate, dispatch]);
+
   return (
     <AuthScreen title={"Welcome Back"} subtitle={"Sign in to have access to your account"}>
       <form action="" className="mt-5" onSubmit={handleSubmit}>

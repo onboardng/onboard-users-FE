@@ -16,6 +16,7 @@ export const reducers = combineReducers({
 export const rootReducer = (state: any, action: any) => {
   if (action.type === "LOGOUT") {
     localStorage.clear();
+    sessionStorage.clear();
     window.location.replace("/");
     return reducers(undefined, action);
   }
