@@ -1,6 +1,6 @@
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputBox from "../../components/InputBox";
 import AuthScreen from "../../components/Authentication/AuthScreen";
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ import Button from "../../components/Button/Button";
 const Register = () => {
   const [signup, { data, isLoading, isSuccess, isError, error }] = useSignupUserMutation();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
@@ -28,12 +29,13 @@ const Register = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Registration Successful");
+      navigate("/verify");
       resetForm();
     }
     if (isError && error && "status" in error) {
       toast.error(error?.data?.message);
     }
-  }, [data, isLoading, isSuccess, isError, error, resetForm]);
+  }, [data, isLoading, isSuccess, isError, error, resetForm, navigate]);
 
   return (
     <AuthScreen title="Create Account" subtitle="Create Account to have an history of all you do on Onboard">

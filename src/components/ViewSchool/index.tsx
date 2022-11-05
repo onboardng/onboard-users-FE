@@ -12,7 +12,7 @@ import RatingLarge from "./RatingLarge";
 import ReviewComments from "./ReviewComments";
 import WriteReview from "./WriteReview";
 
-const ViewSchool = ({ university, courses }: { university: UniversityData, courses: ListCoursesResponse }) => {
+const ViewSchool = ({ university, courses }: { university: UniversityData; courses: ListCoursesResponse }) => {
   const comments = ["1", "2", "3", "4", "5"];
   const [modal, setModal] = useState<boolean>(false);
   const [reviewModal, setReviewModal] = useState<boolean>(false);
