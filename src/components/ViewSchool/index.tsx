@@ -13,7 +13,7 @@ import ReviewComments from "./ReviewComments";
 import WriteReview from "./WriteReview";
 
 const ViewSchool = ({ university, courses, reviews, id }: { university: UniversityData, courses: ListCoursesResponse, reviews:any; id: string }) => {
-  const comments = ["1", "2", "3", "4", "5"];
+  // const comments = ["1", "2", "3", "4", "5"];
   const [modal, setModal] = useState<boolean>(false);
   const [reviewModal, setReviewModal] = useState<boolean>(false);
 
@@ -50,7 +50,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
               </div>
               <p className="pb-2"></p>
               {reviews.map((comment: any) => (
-                <ReviewComments comments={comments} key={comment?.id}></ReviewComments>
+                <ReviewComments comments={comment} key={comment?.id}></ReviewComments>
               ))}
               {reviews?.length < 1 && <p className="text-center py-5" >No Reviews yet</p>}
             </div>
@@ -108,7 +108,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
             </aside>
             <div className=" overflow-y-auto h-[85%] px-2">
               {reviews.map((comment: any) => (
-                <ReviewComments comments={comments} key={comment?.id}></ReviewComments>
+                <ReviewComments comments={comment} key={comment?.id}></ReviewComments>
               ))}
             </div>
             <div className="px-5 py-10 shadow-[0px_-4px_20px_rgba(0,0,0,0.08)]">
