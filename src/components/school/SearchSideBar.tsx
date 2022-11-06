@@ -1,13 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import Icon from "../Icons";
 import InputBox from "../InputBox";
 
 const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
+  const navigate = useNavigate();
   return (
     <div
       className={` bg-white rounded-xl  ${
         showFilter
           ? "absolute md:relative md:h-[793px] ml-5 mx-auto w-[93%] md:w-[30%] md:mx-5 z-50 overflow-hidden"
-          : " h-[793px] first-letter:w-[30%] hidden md:block mx-5"
+          : " h-[793px] md:w-[30%] hidden md:block mx-5"
       } `}
     >
       <div className="flex justify-between bg-[#E7FAFF] p-5">
@@ -44,7 +46,7 @@ const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
               </div>
               <div>
                 <h5 className="text-white left-3 bottom-[30px] text-sm w-[138px]">Already booked an admission?</h5>
-                <div className="flex text-white items-center  left-3">
+                <div onClick={() => navigate("/booking/schools/1")} className="flex text-white items-center left-3 cursor-pointer">
                   <p className="text-[10px]">Track Booking</p>
                   <Icon width={24} height={24} id="arrow-right-icon" />
                 </div>

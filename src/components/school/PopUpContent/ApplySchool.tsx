@@ -3,15 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CourseData } from "../../../utils/interfaces";
 import Icon from "../../Icons";
 
-const ApplySchool = ({ close, course }: { close: () => void, course: Partial<CourseData> }) => {
+const ApplySchool = ({ close, course }: { close: () => void; course: Partial<CourseData> }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   return (
     <>
       <h4 className="text-[16px] md:text-[24px] md:leading-[38px] font-semibold mb-4">{course?.name}</h4>
-      <p className="text-[14px] md:leading-[22.4px] text-[#8B8BA4] pb-4 border-b-[1px]">
-        {course?.description}
-      </p>
+      <p className="text-[14px] md:leading-[22.4px] text-[#8B8BA4] pb-4 border-b-[1px]">{course?.description}</p>
       <div className="tab:flex w-full ">
         <div className="flex flex-col py-4 gap-3 border-b w-full">
           <p className="flex text-[14.5px] leading-[22.4px] md:text-[16px] md:leading-[25.6px] justify-start items-center font-medium tab:py-1">
@@ -35,7 +33,7 @@ const ApplySchool = ({ close, course }: { close: () => void, course: Partial<Cou
       <div className=" w-full flex tab:justify-center justify-end mt-[30px]">
         <div
           onClick={async () => {
-            close();
+            await close();
             navigate(`/schools/${id}/apply`);
           }}
           className="col-span-2 focus:outline-none justify-center cursor-pointer bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px]"

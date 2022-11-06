@@ -16,9 +16,9 @@ const Subscribe = () => {
                         </button>
                     </div>
                 </aside>
-                <p className='text-[10px] leading-[16px] font-bold md:text-[14px] md:leading-[22.4px] ' >Your privacy is important to us, so we'll never spam you or share your info with third parties. </p>
-                <p className='text-[10px] leading-[16px] font-bold md:text-[14px] md:leading-[22.4px] ' >Take a look at our privacy policy. <span className='hidden md:inline' >You can unsubscribe at any time.</span></p>
-                <p className='text-[10px] leading-[16px] font-bold md:text-[14px] md:leading-[22.4px] md:hidden' >You can unsubscribe at any time.</p>
+                <p className='text-[10px] leading-[16px] font-medium md:text-[14px] md:leading-[22.4px]' >Your privacy is important to us, so we'll never spam you or share your info with third parties. </p>
+                <p className='text-[10px] leading-[16px] font-medium md:text-[14px] md:leading-[22.4px]' >Take a look at our privacy policy. <span className='hidden md:inline' >You can unsubscribe at any time.</span></p>
+                <p className='text-[10px] leading-[16px] font-medium md:text-[14px] md:leading-[22.4px] md:hidden' >You can unsubscribe at any time.</p>
             </section>
         </div>
     </div>
