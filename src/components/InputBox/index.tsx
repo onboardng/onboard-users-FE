@@ -1,6 +1,7 @@
 import Icon from "../Icons";
 
 const InputBox = ({
+  isRounded,
   placeholder,
   iconId,
   iconId2,
@@ -19,7 +20,10 @@ const InputBox = ({
   name,
   error,
   touched,
+  fullWidth,
 }: {
+  fullWidth?: boolean;
+  isRounded?: boolean;
   password?: boolean;
   togglePassword?: () => void;
   showPassword?: boolean;
@@ -40,7 +44,7 @@ const InputBox = ({
   touched?: boolean;
 }) => {
   return (
-    <div>
+    <div className={`${fullWidth && "w-full"}`}>
       {label && (
         <label className="text-[14px] leading-[22.4px] text-[#1B1B1B]">
           {label} <span className="text-[#DA0000]">{label2}</span>
@@ -56,7 +60,7 @@ const InputBox = ({
           placeholder={placeholder}
           className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
             iconId ? "pl-[40px]" : "pl-[20px]"
-          } pr-[20px] py-[17px] border-[1.5px] border-[#DADAE7]`}
+          } pr-[20px] py-[17px] border-[1.5px] border-[#DADAE7] ${isRounded && "rounded-[8px]"}`}
         />{" "}
         {password && (
           <i onClick={togglePassword} className={`text-gray-500 absolute right-[15px] fa-solid fa-eye${showPassword ? "" : "-slash"}`}></i>

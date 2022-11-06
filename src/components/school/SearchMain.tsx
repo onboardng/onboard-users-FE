@@ -39,7 +39,7 @@ const SearchMain = ({ showEdit, setShowFilter, data }: { showEdit: Dispatch<SetS
           </div>
           <div>
             <h5 className="text-white left-3 bottom-[30px] text-sm md:w-[138px]">Already booked an admission?</h5>
-            <div className="flex text-white items-center  left-3">
+            <div className="flex text-white items-center cursor-pointer  left-3" onClick={() => navigate("/booking/schools/1")}>
               <p className="text-[10px]">Track Booking</p>
               <Icon width={24} height={24} id="arrow-right-icon" />
             </div>

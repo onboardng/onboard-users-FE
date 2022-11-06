@@ -85,7 +85,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
             <div className="flex justify-between items-center" >
               <h4 className="text-[24px] leading-[38.4px] font-medium">Admissions</h4>
               <div>
-                <InputBox placeholder="Search here" iconId="search-icon2" height={24} width={24} />
+                <InputBox placeholder="Search here" iconId="search-icon2" height={24} width={24} isRounded/>
               </div>
             </div>
             {courses.rows?.map((course: Partial<CourseData>, index) => (

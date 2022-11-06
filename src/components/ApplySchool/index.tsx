@@ -21,22 +21,22 @@ const ApplySchoolCom = () => {
           <div className="py-2.5 md:py-6">
             <h5 className="font-medium text-[16px] leading-[25.6px] md:text-[20px] md:leading-[32px]">Tell us a little about you</h5>
             <div className="py-5">
-              <div className="flex xl:flex-row flex-col xl:justify-between">
-                <InputBox placeholder="Name here" label="First Name" label2="*" classname="rounded-[4px] " />
-                <InputBox placeholder="Name here" label="Last Name" label2="*" classname="rounded-[4px] " />
+              <div className="flex xl:flex-row flex-col gap-5 w-full">
+                <InputBox placeholder="Name here" label="First Name" label2="*" isRounded classname="md:w-[100%]" fullWidth />
+                <InputBox placeholder="Name here" label="Last Name" label2="*" isRounded classname="md:w-[100%]" fullWidth/>
               </div>
-              <div className="w-full">
+              <div className="w-full mt-[18px]">
                 <div className="py-2 flex w-full xl:w-full md:w-[408px]">
-                  <div className="mr-1 w-[15%]">
+                  <div className="mr-[10px] w-[15%]">
                     <InputSelect options={countryCodes} value="+234" name="countryCode" handleChange={() => {}} />
                   </div>
                   <div className="w-full">
-                    <InputBox placeholder="Phone number here" whole={true} classname="rounded-[4px]" />
+                    <InputBox placeholder="Phone number here" whole={true} isRounded />
                   </div>
                 </div>
               </div>
               <div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-[18px]">
                   <span className="checkbox">
                     <input type="checkbox" className="h-[24px] w-[24px] border-[1px] border-[#DADAE7] rounded-[6px] cursor-pointer" />
                   </span>
@@ -57,7 +57,7 @@ const ApplySchoolCom = () => {
                       whole={true}
                       label="Email Address"
                       label2="*"
-                      classname="rounded-[4px] "
+                      isRounded
                     />
                   </div>
                   <div className="py-3">
@@ -69,7 +69,7 @@ const ApplySchoolCom = () => {
                       whole={true}
                       label="Upload School Result"
                       label2="*"
-                      classname="rounded-[4px] "
+                      isRounded
                     />
                   </div>
                   <div className="py-3 flex justify-end tab:hidden">
