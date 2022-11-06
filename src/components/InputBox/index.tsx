@@ -20,7 +20,9 @@ const InputBox = ({
   name,
   error,
   touched,
+  fullWidth,
 }: {
+  fullWidth?: boolean;
   isRounded?: boolean;
   password?: boolean;
   togglePassword?: () => void;
@@ -42,7 +44,7 @@ const InputBox = ({
   touched?: boolean;
 }) => {
   return (
-    <div className="w-full">
+    <div className={`${fullWidth && "w-full"}`}>
       {label && (
         <label className="text-[14px] leading-[22.4px] text-[#1B1B1B]">
           {label} <span className="text-[#DA0000]">{label2}</span>

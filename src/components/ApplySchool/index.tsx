@@ -22,8 +22,8 @@ const ApplySchoolCom = () => {
             <h5 className="font-medium text-[16px] leading-[25.6px] md:text-[20px] md:leading-[32px]">Tell us a little about you</h5>
             <div className="py-5">
               <div className="flex xl:flex-row flex-col gap-5 w-full">
-                <InputBox placeholder="Name here" label="First Name" label2="*" isRounded classname="md:w-full" />
-                <InputBox placeholder="Name here" label="Last Name" label2="*" isRounded classname="md:w-full" />
+                <InputBox placeholder="Name here" label="First Name" label2="*" isRounded classname="md:w-[100%]" fullWidth />
+                <InputBox placeholder="Name here" label="Last Name" label2="*" isRounded classname="md:w-[100%]" fullWidth/>
               </div>
               <div className="w-full mt-[18px]">
                 <div className="py-2 flex w-full xl:w-full md:w-[408px]">

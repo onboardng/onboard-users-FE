@@ -10,7 +10,7 @@ const Subscribe = () => {
                 <h5 className='font-bold text-[16px] leading-[25.6px] md:text-[20px] md:leading-[32px] ' >We’ll be notifying you as they drop</h5>
                 <aside className='md:flex md:justify-center py-5 md:py-10' >
                     <div className="flex gap-5 flex-col xl:flex-row justify-center xl:justify-start xl:items-center items-center relative">
-                        <InputBox placeholder="Enter email address" iconId="mail-icon" height={24} width={24} />
+                        <InputBox placeholder="Enter email address" iconId="mail-icon" height={24} width={24} isRounded />
                         <button className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
                             <p className="text-center">Subscribe</p>
                         </button>
