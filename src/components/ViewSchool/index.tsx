@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import carouselImage from "../../assets/Image Card.svg";
+import { RootState } from "../../redux/store";
 import { CourseData, ListCoursesResponse, UniversityData } from "../../utils/interfaces";
 import Icon from "../Icons";
 import InputBox from "../InputBox";
@@ -16,6 +18,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
   // const comments = ["1", "2", "3", "4", "5"];
   const [modal, setModal] = useState<boolean>(false);
   const [reviewModal, setReviewModal] = useState<boolean>(false);
+  const { authorization: { access_token } } = useSelector((state: RootState)=> state?.authStore)
 
   return (
     <>
@@ -27,7 +30,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
               <div className="bg-[#E7FAFF] h-[62px] flex items-center justify-between">
                 <p className="pl-10 font-medium text-[14px] leading-[22.4px] ">Ratings & Reviews</p>
 
-                <Modal
+                {access_token && <Modal
                   trigger={
                     <p className="pr-10 text-primary text-[10px] font-bold leading-[16px] cursor-pointer flex">
                       <span className="pr-2">
@@ -46,7 +49,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
                       </div>
                     </div>
                   )}
-                </Modal>
+                </Modal>}
               </div>
               <p className="pb-2"></p>
               {reviews.map((comment: any) => (
@@ -112,7 +115,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
               ))}
             </div>
             <div className="px-5 py-10 shadow-[0px_-4px_20px_rgba(0,0,0,0.08)]">
-              <button
+              {access_token && <button
                 onClick={() => {
                   setReviewModal(true);
                   setModal(false);
@@ -121,7 +124,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
               >
                 <p className="text-center">Write a review</p>
                 <Icon width={24} height={24} id="arrow-right-icon" />
-              </button>
+              </button>}
             </div>
           </div>
         </PageModal>
