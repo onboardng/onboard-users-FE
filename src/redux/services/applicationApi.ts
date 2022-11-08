@@ -31,7 +31,16 @@ export const applicationApi = createApi({
         };
       },
     }),
+    viewApplication: builder.mutation<any, { access_code: string, app_id: string }>({
+      query: (data) => {
+        return {
+          url: `application/view/${data?.app_id}`,
+          method: "post",
+          body: {access_code: data?.access_code},
+        };
+      },
+    }),
   }),
 });
 
-export const { useSearchApplicationMutation, useCreateApplicationMutation } = applicationApi;
+export const { useSearchApplicationMutation, useCreateApplicationMutation, useViewApplicationMutation } = applicationApi;

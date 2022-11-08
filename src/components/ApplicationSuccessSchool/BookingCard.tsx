@@ -5,7 +5,7 @@ import Icon from "../Icons";
 
 const BookingCard = ({ track }: { track?: boolean }) => {
   const {
-    state: { data },
+    state: { data, applicationData },
   } = useLocation();
   const handleCopy = () => {
     navigator.clipboard.writeText("AB-12345678");
@@ -34,7 +34,7 @@ const BookingCard = ({ track }: { track?: boolean }) => {
         <div className="text-center md:pb-3 pt-5">
           <p className="text-[16px] leading-[25.6px]">Application ID</p>
           <div className="flex md:flex-row flex-col justify-center items-center py-1">
-            <h3 className="font-semibold text-[28px] leading-[39.2px] md:mr-3">{data?.application.tracking_id}</h3>
+            <h3 className="font-semibold text-[28px] leading-[39.2px] md:mr-3">{track ? data?.application.tracking_id : applicationData?.data?.tracking_id}</h3>
             <span onClick={handleCopy} className="flex justify-between items-center cursor-pointer">
               <Icon id="copy-icon" height={24} width={24} /> <span className="pl-1 text-primary font-medium text-[14px] leading-[22.4px]">Copy</span>
             </span>
@@ -49,7 +49,7 @@ const BookingCard = ({ track }: { track?: boolean }) => {
           <h4 className="font-medium text-[24px] leading-[38.4px] capitalize">{data?.application.school_name}</h4>
           <p className="flex text-[16px] leading-[25.6px] justify-center capitalize items-center text-[#8B8BA4] py-2">
             <Icon id="graduation-icon2" height={24} width={24} />
-            <span className="px-2">Bachelor of {data?.application?.course_name}</span>
+            <span className="px-2">Bachelor of {track ? data?.application?.course_name: applicationData?.data?.intending_course}</span>
           </p>
           <div className="tab:flex tab:justify-center">
             <div>

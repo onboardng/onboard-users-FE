@@ -31,7 +31,7 @@ const AllRoutes = () => {
             <Route path="/schools/:id" element={<ViewSchool />} />
             <Route path="/schools/:id/apply" element={<ApplySchool />} />
             <Route path="/schools/success" element={<ApplicationSuccessful />} />
-            <Route path="/booking/schools/:id" element={<TrackSchoolBooking />} />
+            <Route path="/booking/schools" element={<TrackSchoolBooking />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>

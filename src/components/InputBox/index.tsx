@@ -22,6 +22,7 @@ const InputBox = ({
   touched,
   fullWidth,
   keyDown,
+  isError
 }: {
   fullWidth?: boolean;
   isRounded?: boolean;
@@ -44,6 +45,7 @@ const InputBox = ({
   error?: string;
   touched?: boolean;
   keyDown?: (event: React.KeyboardEvent<HTMLInputElement>)=> void
+  isError?: boolean;
 }) => {
   return (
     <div className={`${fullWidth && "w-full"}`}>
@@ -63,7 +65,7 @@ const InputBox = ({
           placeholder={placeholder}
           className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
             iconId ? "pl-[40px]" : "pl-[20px]"
-          } pr-[20px] py-[17px] border-[1.5px] border-[#DADAE7] ${isRounded && "rounded-[8px]"}`}
+          } pr-[20px] py-[17px] border-[1.5px] ${isError ? "border-[#DA0000]" : "border-[#DADAE7]"} ${isRounded && "rounded-[8px]"}`}
         />{" "}
         {password && (
           <i onClick={togglePassword} className={`text-gray-500 absolute right-[15px] fa-solid fa-eye${showPassword ? "" : "-slash"}`}></i>

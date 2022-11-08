@@ -4,7 +4,7 @@ import Icon from '../Icons'
 import Modal2 from '../Modal/Modal2'
 import ModalClose from '../Modal/ModalClose'
 
-const TrackSchoolBookingComp = ({data} : {data: any} ) => {
+const TrackSchoolBookingComp = ({data} : {data?: any} ) => {
     const [ modal, setModal ] = React.useState<boolean>(false)
     const handleModal = () =>{
         if(modal){document.body.style.overflow = 'auto';}
