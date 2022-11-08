@@ -1,10 +1,9 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CourseData } from "../../../utils/interfaces";
 import Icon from "../../Icons";
 
 const ApplySchool = ({ close, course }: { close: () => void; course: Partial<CourseData> }) => {
-  const { id } = useParams();
   const navigate = useNavigate();
   return (
     <>
@@ -34,7 +33,7 @@ const ApplySchool = ({ close, course }: { close: () => void; course: Partial<Cou
         <div
           onClick={async () => {
             await close();
-            navigate(`/schools/${id}/apply`);
+            navigate(`/schools/${course.id}/apply`);
           }}
           className="col-span-2 focus:outline-none justify-center cursor-pointer bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px]"
         >

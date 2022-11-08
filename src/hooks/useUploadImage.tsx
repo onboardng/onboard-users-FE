@@ -11,7 +11,7 @@ const useUploadImage = () => {
     imageRef.current.click();
   };
 
-  const onChange = (e: any, multiple?: any) => {
+  const onChange = (e: any, multiple?: any, setFieldValue?: any, name?: string) => {
     if (multiple) {
       const selectedFIles: any = [];
       const targetFiles = e.target.files;
@@ -26,6 +26,7 @@ const useUploadImage = () => {
       setFile(e.target.files[0]);
       reader.onloadend = () => setPreview(reader.result);
       reader.readAsDataURL(file);
+      setFieldValue(name, file?.name);
     }
   };
 
