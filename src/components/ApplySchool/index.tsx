@@ -46,11 +46,9 @@ const ApplySchoolCom = () => {
     }
   }, [data, isLoading, isSuccess, isError, error, navigate]);
 
-  if (loading) {
-    return <PageLoader />;
-  }
   return (
     <div className="mx-4 md:mx-12 flex flex-col md:flex-row py-5 ">
+      {loading && <PageLoader />}
       <div className="md:w-[70%] bg-white rounded-[20px]">
         <div className="md:px-10 px-5">
           <div className="flex items-center border-dashed border-b-2 border-[#DADAE7] md:py-5 py-2.5">
@@ -198,11 +196,11 @@ const ApplySchoolCom = () => {
           <h5 className="md:text-[20px] md:leading-[32px]">John Doe</h5>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">School</h5>
-            <p className="md:text-[20px] md:leading-[32px]">University of Lagos</p>
+            <p className="md:text-[20px] md:leading-[32px] capitalize">{Course?.data?.university_name}</p>
           </div>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">Course</h5>
-            <p className="md:text-[20px] md:leading-[32px]">BSc. Marketing</p>
+            <p className="md:text-[20px] md:leading-[32px] capitalize">{Course?.data?.name}</p>
           </div>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">Admission closes on</h5>
