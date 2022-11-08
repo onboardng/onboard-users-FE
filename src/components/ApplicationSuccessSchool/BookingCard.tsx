@@ -7,8 +7,8 @@ const BookingCard = ({ track }: { track?: boolean }) => {
   const {
     state: { data, applicationData },
   } = useLocation();
-  const handleCopy = () => {
-    navigator.clipboard.writeText("AB-12345678");
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
     toast.info("Copied Successfully", {
       position: toast.POSITION.TOP_CENTER,
       progressStyle: {
@@ -35,7 +35,7 @@ const BookingCard = ({ track }: { track?: boolean }) => {
           <p className="text-[16px] leading-[25.6px]">Application ID</p>
           <div className="flex md:flex-row flex-col justify-center items-center py-1">
             <h3 className="font-semibold text-[28px] leading-[39.2px] md:mr-3">{track ? data?.application.tracking_id : applicationData?.data?.tracking_id}</h3>
-            <span onClick={handleCopy} className="flex justify-between items-center cursor-pointer">
+            <span onClick={()=> handleCopy(track ? data?.application.tracking_id : applicationData?.data?.tracking_id)} className="flex justify-between items-center cursor-pointer">
               <Icon id="copy-icon" height={24} width={24} /> <span className="pl-1 text-primary font-medium text-[14px] leading-[22.4px]">Copy</span>
             </span>
           </div>
