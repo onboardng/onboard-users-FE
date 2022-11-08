@@ -16,12 +16,12 @@ import PageLoader from "../../../components/Loader/PageLoader";
 
 const SearchResult = () => {
   const [edit, showEdit] = useState(false);
-  const [searchParams,] = useSearchParams();
-  const [ page, ] = useState(1);
+  const [searchParams] = useSearchParams();
+  const [page] = useState(1);
   const [showFilter, setShowFilter] = useState(false);
   const matches = useMediaQuery("(min-width: 768px)");
-  let searchQuery = Object.fromEntries([...searchParams])
-  const { data, isLoading } = useSearchCourseQuery({page, limit: 10, ...searchQuery})
+  let searchQuery = Object.fromEntries([...searchParams]);
+  const { data, isLoading } = useSearchCourseQuery({ page, limit: 10, ...searchQuery });
 
   useEffect(() => {
     if (matches) {
@@ -60,14 +60,14 @@ const SearchResult = () => {
             <EditDropDown setEdit={showEdit} showFilter={showFilter} />{" "}
           </>
         )}
-        {
-          isLoading ? 
-          <PageLoader /> : 
+        {isLoading ? (
+          <PageLoader />
+        ) : (
           <>
             <SearchSideBar showFilter={showFilter} />
             <SearchMain data={data?.data?.schools} showEdit={showEdit} setShowFilter={setShowFilter} />
           </>
-        }
+        )}
       </div>
       <Update imgSrc={"./static/images/school2.png"} />
       <AddSection />

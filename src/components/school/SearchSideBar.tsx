@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import Icon from "../Icons";
 import InputBox from "../InputBox";
 
 const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
-  const navigate = useNavigate();
   return (
     <div
       className={` bg-white rounded-xl  ${
@@ -46,10 +44,10 @@ const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
               </div>
               <div>
                 <h5 className="text-white left-3 bottom-[30px] text-sm w-[138px]">Already booked an admission?</h5>
-                <div onClick={() => navigate("/booking/schools/1")} className="flex text-white items-center left-3 cursor-pointer">
+                <a href="#bookhere" className="flex text-white items-center left-3 cursor-pointer">
                   <p className="text-[10px]">Track Booking</p>
                   <Icon width={24} height={24} id="arrow-right-icon" />
-                </div>
+                </a>
               </div>
             </div>
           </div>

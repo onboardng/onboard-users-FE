@@ -78,7 +78,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
             placeholder="Enter school name"
           />
           {show && (
-            <div className="absolute w-full bg-white h-[250px] z-[3] rounded-[10px]">
+            <div className="absolute overflow-y-auto w-full bg-white h-[250px] z-[3] rounded-[10px]">
               <div className="p-1 overflow-y-auto">
                 <div className="flex flex-wrap">
                   {(!isFetching || !isLoading) &&
