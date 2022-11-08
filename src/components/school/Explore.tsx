@@ -44,8 +44,9 @@ const Explore = () => {
             </div>
           ))}
         </div>
-        <button className="col-span-2 justify-center bg-green text-white mt-12 flex gap-4 rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
+        <button className="col-span-2 justify-center  mt-12 flex gap-1 font-medium rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
           <p className="text-center">Load more</p>
+          <Icon width={24} height={24} id="arrow-right-black-icon" />
         </button>
       </div>
     </div>

@@ -39,6 +39,7 @@ const ViewSchool = ({ university, courses, reviews, id, isLoading, courseLoading
       trigger({search, id}).unwrap()
       if(skip){setSkip(false)}
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   
   const handleChange = (e: ChangeEvent<HTMLInputElement> ) => {
