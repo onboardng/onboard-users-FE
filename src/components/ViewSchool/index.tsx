@@ -120,10 +120,10 @@ const ViewSchool = ({ university, courses, reviews, id, isLoading, courseLoading
                 <InputBox keyDown={handleKeydown} onChange={handleChange} placeholder="Search here" iconId="search-icon2" height={24} width={24} isRounded/>
               </div>
             </div>
-            {courseLoading || isFetching ? <PageLoader /> : !skip ? data?.data?.map((course: Partial<CourseData>, index: number)=>(<AdmissionsCard course={course} key={index} />)) : courses?.courses.data?.map((course: Partial<CourseData>, index: number) => (
+            {courseLoading || isFetching ? <PageLoader /> : !skip ? data?.data?.map((course: Partial<CourseData>, index: number)=>(<AdmissionsCard course={course} key={index} />)) : courses?.courses?.data?.map((course: Partial<CourseData>, index: number) => (
               <AdmissionsCard course={course} key={index} />
             ))}
-            {courses?.pagination && <Pagination page={page} totalPage={courses?.courses?.pageCount} setPagPage={setPage} currentPage={courses?.courses?.currentPage} perPage={10} />}
+            {courses?.pagination && <Pagination totalCount={courses?.courses?.totalDocs} currentPage={page} onPageChange={setPage} pageSize={10} />}
           </div>
         </div>
       </div>
