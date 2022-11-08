@@ -28,7 +28,7 @@ const ApplySchoolCom = () => {
     onSubmit: (values) => {
       apply({
         ...values,
-        id: 1,
+        id: id,
         classId: Course?.data?.available_diet[0].id,
         result: image?.file,
         phone_number: phoneCode.trim() + values?.phone_number,
@@ -36,6 +36,7 @@ const ApplySchoolCom = () => {
     },
   });
 
+  console.log(image?.file);
   useEffect(() => {
     if (isSuccess) {
       toast.success("Application successful");
