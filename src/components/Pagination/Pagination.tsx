@@ -50,14 +50,14 @@ import { DOTS, usePagination } from "../../hooks/usePagination";
 //                                 // }
 //                             }
 //                         }}
-//                         className="text-[16px] font-normal cursor-pointer relative block py-1.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300"
+//                         className="text-[16px] font-normal cursor-pointer relative block py-0.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300"
 //                         >Previous</span>
 //                 </li>
 //                 {pageArray && pageArray?.map((item: number,i: number) => {
 //                     if (i < 5 && item > 0){
 //                         return (
 //                             <li key={item} className={``}>
-//                                 <span onClick={()=>handleChange(item)} className={`text-[16px] font-normal cursor-pointer relative block py-1.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300 ${item === currentPage && "bg-primary text-white"}`}
+//                                 <span onClick={()=>handleChange(item)} className={`text-[16px] font-normal cursor-pointer relative block py-0.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300 ${item === currentPage && "bg-primary text-white"}`}
 //                                 >{item}</span>
 //                             </li>
 //                         )
@@ -67,7 +67,7 @@ import { DOTS, usePagination } from "../../hooks/usePagination";
 //                             <>
 //                                 {(pageArray) && (parseInt(pageArray[pageArray.length - 1]) !== pages-1) && <li className='mt-1.5'>...</li>}
 //                                 <li className={`page-item ${pages === currentPage && "bg-primary text-white"}`}>
-//                                     <span onClick={()=>handleChange(pages)} className={`text-[16px] font-normal cursor-pointer relative block py-1.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300 ${item === currentPage && "bg-primary text-white"} `}
+//                                     <span onClick={()=>handleChange(pages)} className={`text-[16px] font-normal cursor-pointer relative block py-0.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300 ${item === currentPage && "bg-primary text-white"} `}
 //                                     >{pages}</span>
 //                                 </li>
 //                             </>
@@ -83,7 +83,7 @@ import { DOTS, usePagination } from "../../hooks/usePagination";
 //                         // }
 //                     }
 //                 }}
-//                     className="text-[16px] font-normal cursor-pointer relative block py-1.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300"
+//                     className="text-[16px] font-normal cursor-pointer relative block py-0.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300"
 //                     >Next</span></li>
 //             </ul>
 //             </nav>
@@ -131,7 +131,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
                     className={`${currentPage === 1 && "disabled"}`}
                     onClick={onPrevious}
                 >
-                    <span className="text-[16px] font-normal cursor-pointer relative block py-1.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300" >Previous</span>
+                    <span className="text-[16px] font-normal cursor-pointer relative block py-0.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300" >Previous</span>
                 </li>
                 {paginationRange.map((pageNumber: any, index: number) => {
                     if (pageNumber === DOTS) {
@@ -140,9 +140,9 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
             
                     return (
                     <li
-                        onClick={() => onPageChange(pageNumber)}
+                        onClick={() => onPageChange(pageNumber)} key={index}
                     >
-                        <span className={`text-[16px] font-normal cursor-pointer relative block py-1.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300 ${pageNumber === currentPage && "bg-primary text-white"}`} >{pageNumber}</span>
+                        <span className={`text-[16px] font-normal cursor-pointer relative block py-0.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300 ${pageNumber === currentPage && "bg-primary text-white"}`} >{pageNumber}</span>
                     </li>
                     );
                 })}
@@ -150,7 +150,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
                     className={`${currentPage === lastPage && "disabled"}`}
                     onClick={onNext}
                 >
-                    <span className="text-[16px] font-normal cursor-pointer relative block py-1.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300" >Next</span>
+                    <span className="text-[16px] font-normal cursor-pointer relative block py-0.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300" >Next</span>
                 </li>
                 </ul>
             </div>

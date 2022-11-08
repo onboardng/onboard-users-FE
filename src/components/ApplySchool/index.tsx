@@ -92,7 +92,7 @@ const ApplySchoolCom = () => {
               </div>
               <div className="w-full mt-[18px]">
                 <div className="py-2 flex w-full xl:w-full md:w-[408px]">
-                  <div className="mr-[10px] w-[15%]">
+                  <div className="mr-[10px] w-[30%] md:w-[15%]">
                     <InputSelect options={countryCodes} value="+234" name="countryCode" handleChange={(value: any) => setPhoneCode(value)} />
                   </div>
                   <div className="w-full">

@@ -5,6 +5,7 @@ import Icon from "../../Icons";
 
 const ApplySchool = ({ close, course }: { close: () => void; course: Partial<CourseData> }) => {
   const navigate = useNavigate();
+  console.log(course)
   return (
     <>
       <h4 className="text-[16px] md:text-[24px] md:leading-[38px] font-semibold mb-4">{course?.name}</h4>
