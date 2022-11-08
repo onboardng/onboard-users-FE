@@ -123,7 +123,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
               matches={matches}
               name="program"
               placeholder="Select Program"
-              handleChange={(selectedRole: { label: string; value: string }) => handleSelectChange(selectedRole, "program")}
+              handleChange={(selectedRole: { label: string; value: string }) => handleSelectChange(selectedRole, "program_name")}
               options={schoolPrograms}
             />
           </div>
