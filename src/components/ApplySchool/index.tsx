@@ -18,7 +18,7 @@ const ApplySchoolCom = () => {
   const { handleClick, onChange, imageRef, image } = useUploadImage();
   const [apply, { data, isLoading, isSuccess, isError, error }] = useCreateApplicationMutation();
   const { id } = useParams();
-  const [phoneCode, setPhoneCode] = useState("");
+  const [phoneCode, setPhoneCode] = useState("+234");
   const { data: Course, isLoading: loading } = useGetACourseQuery(id as string);
   const navigate = useNavigate();
 
@@ -36,11 +36,10 @@ const ApplySchoolCom = () => {
     },
   });
 
-  console.log(image?.file);
   useEffect(() => {
     if (isSuccess) {
       toast.success("Application successful");
-      navigate("/schools/success");
+      navigate("/schools/success", { state: data });
     }
     if (isError && error && "status" in error) {
       toast.error(error?.data?.message);
@@ -54,8 +53,8 @@ const ApplySchoolCom = () => {
         <div className="md:px-10 px-5">
           <div className="flex items-center border-dashed border-b-2 border-[#DADAE7] md:py-5 py-2.5">
             <img src={carouselImage} className="w-[50px] h-[50px] rounded-[6px] " alt="Apply" />
-            <p className="px-3 font-medium text-[14px] leading-[22.4px] md:font-bold md:text-[16px] md:leading-[25.6px]">
-              BSC. in Marketing <span className="md:font-medium">at</span> University of Lagos
+            <p className="px-3 font-medium text-[14px] leading-[22.4px] md:font-bold md:text-[16px] md:leading-[25.6px] capitalize">
+              BSC. in {Course?.data?.name} <span className="md:font-medium capitalize">at</span> {Course?.data?.university_name}
             </p>
           </div>
           <form onSubmit={handleSubmit} className="py-2.5 md:py-6">
@@ -94,7 +93,7 @@ const ApplySchoolCom = () => {
               <div className="w-full mt-[18px]">
                 <div className="py-2 flex w-full xl:w-full md:w-[408px]">
                   <div className="mr-[10px] w-[15%]">
-                    <InputSelect options={countryCodes} value="+234" name="countryCode" handleChange={(value: any) => setPhoneCode(value)} />
+                    <InputSelect options={countryCodes} value="+234" name="countryCode" handleChange={(value: any) => setPhoneCode(value?.value)} />
                   </div>
                   <div className="w-full">
                     <InputBox
