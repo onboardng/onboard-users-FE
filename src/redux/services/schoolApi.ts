@@ -32,8 +32,10 @@ export const schoolApi = createApi({
       },
       invalidatesTags: ["reviews"]
     }),
-
+    universitySearch: builder.query<any, string>({
+      query: (search) => createRequestWithParams(`university/search`, {search}),
+    })
   }),
 });
 
-export const { useGetAUniversityQuery, useGetAllUniverisitiesQuery, useCreateReviewMutation, useGetAllUniversityReviewsQuery } = schoolApi;
+export const { useGetAUniversityQuery, useGetAllUniverisitiesQuery, useCreateReviewMutation, useGetAllUniversityReviewsQuery, useUniversitySearchQuery } = schoolApi;

@@ -13,7 +13,7 @@ export const courseApi = createApi({
 
         getUniversityCourses: builder.query<any, { page: number, limit: number, id: string }>({
             query: ({ page, limit, id }) => createRequestWithParams(`course/by-sch/${id}`, { page, limit}),
-            providesTags: (result, _error, _arg) => result?.data ? [...result?.data?.courses?.data?.rows?.map(({ id }: { id: string })=> ({type: "courses", id})), "courses"] : ["courses"],
+            providesTags: (result, _error, _arg) => result?.data ? [...result?.data?.courses?.data?.map(({ id }: { id: string })=> ({type: "courses", id})), "courses"] : ["courses"],
         }),
 
         getACourse: builder.query<any, string>({
@@ -22,9 +22,12 @@ export const courseApi = createApi({
         }),
 
         searchCourse: builder.query<any, {page: number, limit: number, course_name?: string, program_name?: string, school_name?: string, country_name?: string}>({
-            query: (params) => createRequestWithParams("course/search", params)
+            query: (params) => createRequestWithParams("course/big-search", params)
+        }),
+        searchCourseInUniversity: builder.query<any, { search?: string, id?: string }>({
+            query: (params) => createRequestWithParams(`course/search/${params?.id}`, {search: params?.search})
         })
     })
 })
 
-export const { useGetACourseQuery, useGetAllCoursesQuery, useGetUniversityCoursesQuery, useSearchCourseQuery } = courseApi
+export const { useGetACourseQuery, useGetAllCoursesQuery, useGetUniversityCoursesQuery, useSearchCourseQuery, useLazySearchCourseInUniversityQuery } = courseApi

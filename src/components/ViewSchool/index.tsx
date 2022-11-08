@@ -1,30 +1,62 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import carouselImage from "../../assets/Image Card.svg";
+import { useLazySearchCourseInUniversityQuery } from "../../redux/services";
 import { RootState } from "../../redux/store";
-import { CourseData, ListCoursesResponse, UniversityData } from "../../utils/interfaces";
+import { CourseData, UniversityData } from "../../utils/interfaces";
 import Icon from "../Icons";
 import InputBox from "../InputBox";
+import PageLoader from "../Loader/PageLoader";
 import Modal from "../Modal/Modal";
 import Modal2 from "../Modal/Modal2";
 import ModalClose from "../Modal/ModalClose";
+import Pagination from "../Pagination/Pagination";
 import PageModal from "../school/PageModal";
 import AdmissionsCard from "./AdmissionsCard";
 import RatingLarge from "./RatingLarge";
 import ReviewComments from "./ReviewComments";
 import WriteReview from "./WriteReview";
 
-const ViewSchool = ({ university, courses, reviews, id }: { university: UniversityData, courses: ListCoursesResponse, reviews:any; id: string }) => {
+const ViewSchool = ({ university, courses, reviews, id, isLoading, courseLoading, reviewLoading, page, setPage }: { university: UniversityData, courses: any, reviews:any; id: string; isLoading: boolean; courseLoading: boolean; reviewLoading: boolean; page: number; setPage: Function }) => {
   // const comments = ["1", "2", "3", "4", "5"];
+  const { state } = useLocation();
   const [modal, setModal] = useState<boolean>(false);
+  const [ skip, setSkip ] = useState(true);
+  const [ search, setSearch ] = useState(state?.course_name || "")
   const [reviewModal, setReviewModal] = useState<boolean>(false);
-  const { authorization: { access_token } } = useSelector((state: RootState)=> state?.authStore)
+  const { authorization: { access_token } } = useSelector((state: RootState)=> state?.authStore);
+  const [trigger, { data, isFetching }] = useLazySearchCourseInUniversityQuery();
+
+  useEffect(() => {
+    if(!(search.length > 0) && !skip){
+      setSkip(true)
+    }
+  }, [skip, search])
+
+  useEffect(() => {
+    if(search.length > 0){
+      trigger({search, id}).unwrap()
+      if(skip){setSkip(false)}
+    }
+  },[])
+  
+  const handleChange = (e: ChangeEvent<HTMLInputElement> ) => {
+    setSearch(e?.target?.value);
+  }
+
+  const handleKeydown = (e:KeyboardEvent<HTMLInputElement>) => {
+    if(e.keyCode === 13 && search.length > 0){
+        trigger({search, id}).unwrap()
+        if(skip){setSkip(false)}
+    }
+};
 
   return (
     <>
       <div className="mx-4 md:mx-12 flex flex-col md:flex-row py-5 overflow-hidden">
-        <div>
-          <img src={university?.picture || carouselImage} alt="carousel" />
+        <div className="md:w-5/12" >
+          <img src={university?.pictures?.[0] || carouselImage} alt="carousel" />
           <section className="tab:hidden py-10">
             <div className="bg-white">
               <div className="bg-[#E7FAFF] h-[62px] flex items-center justify-between">
@@ -52,20 +84,20 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
                 </Modal>}
               </div>
               <p className="pb-2"></p>
-              {reviews.map((comment: any) => (
+              {reviewLoading ? <PageLoader /> : reviews?.map((comment: any) => (
                 <ReviewComments comments={comment} key={comment?.id}></ReviewComments>
               ))}
               {reviews?.length < 1 && <p className="text-center py-5" >No Reviews yet</p>}
             </div>
           </section>
         </div>
-        <div className="md:pl-10 w-full tab:pt-5">
-          <div>
+        <div className="md:pl-10 w-full md:w-7/12 tab:pt-5">
+          {isLoading ? <PageLoader /> : <div>
             <h1 className="text-[24px] leading-[38.4px] font-medium md:font-semibold md:text-[40px] md:leading-[56px]">{university?.name}</h1>
             <span className="flex">
-              <RatingLarge rating={university.ratings || 1} />
+              <RatingLarge rating={university?.ratings || 1} />
             </span>
-            <p className="text-[#8B8BA4] text-[16px] leading-[25.6px] py-1">{university.ratings || 0} ratings total</p>
+            <p className="text-[#8B8BA4] text-[16px] leading-[25.6px] py-1">{university?.ratings || 0} ratings total</p>
             <p
               onClick={() => {
                 setModal(true);
@@ -79,18 +111,19 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
               <Icon id="location-pin-icon" width={24} height={24} />
               <span className="pl-2">{university?.country}</span>
             </p>
-            <p className="text-[#8B8BA4] text-[14px] leading-[22.4px] font-medium py-1">{university.description}</p>
-          </div>
+            <p className="text-[#8B8BA4] text-[14px] leading-[22.4px] font-medium py-1">{university?.description}</p>
+          </div>}
           <div className="md:pt-10 pt-2 relative">
             <div className="flex justify-between items-center" >
               <h4 className="text-[24px] leading-[38.4px] font-medium">Admissions</h4>
               <div>
-                <InputBox placeholder="Search here" iconId="search-icon2" height={24} width={24} isRounded/>
+                <InputBox keyDown={handleKeydown} onChange={handleChange} placeholder="Search here" iconId="search-icon2" height={24} width={24} isRounded/>
               </div>
             </div>
-            {courses.rows?.map((course: Partial<CourseData>, index) => (
+            {courseLoading || isFetching ? <PageLoader /> : !skip ? data?.data?.map((course: Partial<CourseData>, index: number)=>(<AdmissionsCard course={course} key={index} />)) : courses?.courses.data?.map((course: Partial<CourseData>, index: number) => (
               <AdmissionsCard course={course} key={index} />
             ))}
+            {courses?.pagination && <Pagination page={page} totalPage={courses?.courses?.pageCount} setPagPage={setPage} currentPage={courses?.courses?.currentPage} perPage={10} />}
           </div>
         </div>
       </div>
@@ -110,7 +143,7 @@ const ViewSchool = ({ university, courses, reviews, id }: { university: Universi
               <p className="mx-auto">Reviews</p>
             </aside>
             <div className=" overflow-y-auto h-[85%] px-2">
-              {reviews.map((comment: any) => (
+              {reviewLoading ? <PageLoader /> : reviews?.map((comment: any) => (
                 <ReviewComments comments={comment} key={comment?.id}></ReviewComments>
               ))}
             </div>

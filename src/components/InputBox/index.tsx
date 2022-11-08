@@ -21,6 +21,7 @@ const InputBox = ({
   error,
   touched,
   fullWidth,
+  keyDown,
 }: {
   fullWidth?: boolean;
   isRounded?: boolean;
@@ -42,6 +43,7 @@ const InputBox = ({
   name?: string;
   error?: string;
   touched?: boolean;
+  keyDown?: (event: React.KeyboardEvent<HTMLInputElement>)=> void
 }) => {
   return (
     <div className={`${fullWidth && "w-full"}`}>
@@ -56,6 +58,7 @@ const InputBox = ({
           onChange={onChange}
           name={name}
           onBlur={onBlur}
+          onKeyDown={keyDown}
           defaultValue={value || ""}
           placeholder={placeholder}
           className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Icon from "../Icons";
 import RatingLarge from "../ViewSchool/RatingLarge";
 import Rating from "../ViewSchool/Rating";
@@ -8,6 +8,7 @@ import { useMediaQuery } from "usehooks-ts";
 const SearchMain = ({ showEdit, setShowFilter, data }: { showEdit: Dispatch<SetStateAction<boolean>>; setShowFilter: typeof showEdit; data: any }) => {
   const navigate = useNavigate();
   const matches = useMediaQuery('(min-width: 768px)');
+  const [ searchParams, ] = useSearchParams();
   return (
     <div className="md:w-[70%] w-full mx-5">
       <div className="py-7 px-5 flex md:flex-row flex-col items-center justify-between bg-white rounded-xl">
@@ -52,7 +53,7 @@ const SearchMain = ({ showEdit, setShowFilter, data }: { showEdit: Dispatch<SetS
           ?.map((value: any, index: number) => (
             <div className="flex flex-col  md:h-[555px] bg-white gap-5" key={index}>
               <div className="flex gap-4 justify-center bg-no-repeat bg-cover w-full md:h-[259px]">
-                <img src="/static/images/school.png" alt="card" className="w-full" />
+                <img src={value?.pictures?.[0]} alt="card" className="w-full" />
               </div>
               <div className="px-5">
                 <p className="text-[28px] font-semibold">{value?.name}</p>
@@ -65,7 +66,7 @@ const SearchMain = ({ showEdit, setShowFilter, data }: { showEdit: Dispatch<SetS
                   <p className="text-md">{value?.country}</p>{" "}
                 </div>
                 <button
-                  onClick={() => navigate(`/schools/${value?.id}`)}
+                  onClick={() => navigate(`/schools/${value?.id}`, {state : {course_name: searchParams.get("course_name") || ""}})}
                   className="mt-10 mb-10 col-span-2 justify-center bg-green text-white flex gap-2 rounded-md items-center w-full md:px-[74.5px] py-[17px]"
                 >
                   <p className="text-center">View School</p>

@@ -65,7 +65,7 @@ const SearchResult = () => {
           <PageLoader /> : 
           <>
             <SearchSideBar showFilter={showFilter} />
-            <SearchMain data={data?.data?.courses?.data} showEdit={showEdit} setShowFilter={setShowFilter} />
+            <SearchMain data={data?.data?.schools} showEdit={showEdit} setShowFilter={setShowFilter} />
           </>
         }
       </div>

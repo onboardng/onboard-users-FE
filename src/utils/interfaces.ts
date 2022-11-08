@@ -26,6 +26,7 @@ export type UniversityData = {
   deleted: boolean;
   picture_2: string;
   updated_at: string;
+  pictures: string[];
 };
 
 export type CourseData = {
