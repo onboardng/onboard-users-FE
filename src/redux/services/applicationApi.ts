@@ -12,7 +12,7 @@ export const applicationApi = createApi({
         form_data.append("first_name", body?.first_name);
         form_data.append("last_name", body?.last_name);
         form_data.append("email", body?.email);
-        form_data.append("phone_number", `${body?.phoneCode}${body?.phone_number}`);
+        form_data.append("phone_number", `${body?.phone_number}`);
         form_data.append("result", body.result);
         return {
           url: `application/create/${id}/${classId}`,

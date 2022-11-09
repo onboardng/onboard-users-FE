@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from "usehooks-ts";
 import { useUniversitySearchQuery } from "../../redux/services";
-import { SearchSchema } from "../../schemas/SearchSchema";
 import { ISearchObject } from "../../utils/interfaces";
 import { countryList, schoolPrograms } from "../../utils/selectOptions";
 import Icon from "../Icons";
@@ -26,7 +25,6 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
       program_name: "",
       ...searchQuery,
     },
-    validationSchema: SearchSchema,
     onSubmit: (values) => {
       setEdit && setEdit(false);
       let searchObject = { ...values };

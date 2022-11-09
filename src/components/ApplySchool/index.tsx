@@ -13,6 +13,7 @@ import InputBox from "../InputBox";
 import FileBox from "../InputBox/FileBox";
 import InputSelect from "../InputSelect";
 import PageLoader from "../Loader/PageLoader";
+import Spinner from "../Loader/Spinner";
 
 const ApplySchoolCom = () => {
   const { handleClick, onChange, imageRef, image } = useUploadImage();
@@ -170,6 +171,7 @@ const ApplySchoolCom = () => {
                   <div className="py-3 flex justify-end tab:hidden">
                     <Button
                       loader={isLoading}
+                      disabled={isLoading}
                       className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto"
                     >
                       <p className="text-center">Proceed</p>
@@ -184,11 +186,12 @@ const ApplySchoolCom = () => {
       </div>
       <div className="py-10 flex justify-end md:hidden">
         <button
-          onClick={() => navigate("/schools/success")}
+          onClick={(e: any)=>handleSubmit(e)}
+          disabled={isLoading}
           className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto"
         >
           <p className="text-center">Proceed</p>
-          <Icon width={24} height={24} id="arrow-right-icon" />
+          {isLoading ? <Spinner/> : <Icon width={24} height={24} id="arrow-right-icon" />}
         </button>
       </div>
       <div className="md:w-[30%] tab:hidden pl-5">

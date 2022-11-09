@@ -150,8 +150,8 @@ const ViewSchool = ({
             </div>
           )}
           <div className="md:pt-10 pt-2 relative">
-            <div className="flex justify-between items-center">
-              <h4 className="text-[24px] leading-[38.4px] font-medium">Admissions</h4>
+            <div className="md:flex md:flex-row md:justify-between md:items-center">
+              <h4 className="tab:text-left text-[24px] leading-[38.4px] font-medium">Admissions</h4>
               <div>
                 <InputBox
                   keyDown={handleKeydown}
