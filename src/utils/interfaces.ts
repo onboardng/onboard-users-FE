@@ -37,6 +37,7 @@ export type CourseData = {
   updated_at: string;
   UniversityId: string;
   ProgramId: string;
+  available_diet?: any
 }
 
 export interface ListCoursesResponse {
