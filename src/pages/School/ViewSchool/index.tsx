@@ -23,8 +23,8 @@ const ViewSchool = () => {
     return courseData?.data;
   }, [courseData?.data]);
   const reviews = useMemo<any>(() => {
-    return reviewData?.data?.result
-  },[reviewData?.data?.result])
+    return reviewData?.data?.result?.data
+  },[reviewData?.data?.result?.data])
 
   return (
     <div className="bg-grey-600">

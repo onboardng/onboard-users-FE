@@ -119,7 +119,7 @@ const ViewSchool = ({
               ) : (
                 reviews?.map((comment: any) => <ReviewComments comments={comment} key={comment?.id}></ReviewComments>)
               )}
-              {reviews?.length < 1 && <p className="text-center py-5">No Reviews yet</p>}
+              {(reviews?.length < 1 || !reviews) && <p className="text-center py-5">No Reviews yet</p>}
             </div>
           </section>
         </div>
