@@ -50,7 +50,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
             <div ref={ref} className="group relative ">
               <div className="pl-8">
                 <li className="flex items-center pt-2 cursor-pointer" onClick={() => setDropDown((val) => !val)}>
-                  <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `/static/images/dummyUser.jpg`} />
+                  <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `${process.env.PUBLIC_URL}/svgs/Avatar.svg`} />
 
                   <span className="pl-3">
                     <Icon id={"arrow-down-icon"} width={24} height={24} />
@@ -60,22 +60,22 @@ const Navbar = ({ home }: { home?: boolean }) => {
               <div
                 className={`${
                   dropDown ? "block" : "hidden"
-                } shadow-[0px_4px_20px_rgba(0,0,0,0.08)] right-0 absolute z-[1] mt-5 bg-white w-[250px] rounded-[10px]`}
+                } shadow-[0px_4px_20px_rgba(0,0,0,0.08)] right-0 absolute z-[1] mt-5 bg-white w-[300px] rounded-[10px]`}
               >
                 <div className="px-5">
                   <li
-                    className="flex items-center pt-5 pb-3 border-[#979797] cursor-pointer border-b-[1px]"
+                    className="flex items-center pt-5 pb-3 cursor-pointer"
                     onClick={() => {
                       setDropDown((val) => !val);
                     }}
                   >
-                    <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `/static/images/dummyUser.jpg`} />
+                    <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `${process.env.PUBLIC_URL}/svgs/Avatar.svg`} />
                     <aside>
                       <h1 className=" text-sm text-black font-semibold">{user?.full_name || `Onboard User`}</h1>
-                      <p className=" font-medium text-[#959595] text-[12px] leading-[14.52px] capitalize">{"User"}</p>
+                      <p className=" font-medium text-[#1B1B1B] text-[14px] leading-[22.4px] capitalize">{"User"}</p>
                     </aside>
                   </li>
-                  <li className="text-[#959595] flex mt-5 mb-5 cursor-pointer" onClick={handleLogout}>
+                  <li className="text-[#1B1B1B] flex mt-5 mb-5 cursor-pointer" onClick={handleLogout}>
                     <span className="ml-2">Log out</span>
                   </li>
                 </div>
