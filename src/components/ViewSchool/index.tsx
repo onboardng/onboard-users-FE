@@ -171,7 +171,7 @@ const ViewSchool = ({
             ) : (
               courses?.courses?.data?.map((course: Partial<CourseData>, index: number) => <AdmissionsCard course={course} key={index} />)
             )}
-            {courses?.pagination && <Pagination totalCount={courses?.courses?.totalDocs} currentPage={page} onPageChange={setPage} pageSize={10} />}
+            {courses?.pagination && skip && <Pagination totalCount={courses?.courses?.totalDocs} currentPage={page} onPageChange={setPage} pageSize={10} />}
           </div>
         </div>
       </div>

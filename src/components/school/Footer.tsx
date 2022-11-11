@@ -1,5 +1,4 @@
 import React from "react";
-import Logo from "../../assets/Onboard Logo - White 1.svg";
 import Icon from "../Icons";
 
 const Footer = () => {
@@ -10,7 +9,7 @@ const Footer = () => {
       <div className="flex md:flex-row flex-col md:justify-between w-full h-full">
         <div className="h-full">
           <aside>
-            <img src={Logo} alt="Logo" />
+            <img src={`/svgs/Onboard Logo - White 1.svg`} alt="Logo" />
           </aside>
           <aside className="flex justify-between items-start h-full text-white w-[70%] md:w-full py-10">
             <aside className="md:mr-28">

@@ -18,13 +18,13 @@ const ViewSchool = () => {
   const initialReviewQueryParams: IRootQueryParams = { page: 1, limit: 10 };
   const { data: courseData, isFetching: courseLoading } = useGetUniversityCoursesQuery({ ...initialQueryParams, id });
   const { data: reviewData, isLoading: reviewLoading } = useGetAllUniversityReviewsQuery({ id, ...initialReviewQueryParams });
-  const university = useMemo<UniversityData>(() => data?.data.university, [data]);
+  const university = useMemo<UniversityData>(() => data?.data, [data]);
   const universityCourses = useMemo<any>(() => {
     return courseData?.data;
   }, [courseData?.data]);
   const reviews = useMemo<any>(() => {
-    return reviewData?.data?.result.data
-  },[reviewData?.data?.result.data])
+    return reviewData?.data?.result
+  },[reviewData?.data?.result])
 
   return (
     <div className="bg-grey-600">

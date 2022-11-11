@@ -20,7 +20,7 @@ export const schoolApi = createApi({
     }),
     getAllUniversityReviews: builder.query<any, {id: string; page: number; limit: number}>({
       query: ({ id, page, limit }) => createRequestWithParams(`review/all/${id}`,{ page, limit }),
-      providesTags: (result, _error, _arg) => result?.data ? [...result?.data?.result.data?.map(({ id }: { id: string }) => ({ type: "reviews", id })), "reviews"] : ["reviews"]
+      providesTags: ["reviews"]
     }),
     createReview: builder.mutation<any, { id: string, body: { text:string, rating:number }}>({
       query: (data) => {

@@ -13,7 +13,7 @@ export const courseApi = createApi({
 
         getUniversityCourses: builder.query<any, { page: number, limit: number, id: string }>({
             query: ({ page, limit, id }) => createRequestWithParams(`course/by-sch/${id}`, { page, limit}),
-            providesTags: (result, _error, _arg) => result?.data ? [...result?.data?.courses?.data?.map(({ id }: { id: string })=> ({type: "courses", id})), "courses"] : ["courses"],
+            providesTags: ["courses"],
         }),
 
         getACourse: builder.query<any, string>({
