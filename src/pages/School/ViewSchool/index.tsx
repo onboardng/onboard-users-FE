@@ -18,7 +18,7 @@ const ViewSchool = () => {
   const initialReviewQueryParams: IRootQueryParams = { page: 1, limit: 10 };
   const { data: courseData, isFetching: courseLoading } = useGetUniversityCoursesQuery({ ...initialQueryParams, id });
   const { data: reviewData, isLoading: reviewLoading } = useGetAllUniversityReviewsQuery({ id, ...initialReviewQueryParams });
-  const university = useMemo<UniversityData>(() => data?.data, [data]);
+  const university = useMemo<UniversityData>(() => data?.data?.university, [data]);
   const universityCourses = useMemo<any>(() => {
     return courseData?.data;
   }, [courseData?.data]);
