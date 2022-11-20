@@ -169,9 +169,9 @@ const ViewSchool = ({
             ) : !skip ? (
               data?.data?.map((course: Partial<CourseData>, index: number) => <AdmissionsCard course={course} key={index} />)
             ) : (
-              courses?.courses?.data?.map((course: Partial<CourseData>, index: number) => <AdmissionsCard course={course} key={index} />)
+              courses?.allCourses?.data?.map((course: Partial<CourseData>, index: number) => <AdmissionsCard course={course} key={index} />)
             )}
-            {courses?.pagination && skip && <Pagination totalCount={courses?.courses?.totalDocs} currentPage={page} onPageChange={setPage} pageSize={10} />}
+            {courses?.pagination && skip && <Pagination totalCount={courses?.allCourses?.totalDocs} currentPage={page} onPageChange={setPage} pageSize={10} />}
           </div>
         </div>
       </div>
