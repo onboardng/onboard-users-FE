@@ -41,7 +41,10 @@ export const authApi = createApi({
         };
       },
     }),
+    googleSignIn: builder.query({
+      query: () => `auth/google/url`
+    })
   }),
 });
 
-export const { useSignupUserMutation, useUserLoginMutation, useActivateOtpMutation, useUpdateProfileMutation } = authApi;
+export const { useSignupUserMutation, useUserLoginMutation, useActivateOtpMutation, useUpdateProfileMutation, useLazyGoogleSignInQuery } = authApi;

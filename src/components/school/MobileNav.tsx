@@ -17,7 +17,7 @@ const MobileNav = ({
         <div className="md:hidden sticky top-0 z-50 pb-[31px] pt-[55px] bg-white md:bg-none flex items-center">
           <>
             <div className="px-[21px] cursor-pointer">
-              <img src="/svgs/OnboardLogoBlue.svg" alt="logo" className="h-12 w-12" />
+              <img src="/svgs/OnboardLogoBlue.svg" alt="logo" className="h-12 w-full" />
             </div>
             <div className="cursor-pointer  flex justify-end px-[21px] w-full  ">
               <div
