@@ -28,11 +28,11 @@ const Explore = () => {
           {universities?.rows?.slice(0, 4).map((school: Partial<UniversityData>, index) => (
             <div className="flex flex-col justify-center items-center gap-5 relative" key={index}>
               <div className="flex gap-4 justify-center items-center bg-filter bg-no-repeat bg-cover bg-blend-multiply w-full md:w-[300px] md:h-[200px] relative rounded-t-[10px] overflow-hidden ">
-                <img src={school.picture || "/static/images/school.png"} alt="card" className="w-full opacity-50" />
+                <img src={school.pictures?.[0] || "/static/images/school.png"} alt="card" className="w-full opacity-50" />
                 <h5 className="text-[16px] md:text-[24px] absolute text-white left-3 bottom-[30px] capitalize">{school.name}</h5>
                 <div className="absolute flex text-white gap-2 items-center bottom-[15px] left-3">
                   <Icon width={12} height={14} id="location-icon-white" />
-                  <p className="text-[10px]">Lagos, Nigeria</p>{" "}
+                  <p className="text-[10px]">{school?.address}, {school?.country}</p>{" "}
                 </div>
               </div>
               <button
@@ -44,7 +44,7 @@ const Explore = () => {
             </div>
           ))}
         </div>
-        <button className="col-span-2 justify-center  mt-12 flex gap-1 font-medium rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
+        <button onClick={() => navigate(`/search`)} className="col-span-2 justify-center  mt-12 flex gap-1 font-medium rounded-md items-center px-[20px] py-[17px] w-full md:w-auto">
           <p className="text-center">Load more</p>
           <Icon width={24} height={24} id="arrow-right-black-icon" />
         </button>

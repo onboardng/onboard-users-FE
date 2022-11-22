@@ -6,17 +6,24 @@ import AuthScreen from "../../components/Authentication/AuthScreen";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { iniitalSignupValues, SignupSchema } from "../../schemas/AuthSchema";
-import { useSignupUserMutation } from "../../redux/services";
+import { useLazyGoogleSignInQuery, useSignupUserMutation } from "../../redux/services";
 import { toast } from "react-toastify";
 import Button from "../../components/Button/Button";
 
 const Register = () => {
   const [signup, { data, isLoading, isSuccess, isError, error }] = useSignupUserMutation();
+  const [ trigger, { isFetching: googleLoading, data: googleData, isSuccess: googleSuccess } ] = useLazyGoogleSignInQuery()
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
+
+  useEffect(() => {
+    if(!googleLoading && googleSuccess){
+      window.open(googleData?.data, '_blank')
+    }
+  }, [googleData, googleLoading, googleSuccess])
 
   const { values, handleChange, handleSubmit, handleBlur, touched, errors, resetForm } = useFormik({
     initialValues: iniitalSignupValues,
@@ -36,6 +43,10 @@ const Register = () => {
       toast.error(error?.data?.message);
     }
   }, [data, isLoading, isSuccess, isError, error, resetForm, navigate]);
+
+  const handleGoogleLogin = () => {
+    trigger({}).unwrap()
+  }
 
   return (
     <AuthScreen title="Create Account" subtitle="Create Account to have an history of all you do on Onboard">
@@ -108,7 +119,7 @@ const Register = () => {
       <div className="flex justify-center md:justify-end mt-5">
         <div className="flex items-center gap-4 text-base md:flex-row flex-col">
           <p>You can also sign in with</p>
-          <div className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
+          <div onClick={handleGoogleLogin} className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
             <FcGoogle />
             <p className="text-sm font-medium text-green">Google</p>
           </div>
