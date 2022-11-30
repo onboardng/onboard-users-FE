@@ -22,7 +22,7 @@ export const store = configureStore({
     courseApi.middleware,
     applicationApi.middleware,
   ],
-  // devTools: import.meta.env.NODE_ENV !== "production",
+  devTools: import.meta.env.NODE_ENV !== "production",
   enhancers: [reduxBatch],
 });
 
