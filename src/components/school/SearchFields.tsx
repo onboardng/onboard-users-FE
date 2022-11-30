@@ -71,7 +71,6 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
             onFocus={() => setShow(true)}
             handleChange={formik.handleChange}
             value={formik.values.school_name}
-            disabled
             name="school_name"
             label="School name"
             iconId="school-icon"
