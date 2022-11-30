@@ -129,7 +129,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
         </div>{" "}
         <div className="bg-grey-600 text-grey-500 flex gap-4 rounded-xl items-center h-full px-2 md:px-8 py-6">
           <Icon width={24} height={24} id="course-icon" />
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 w-full">
             <h2 className="text-[14px] md:text-[16px]">Course</h2>
             <input
               name="course_name"
@@ -137,7 +137,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
               onChange={formik.handleChange}
               type="text"
               placeholder="Select Course"
-              className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent"
+              className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent border-transparent border-2 focus-within:border-primary  w-full"
             />
           </div>
         </div>

@@ -15,7 +15,9 @@ const Card:React.FC<CardProps> = ({id, school_name, country}) => {
             <img src={image} alt={school_name} className='w-full h-full rounded-[6px]' />
         </div>
         <div className='flex flex-col px-5'>
-            <p className='font-[600] text-[28px] leading-[39px] capitalize'>{school_name}</p>
+            <p className='font-[600] text-[28px] leading-[39px] capitalize'>
+                {school_name.length > 20 ? `${school_name.substring(0,20)}...` : school_name}
+            </p>
             <div className='flex flex-col mt-[14px] mb-[10px]'>
                 <p>Ratings here</p>
             </div>

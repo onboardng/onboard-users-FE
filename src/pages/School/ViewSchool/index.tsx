@@ -14,6 +14,7 @@ const ViewSchool = () => {
   const id = useParams().id as string;
   const [ page, setPage ] = React.useState(1)
   const { data, isLoading } = useGetAUniversityQuery(id);
+  console.log({data})
   const initialQueryParams: IRootQueryParams = { page, limit: 10 };
   const initialReviewQueryParams: IRootQueryParams = { page: 1, limit: 10 };
   const { data: courseData, isFetching: courseLoading } = useGetUniversityCoursesQuery({ ...initialQueryParams, id });
