@@ -3,7 +3,8 @@ import { Mutex } from "async-mutex";
 import { setLoginUser } from "../slices/auth";
 import { RootState } from "../store";
 
-const { REACT_APP_BACKEND_API } = process.env;
+const BACKEND_API = process.env.REACT_APP_BACKEND_API as string
+
 export interface CustomError {
   data: {
     code: number;
@@ -13,7 +14,8 @@ export interface CustomError {
   };
   status: number;
 }
-const baseUrl = `${REACT_APP_BACKEND_API}/`;
+const baseUrl = `${BACKEND_API}/`;
+console.log(baseUrl)
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
