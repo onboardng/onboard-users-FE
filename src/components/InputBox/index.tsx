@@ -55,7 +55,7 @@ const InputBox = ({
           {label} <span className="text-[#DA0000]">{label2}</span>
         </label>
       )}
-      <div className="flex gap-4 items-center justify-center relative md:justify-start w-full md:w-auto">
+      <div className="flex gap-4 items-center justify-center relative md:justify-start w-full md:w-auto border-transparent border-2 focus-within:border-primary rounded-[8px]">
         <input
           type={`${password ? (showPassword ? "text" : "password") : "text"}`}
           onChange={onChange}
@@ -64,7 +64,7 @@ const InputBox = ({
           onKeyDown={keyDown}
           defaultValue={value || ""}
           placeholder={placeholder}
-          className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
+          className={`focus:outline-none w-full  ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
             iconId ? "pl-[40px]" : "pl-[20px]"
           } pr-[20px] py-[17px] border-[1.5px] ${isError ? "border-[#DA0000]" : "border-[#DADAE7]"} ${isRounded && "rounded-[8px]"}`}
         />{" "}
