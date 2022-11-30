@@ -21,7 +21,7 @@ const BookingCard = ({ track }: { track?: boolean }) => {
   return (
     <div className="bg-white md:rounded-[40px] rounded-[10px] md:mr-10 lg:my-5">
       <div className="relative">
-        <img alt="success" src={`${process.env.PUBLIC_URL}/svgs/Booking Image Card.svg`} className="md:rounded-t-[40px] rounded-t-[10px] w-full" />
+        <img alt="success" src={`${import.meta.env.PUBLIC_URL}/svgs/Booking Image Card.svg`} className="md:rounded-t-[40px] rounded-t-[10px] w-full" />
         {track && (
           <div
             className={`absolute z-[1] w-full h-full bg-[#00000060] top-0 md:rounded-t-[40px] rounded-t-[10px] flex items-center justify-center text-white font-medium text-[24px] leading-[38.4px] `}
