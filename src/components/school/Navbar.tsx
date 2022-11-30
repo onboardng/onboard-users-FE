@@ -50,7 +50,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
             <div ref={ref} className="group relative ">
               <div className="pl-8">
                 <li className="flex items-center pt-2 cursor-pointer" onClick={() => setDropDown((val) => !val)}>
-                  <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `${process.env.PUBLIC_URL}/svgs/Avatar.svg`} />
+                  <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `${import.meta.env.PUBLIC_URL}/svgs/Avatar.svg`} />
 
                   <span className="pl-3">
                     <Icon id={"arrow-down-icon"} width={24} height={24} />
@@ -69,7 +69,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
                       setDropDown((val) => !val);
                     }}
                   >
-                    <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `${process.env.PUBLIC_URL}/svgs/Avatar.svg`} />
+                    <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `${import.meta.env.PUBLIC_URL}/svgs/Avatar.svg`} />
                     <aside>
                       <h1 className=" text-sm text-black font-semibold">{user?.full_name || `Onboard User`}</h1>
                       <p className=" font-medium text-[#1B1B1B] text-[14px] leading-[22.4px] capitalize">{"User"}</p>

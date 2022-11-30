@@ -1,9 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import Icon from "../Icons";
-import RatingLarge from "../ViewSchool/RatingLarge";
-import Rating from "../ViewSchool/Rating";
-import { useMediaQuery } from "usehooks-ts";
+
+import Card from "../Shared/Card";
+import { CardProps } from "../../interfaces";
 
 const SearchMain = ({
   showEdit,
@@ -14,9 +13,7 @@ const SearchMain = ({
   setShowFilter: typeof showEdit;
   data: any;
 }) => {
-  const navigate = useNavigate();
-  const matches = useMediaQuery("(min-width: 768px)");
-  const [searchParams] = useSearchParams();
+
   return (
     <div className="md:w-[70%] w-full mx-5">
       <div className="py-7 px-5 flex md:flex-row flex-col items-center justify-between bg-white rounded-xl">
@@ -54,36 +51,24 @@ const SearchMain = ({
             </a>
           </div>
         </div>
-      </div>{" "}
-      <p className="my-5 text-lg">
-        {data?.length || "No"} {data?.length > 1 || !data ? "universities" : "university"} found
-      </p>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] mb-4">
-        {data?.map((value: any, index: number) => (
-          <div className="flex flex-col  md:h-[555px] bg-white gap-5" key={index}>
-            <div className="flex gap-4 justify-center bg-no-repeat bg-cover w-full md:h-[259px]">
-              <img src={value?.pictures?.[0]} alt="card" className="w-full" />
-            </div>
-            <div className="px-5">
-              <p className="text-[28px] font-semibold">{value?.name}</p>
-              <div className="flex gap-2 mt-[14px]">
-                {matches ? <RatingLarge rating={value?.ratings || 1} /> : <Rating rating={value?.ratings || 1} />}
-              </div>
-              <p className="mt-[8px] mb-[10px] text-sm text-gray-600">{value?.ratings || 0} ratings total</p>
-              <div className="flex gap-2 items-center">
-                <Icon width={18} height={20} id="location-icon-green" />
-                <p className="text-md">{value?.country}</p>{" "}
-              </div>
-              <button
-                onClick={() => navigate(`/schools/${value?.id}`, { state: { course_name: searchParams.get("course_name") || "" } })}
-                className="mt-10 mb-10 col-span-2 justify-center bg-green text-white flex gap-2 rounded-md items-center w-full md:px-[74.5px] py-[17px]"
-              >
-                <p className="text-center">View School</p>
-                <Icon width={24} height={24} id="arrow-right-icon" />
-              </button>
-            </div>
+      </div>
+
+      <div className="my-8">
+        {data && data?.length > 0 && (
+          <div className="font-bold text-lg leading-8">
+            {data?.length < 2 ? '1 university found' : `${data?.length} universities found.`}
           </div>
-        ))}
+        )}
+      </div>
+
+      <div className="my-10">
+        {data && data?.length === 0 ? (
+          <p className="my-5 text-lg">No data found. Please try a new search.</p>
+        ): (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] mb-4">
+            {data?.map((result:CardProps) => <Card key={result.id} {...result} />)}
+          </div>
+        )}
       </div>
       <div id="bookhere"></div>
     </div>
