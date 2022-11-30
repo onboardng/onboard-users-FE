@@ -5,7 +5,7 @@ import { FiCamera, FiChevronRight, FiMapPin } from 'react-icons/fi'
 import { CardProps } from '../../interfaces'
 import image from '../../assets/test-images.jpg'
 
-const Card:React.FC<CardProps> = ({id, school_name, country}) => {
+const Card:React.FC<CardProps> = ({id, school_name, country, UniversityId}) => {
   return (
     <div className='w-[496.5px] flex flex-col gap-[30px] bg-white'>
         <div className='w-[487px] h-[259px] rounded-[6px] relative'>
@@ -25,7 +25,7 @@ const Card:React.FC<CardProps> = ({id, school_name, country}) => {
                 <FiMapPin className='text-primary fill-primary' />
                 <p className='font-[500] text-sm leading-[26px]'>{country}</p>
             </div>
-            <Link to={`/schools/${id}`} className='w-[456.6px] h-[60px] flex items-center justify-center bg-primary text-white font-[500] text-sm rounded capitalize gap-[17px] mt-10 mb-[30px]'>
+            <Link to={`/schools/${UniversityId}`} className='w-[456.6px] h-[60px] flex items-center justify-center bg-primary text-white font-[500] text-sm rounded capitalize gap-[17px] mt-10 mb-[30px]'>
                 view school
                 <FiChevronRight className='text-white' />
             </Link>

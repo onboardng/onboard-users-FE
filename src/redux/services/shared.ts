@@ -3,7 +3,8 @@ import { Mutex } from "async-mutex";
 import { setLoginUser } from "../slices/auth";
 import { RootState } from "../store";
 
-const BACKEND_API = import.meta.env.VITE_BACKEND_API
+// const BACKEND_API = process.env.REACT_APP_BACKEND_API
+const BACKEND_API = "https://app.onboard.com.ng/onboard/v1"
 
 export interface CustomError {
   data: {
