@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useGetAllUniverisitiesQuery } from "../../redux/services";
 import { IRootQueryParams, ListUniversitiesResponse, UniversityData } from "../../utils/interfaces";
 import Icon from "../Icons";
@@ -27,20 +27,20 @@ const Explore = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[30px]">
           {universities?.rows?.slice(0, 4).map((school: Partial<UniversityData>, index) => (
             <div className="flex flex-col justify-center items-center gap-5 relative" key={index}>
-              <div className="flex gap-4 justify-center items-center bg-filter bg-no-repeat bg-cover bg-blend-multiply w-full md:w-[300px] md:h-[200px] relative rounded-t-[10px] overflow-hidden ">
-                <img src={school.pictures?.[0] || "/static/images/school.png"} alt="card" className="w-full opacity-50" />
+              <div className="flex gap-4 justify-center items-center bg-filter bg-no-repeat bg-cover bg-blend-multiply w-full md:w-[300px] md:h-[200px] relative rounded-[6px] overflow-hidden ">
+                <img src={school.pictures?.[0] || "/static/images/school.png"} alt="card" className="w-full h-full opacity-50 rounded-[6px]" />
                 <h5 className="text-[16px] md:text-[24px] absolute text-white left-3 bottom-[30px] capitalize">{school.name}</h5>
                 <div className="absolute flex text-white gap-2 items-center bottom-[15px] left-3">
                   <Icon width={12} height={14} id="location-icon-white" />
-                  <p className="text-[10px]">{school?.address}, {school?.country}</p>{" "}
+                  <p className="text-[10px]">{school?.address}, {school?.country}</p>
                 </div>
               </div>
-              <button
-                onClick={() => navigate(`/schools/${school.id}`)}
+              <Link 
+                to={`/schools/${school.id}`}
                 className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center w-full md:px-[74.5px] py-[17px]"
               >
-                <p className="text-center">View School Profile</p>{" "}
-              </button>
+                View School Profile
+              </Link>
             </div>
           ))}
         </div>

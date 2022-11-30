@@ -1,3 +1,4 @@
+import React from "react";
 import Icon from "../Icons";
 import InputBox from "../InputBox";
 

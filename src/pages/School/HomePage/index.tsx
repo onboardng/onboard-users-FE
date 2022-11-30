@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import AddSection from "../../../components/school/AdSection";
 import Explore from "../../../components/school/Explore";
 import Footer from "../../../components/school/Footer";
