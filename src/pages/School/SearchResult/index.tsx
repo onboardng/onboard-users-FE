@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import Icon from "../../../components/Icons";
 import AddSection from "../../../components/school/AdSection";
