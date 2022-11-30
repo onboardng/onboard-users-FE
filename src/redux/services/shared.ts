@@ -3,7 +3,7 @@ import { Mutex } from "async-mutex";
 import { setLoginUser } from "../slices/auth";
 import { RootState } from "../store";
 
-const BACKEND_API = import.meta.env.VITE_BACKEND_API as string
+const BACKEND_API = import.meta.env.VITE_BACKEND_API
 
 export interface CustomError {
   data: {
