@@ -1,37 +1,49 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import PageLoader from "../../../components/Loader/PageLoader";
+import PageLoader from "../../../components/Loader/PageLoader";
 import AddSection from "../../../components/school/AdSection";
 import Footer from "../../../components/school/Footer";
 import Navbar from "../../../components/school/Navbar";
 import Subscribe from "../../../components/school/Subscribe";
 import ViewSchoolComp from "../../../components/ViewSchool";
 import Goback from "../../../components/ViewSchool/Goback";
-import { useGetAllUniversityReviewsQuery, useGetAUniversityQuery, useGetUniversityCoursesQuery } from "../../../redux/services";
-import { IRootQueryParams, UniversityData } from "../../../utils/interfaces";
+// import { useGetAllUniversityReviewsQuery, useGetAUniversityQuery, useGetUniversityCoursesQuery } from "../../../redux/services";
+// import { IRootQueryParams, UniversityData } from "../../../utils/interfaces";
+import { useHttpRequest } from "../../../hooks/useHttpRequest";
+
+// const baseUrl = process.env.REACT_APP_BACKEND_API
+const baseUrl = "https://app.onboard.com.ng/onboard/v1"
 
 const ViewSchool = () => {
   const id = useParams().id as string;
-  const [ page, setPage ] = React.useState(1)
-  const { data, isLoading } = useGetAUniversityQuery(id);
-  console.log({data})
-  const initialQueryParams: IRootQueryParams = { page, limit: 10 };
-  const initialReviewQueryParams: IRootQueryParams = { page: 1, limit: 10 };
-  const { data: courseData, isFetching: courseLoading } = useGetUniversityCoursesQuery({ ...initialQueryParams, id });
-  const { data: reviewData, isLoading: reviewLoading } = useGetAllUniversityReviewsQuery({ id, ...initialReviewQueryParams });
-  const university = useMemo<UniversityData>(() => data?.data?.university, [data]);
-  const universityCourses = useMemo<any>(() => {
-    return courseData?.data;
-  }, [courseData?.data]);
-  const reviews = useMemo<any>(() => {
-    return reviewData?.data?.result?.data
-  },[reviewData?.data?.result?.data])
+  const [universityData, setUniversityData] = useState<any>()
+  const {error, loading, sendRequest} = useHttpRequest()
+  
+  const getUniversityInfo = async(id: string) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    try {
+      const data = await sendRequest(`${baseUrl}/university/view/${id}`, 'GET', null, headers)
+      if(data === undefined) return
+      console.log(data)
+      setUniversityData(data)
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    getUniversityInfo(id)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+  if(loading) return <PageLoader />
 
   return (
     <div className="bg-grey-600">
       <Navbar />
       <Goback isback />
-      <ViewSchoolComp page={page} setPage={setPage} isLoading={isLoading} courseLoading={courseLoading} reviewLoading={reviewLoading} id={id} reviews={reviews} courses={universityCourses} university={university} />
+      {}
+      <ViewSchoolComp data={universityData} />
       <AddSection />
       <Subscribe />
       <Footer />

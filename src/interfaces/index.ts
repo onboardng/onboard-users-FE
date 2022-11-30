@@ -17,3 +17,40 @@ export interface CardProps {
     ProgramId?: string
     FacultyId?: string
 }
+
+export interface UniversityProps {
+    added_by?: string
+    address: string
+    country: string
+    created_at?: string | Date
+    deleted?: boolean
+    description: string
+    id: string
+    name: string
+    pictures: string[]
+    ratings?: number
+    total_admission: number
+    updated_at?: string | Date
+}
+
+export interface AvailableProgrammes {
+    programs: Array<Program>
+}
+
+export interface Program {
+    UniversityId: string
+    added_b: string
+    created_at: string | Date
+    delete: boolean
+    description: string
+    duration: number
+    id: string
+    name: string
+    university_name: string 
+    updated_at: string | Date
+}
+
+export interface UniversityResponse {
+    university: UniversityProps
+    available_programmes: AvailableProgrammes
+}
