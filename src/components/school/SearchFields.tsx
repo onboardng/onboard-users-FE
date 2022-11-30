@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from "usehooks-ts";
 import { useUniversitySearchQuery } from "../../redux/services";
@@ -8,6 +8,7 @@ import { countryList, schoolPrograms } from "../../utils/selectOptions";
 import Icon from "../Icons";
 import LargeInputBox from "../InputBox/LargeInputBox";
 import LargeSelectBox from "../InputSelect/LargeSelectBox";
+import { FiChevronRight } from "react-icons/fi"
 
 const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
   const navigate = useNavigate();
@@ -101,7 +102,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
           <div className="flex flex-col gap-3 w-full">
             <h2 className="text-[14px] md:text-[16px]">Country</h2>
             <LargeSelectBox
-              value={formik.values.program_name}
+              value={formik.values.country_name}
               matches={matches}
               name="country_name"
               placeholder="Enter Country"
@@ -164,11 +165,12 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
       </div>
       <button
         type="button"
+        disabled={!formik.values.program_name || !formik.values.course_name}
         onClick={() => formik.handleSubmit()}
-        className="w-full col-span-2 cursor-pointer justify-center bg-green text-white flex gap-4 rounded-lg items-center px-[30px] py-[22px]"
+        className="w-full col-span-2 cursor-pointer justify-center bg-green text-white flex gap-4 rounded-lg items-center px-[30px] py-[22px] disabled:bg-gray-500"
       >
         <p className="text-center">Search</p>
-        <Icon width={24} height={24} id="arrow-right-icon" />
+        <FiChevronRight />
       </button>
     </div>
   );

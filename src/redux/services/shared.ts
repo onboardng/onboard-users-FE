@@ -15,7 +15,6 @@ export interface CustomError {
   status: number;
 }
 const baseUrl = `${BACKEND_API}/`;
-console.log(baseUrl)
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
