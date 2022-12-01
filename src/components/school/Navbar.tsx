@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import useOnClickOutside from "../../hooks/useClickOutside";
 import { RootState } from "../../redux/store";
 import Icon from "../Icons";
+import Modal from "../../components/Shared/Modal"
 
 const Navbar = ({ home }: { home?: boolean }) => {
   const navigate = useNavigate();
@@ -26,8 +27,11 @@ const Navbar = ({ home }: { home?: boolean }) => {
     dropDownNotification && setDropDownNotification(false);
   });
 
+  const [openModal, setOpenModal] = useState<boolean>(false)
+
   return (
     <>
+    {openModal && <Modal heading='Logout' message='Do you want logout?' onClose={() => setOpenModal(false)} onConfirm={handleLogout} />}
       <div
         className={`tab:hidden relative md:pt-[17px] flex justify-between items-center ${
           !home ? "bg-white sticky top-0 z-[10] px-[57px] py-3" : "mx-[57px]"
@@ -63,19 +67,17 @@ const Navbar = ({ home }: { home?: boolean }) => {
                 } shadow-[0px_4px_20px_rgba(0,0,0,0.08)] right-0 absolute z-[1] mt-5 bg-white w-[300px] rounded-[10px]`}
               >
                 <div className="px-5">
-                  <li
-                    className="flex items-center pt-5 pb-3 cursor-pointer"
-                    onClick={() => {
-                      setDropDown((val) => !val);
-                    }}
-                  >
+                  <Link to='/user' className="flex items-center pt-5 pb-3 cursor-pointer" onClick={() => {setDropDown((val) => !val)}}>
                     <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `/svgs/Avatar.svg`} />
                     <aside>
                       <h1 className=" text-sm text-black font-semibold">{user?.full_name || `Onboard User`}</h1>
-                      <p className=" font-medium text-[#1B1B1B] text-[14px] leading-[22.4px] capitalize">{"User"}</p>
+                      <p className=" font-medium text-[#1B1B1B] text-[12px] leading-[22.4px]">
+                        {user.email}
+                      </p>
                     </aside>
-                  </li>
-                  <li className="text-[#1B1B1B] flex mt-5 mb-5 cursor-pointer" onClick={handleLogout}>
+                  </Link>
+                  <Link to='details' className="text-[#1B1B1B] flex mt-5 mb-5">Update details</Link>
+                  <li className="text-[#1B1B1B] flex mt-5 mb-5 cursor-pointer" onClick={() => setOpenModal(true)}>
                     <span className="ml-2">Log out</span>
                   </li>
                 </div>

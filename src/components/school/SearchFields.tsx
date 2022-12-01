@@ -102,7 +102,6 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
             <h2 className="text-[14px] md:text-[16px]">Country</h2>
             <LargeSelectBox
               value={formik.values.country_name}
-              disabled
               matches={matches}
               name="country_name"
               placeholder="Enter Country"
@@ -144,7 +143,6 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
       </div>
       <button
         type="button"
-        disabled={!formik.values.program_name || !formik.values.course_name}
         onClick={() => formik.handleSubmit()}
         className="w-full col-span-2 cursor-pointer justify-center bg-green text-white flex gap-4 rounded-lg items-center px-[30px] py-[22px] disabled:bg-gray-500"
       >
