@@ -1,0 +1,168 @@
+import React, { ChangeEvent, DragEvent, FormEvent, useEffect, useState } from 'react'
+import { FiTrash, FiUploadCloud } from 'react-icons/fi'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+
+import { RootState } from '../../redux/store'
+import Navbar from '../../components/school/Navbar'
+import InputField from '../../components/Shared/InputField'
+import { useHttpRequest } from '../../hooks/useHttpRequest'
+import PageLoader from '../../components/Loader/PageLoader'
+
+const initialState = { first_name: "", last_name: "", email: "", phone: "" }
+const baseUrl = 'https://app.onboard.com.ng/onboard/v1'
+
+const Profile:React.FC = () => {
+    const [previewURL, setPreviewURL] = useState<string | ArrayBuffer | null>(null)
+    const [dragActive, setDragActive] = useState<boolean>(false)
+    const [imageFile, setImageFile] = useState<File | null>(null)
+    const {error, loading, sendRequest} = useHttpRequest()
+    const { authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
+
+    const [inputs, setFormState] = useState<typeof initialState>(initialState)
+    const {first_name, last_name, email, phone} = inputs
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormState({...inputs, [e.target.name]: e.target.value})
+    }
+
+    const updateProfile = async(e: FormEvent) => {
+        e.preventDefault()
+
+        const image = imageFile as unknown as string
+        const formData = new FormData()
+        formData.append('image', image)
+        formData.append('full_name', first_name+last_name)
+        formData.append('email', email)
+        formData.append('phone', phone)
+
+        const headers = {
+            Token: `${access_token}`
+        }
+        try {
+            const data = await sendRequest(`${baseUrl}/auth/edit`, 'PATCH', formData, headers)
+            console.log(data)
+            console.log(formData)
+        } catch (error) {}
+    }
+
+    const handleFile = (file: File) => {
+        if(!file) return
+        const { type } = file
+        if(type === 'image/png' || type === 'image/jpg' || type === 'image/jpeg') {
+            const fileReader = new FileReader()
+            fileReader.onload = () => setPreviewURL(fileReader.result)
+            fileReader.readAsDataURL(file)
+        } else return toast.error("Wrong file type")
+        setImageFile(file)
+    }
+
+    const handleDrag = (e: DragEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setDragActive(true)
+    }
+
+    const handleDrop = (e: DragEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setDragActive(false)
+
+        if(!e.dataTransfer) return
+        let file = e.dataTransfer.files[0]
+        handleFile(file)
+    }
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if(!e.currentTarget.files) return
+        let file = e.currentTarget.files[0]
+        handleFile(file)
+    }
+
+    useEffect(() => {
+        error && toast.error(`${error}`)
+    },[error])
+
+    if(loading) return <PageLoader />
+
+  return (
+    <>
+    <Navbar />
+    <div className='w-full h-full bg-[#F7F7F7] grid place-items-center'>
+        <div className='w-[690px] min-w-[300px] mb-[125px]'>
+            <p className='font-medium text-[20px] leading-8 mt-[51px] mb-[10px]'>Personal Info</p>
+            <p className='font-medium text-[#8B8BA4] text-sm leading-[26px] mb-[41px]'>
+                Update your photo and personal details here
+            </p>
+
+            <form onSubmit={updateProfile} className='w-full flex flex-col'>
+                <div className='w-full flex items-center justify-between mb-[20px]'>
+                    <InputField label='First Name' name='first_name' onChange={handleInputChange} type='text' width='335px' />
+                    <InputField label='Last Name' name='last_name' onChange={handleInputChange} type='text' width='335px' />
+                </div>
+                <hr className='w-full h-[1px] bg-[#DADAE7] my-[20px]' />
+                <div className='w-full flex flex-col gap-[20px]'>
+                    <InputField label='Email' name='email' onChange={handleInputChange} type='email' />
+                    <InputField label='Phone' name='phone' onChange={handleInputChange} type='text' />
+                </div>
+                <hr className='w-full h-[1px] bg-[#DADAE7] my-[20px]' />
+                <div className='w-full flex'>
+                    <div className='w-[50px] h-[50px] rounded-full overflow-hidden'>
+                        <img src="" alt="" className='w-full h-full rounded-full object-cover' />
+                    </div>
+                    <div className='w-[630px] h-[165px] bg-white rounded-[4px] border-[1px] border-[#DADAE7] ml-2'>
+                        {previewURL === null ? (
+                            <label className='w-full h-full flex items-center justify-center relative overflow-hidden'>
+                                {!dragActive && (
+                                    <div className='flex flex-col items-center'>
+                                    <div className='rounded-full bg-primary p-[10px]'>
+                                        <FiUploadCloud fontSize={20} className='text-white rounded-full' />
+                                    </div>
+                                    <div className='flex items-center gap-[3px] font-medium text-base leading-[22px] mt-[17px]'>
+                                        click to upload <p className='text-primary'>or drag and drop</p>
+                                    </div>
+                                    </div>
+                                )}
+                                {dragActive && <p className='font-medium text-base leading-[22px]'>Drop files here</p>}
+                                <input
+                                className='w-full h-[120%] absolute -top-9 left-0 image-upload'
+                                type="file"
+                                draggable
+                                onChange={handleFileChange}
+                                onDragEnter={handleDrag}
+                                onDragLeave={handleDrop}
+                                onDragOver={handleDrag}
+                                onDrop={handleDrop}
+                                />
+                            </label>
+                        ) : (
+                            <div className='w-full h-full relative'>
+                                <button type='button' onClick={() => setPreviewURL(null)} className='rounded-full bg-white text-black p-3 absolute top-2 left-2'>
+                                    <FiTrash />
+                                </button>
+                                <img src={`${previewURL}`} alt="" className='w-full h-full object-cover' />
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <button type='submit' className='w-[174px] h-[42px] bg-white border-[1px] border-primary rounded-[4px] text-primary mt-[30px]'>
+                    Save
+                </button>
+            </form>
+            <hr className='w-full h-[1px] bg-[#DADAE7] my-[20px]' />
+            <div className='w-full flex flex-col'>
+                <p className='font-medium text-[20px] leading-8'>Security</p>
+                <p className='font-medium text-[#8B8BA4] text-sm leading-[26px] mt-[10px] mb-[20px]'>
+                    Update your password here
+                </p>
+                <button className='w-[174px] h-[42px] bg-white border-[1px] border-primary rounded-[4px] text-primary'>
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+    </>
+  )
+}
+
+export default Profile

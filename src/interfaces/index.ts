@@ -27,14 +27,10 @@ export interface UniversityProps {
     description: string
     id: string
     name: string
-    pictures: string[]
+    pictures: Array<string>
     ratings?: number
     total_admission: number
     updated_at?: string | Date
-}
-
-export interface AvailableProgrammes {
-    programs: Array<Program>
 }
 
 export interface Program {
@@ -52,5 +48,13 @@ export interface Program {
 
 export interface UniversityResponse {
     university: UniversityProps
-    available_programmes: AvailableProgrammes
+    available_programs: Array<Program>
+}
+
+export interface Course {
+    id: string
+    name: string
+    description: string
+    UniversityId: string
+    ProgramId: string
 }

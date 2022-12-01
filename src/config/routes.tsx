@@ -8,6 +8,7 @@ const AllRoutes = () => {
   const Welcome = lazy(() => import("../pages/Authentication/Verify"));
   const Register = lazy(() => import("../pages/Authentication/Register"));
   const UserDetails = lazy(() => import("../pages/Authentication/BasicDetails"));
+  const Profile = lazy(() => import("../pages/Authentication/Profile"));
   const Login = lazy(() => import("../pages/Authentication/Login"));
   const SchoolHomePage = lazy(() => import("../pages/School/HomePage"));
   const SchoolSearchPage = lazy(() => import("../pages/School/SearchResult"));
@@ -17,6 +18,7 @@ const AllRoutes = () => {
   const TrackSchoolBooking = lazy(() => import("../pages/School/TrackSchoolBooking"));
   const ForgotPassword = lazy(() => import("../pages/Authentication/ForgotPassword"));
   const ResetPassword = lazy(() => import("../pages/Authentication/ResetPassword"));
+  
   return (
     <PersistGate loading={null} persistor={persistor}>
       <Suspense fallback={<PageLoader />}>
@@ -27,6 +29,7 @@ const AllRoutes = () => {
             <Route path="/verify" element={<Welcome />} />
             <Route path="/register" element={<Register />} />
             <Route path="/details" element={<UserDetails />} />
+            <Route path="/user" element={<Profile />} />
             <Route path="/search" element={<SchoolSearchPage />} />
             <Route path="/schools/:id" element={<ViewSchool />} />
             <Route path="/schools/:id/apply" element={<ApplySchool />} />
