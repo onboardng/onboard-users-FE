@@ -8,42 +8,71 @@ import Navbar from '../../components/school/Navbar'
 import InputField from '../../components/Shared/InputField'
 import { useHttpRequest } from '../../hooks/useHttpRequest'
 import PageLoader from '../../components/Loader/PageLoader'
+import { User } from '../../interfaces'
 
-const initialState = { first_name: "", last_name: "", email: "", phone: "" }
 const baseUrl = 'https://app.onboard.com.ng/onboard/v1'
 
 const Profile:React.FC = () => {
     const [previewURL, setPreviewURL] = useState<string | ArrayBuffer | null>(null)
     const [dragActive, setDragActive] = useState<boolean>(false)
     const [imageFile, setImageFile] = useState<File | null>(null)
+    const [userProfile, setUserProfile] = useState<User | null>(null)
     const {error, loading, sendRequest} = useHttpRequest()
     const { authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
 
-    const [inputs, setFormState] = useState<typeof initialState>(initialState)
-    const {first_name, last_name, email, phone} = inputs
+    
+    const getProfile = async() => {
+        const headers = {
+            'Authorization': `Bearer ${access_token}`
+        }
+        try {
+            const data = await sendRequest(`${baseUrl}/auth/view-profile`, 'GET', null, headers)
+            if(!data || data === undefined) return
+            console.log(data)
+            setUserProfile(data?.data)
+        } catch (error) {}
+    }
+    
+    const [first_name, setFirst_name] = useState<string>("")
+    const [last_name, setLast_name] = useState<string>("")
+    const [email, setEmail] = useState<string>("")
+    const [phone_number, setPhone_number] = useState<string>("")
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormState({...inputs, [e.target.name]: e.target.value})
+    const setFields = () => {
+        if(userProfile) {
+            const stringArray = userProfile?.full_name.split(" ")
+            setFirst_name(stringArray[0])
+            setLast_name(stringArray[1])
+            setEmail(userProfile?.email !== null ? userProfile?.email : "")
+            setPhone_number(userProfile?.phone_number !== null ? userProfile?.phone_number : "")
+        }
     }
 
+    useEffect(() => {
+        setFields()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[userProfile])
+    
     const updateProfile = async(e: FormEvent) => {
         e.preventDefault()
 
         const image = imageFile as unknown as string
         const formData = new FormData()
         formData.append('image', image)
-        formData.append('full_name', first_name+last_name)
+        formData.append('full_name', first_name+""+last_name)
         formData.append('email', email)
-        formData.append('phone', phone)
+        formData.append('phone_number', phone_number)
 
         const headers = {
-            Token: `${access_token}`
+            'Authorization': `Bearer ${access_token}`
         }
         try {
             const data = await sendRequest(`${baseUrl}/auth/edit`, 'PATCH', formData, headers)
-            console.log(data)
-            console.log(formData)
+            if(data === undefined) return
+            toast.success(`${data?.message}`)
         } catch (error) {}
+        setPreviewURL(null)
+        getProfile()
     }
 
     const handleFile = (file: File) => {
@@ -83,6 +112,11 @@ const Profile:React.FC = () => {
         error && toast.error(`${error}`)
     },[error])
 
+    useEffect(() => {
+        getProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
     if(loading) return <PageLoader />
 
   return (
@@ -97,18 +131,18 @@ const Profile:React.FC = () => {
 
             <form onSubmit={updateProfile} className='w-full flex flex-col'>
                 <div className='w-full flex items-center justify-between mb-[20px]'>
-                    <InputField label='First Name' name='first_name' onChange={handleInputChange} type='text' width='335px' />
-                    <InputField label='Last Name' name='last_name' onChange={handleInputChange} type='text' width='335px' />
+                    <InputField label='First Name' value={first_name} onChange={(e: ChangeEvent<HTMLInputElement>) => setFirst_name(e.target.value)} type='text' width='335px' />
+                    <InputField label='Last Name' value={last_name} onChange={(e: ChangeEvent<HTMLInputElement>) => setLast_name(e.target.value)} type='text' width='335px' />
                 </div>
                 <hr className='w-full h-[1px] bg-[#DADAE7] my-[20px]' />
                 <div className='w-full flex flex-col gap-[20px]'>
-                    <InputField label='Email' name='email' onChange={handleInputChange} type='email' />
-                    <InputField label='Phone' name='phone' onChange={handleInputChange} type='text' />
+                    <InputField label='Email' value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} type='email' />
+                    <InputField label='Phone' value={phone_number} onChange={(e: ChangeEvent<HTMLInputElement>) => setPhone_number(e.target.value)} type='text' />
                 </div>
                 <hr className='w-full h-[1px] bg-[#DADAE7] my-[20px]' />
                 <div className='w-full flex'>
                     <div className='w-[50px] h-[50px] rounded-full overflow-hidden'>
-                        <img src="" alt="" className='w-full h-full rounded-full object-cover' />
+                        <img src={userProfile?.avatar !== null ? userProfile?.avatar : "/svgs/Avatar.svg"} alt="" className='w-full h-full rounded-full object-cover' />
                     </div>
                     <div className='w-[630px] h-[165px] bg-white rounded-[4px] border-[1px] border-[#DADAE7] ml-2'>
                         {previewURL === null ? (

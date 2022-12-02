@@ -5,17 +5,17 @@ import { FiCamera, FiChevronRight, FiMapPin } from 'react-icons/fi'
 import { CardProps } from '../../interfaces'
 import image from '../../assets/test-images.jpg'
 
-const Card:React.FC<CardProps> = ({id, school_name, country, UniversityId}) => {
+const Card:React.FC<CardProps> = ({id, school_name, country, UniversityId, }) => {
   return (
     <div className='w-[496.5px] flex flex-col gap-[30px] bg-white'>
         <div className='w-[487px] h-[259px] rounded-[6px] relative'>
             <Link to='/' className='w-[71px] h-[46px] flex items-center gap-[10px] px-[10px] bg-primary text-white absolute right-5 top-2 rounded-md'>
                 <FiCamera />
             </Link>
-            <img src={image} alt={school_name} className='w-full h-full rounded-[6px]' />
+            <img src={image} alt={school_name} className='w-full h-full object-contain rounded-[6px]' />
         </div>
         <div className='flex flex-col px-5'>
-            <p className='font-[600] text-[28px] leading-[39px] capitalize'>
+            <p className='w-11/12 font-[600] text-[28px] leading-[39px] capitalize'>
                 {school_name.length > 20 ? `${school_name.substring(0,20)}...` : school_name}
             </p>
             <div className='flex flex-col mt-[14px] mb-[10px]'>
