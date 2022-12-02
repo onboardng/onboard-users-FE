@@ -68,10 +68,6 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
-  useEffect(() => {
-    console.log(paginationEl)
-  },[paginationEl])
-
   if(loading) return <PageLoader />
 
   return (
