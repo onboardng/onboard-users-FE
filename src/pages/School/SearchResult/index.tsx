@@ -21,9 +21,8 @@ const SearchResult = () => {
   const [showFilter, setShowFilter] = useState(false);
   const matches = useMediaQuery("(min-width: 768px)");
   let searchQuery = Object.fromEntries([...searchParams]);
-  const {course_name, program_name} = searchQuery
   // TODO: #5 fix search to match all fields
-  const { data, isLoading } = useSearchCourseQuery({ page, limit: 10, course_name, program_name});
+  const { data, isLoading } = useSearchCourseQuery({ page, limit: 10, ...searchQuery});
 
   useEffect(() => {
     if (matches) {

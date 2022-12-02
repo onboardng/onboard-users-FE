@@ -1,11 +1,15 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { FiChevronRight, FiMapPin, FiPlus, FiSearch } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import { FiChevronRight, FiPlus, FiSearch } from 'react-icons/fi'
+import { HiMapPin } from 'react-icons/hi2'
+import { useSelector } from 'react-redux'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { useHttpRequest } from '../../hooks/useHttpRequest'
-import { Course, UniversityResponse } from '../../interfaces'
+import { Course, PaginationProps, UniversityResponse } from '../../interfaces'
 import PageLoader from "../../components/Loader/PageLoader";
+import { RootState } from '../../redux/store'
 import AddRating from './AddRatings'
+import Pagination from '../Pagination/Pagination'
 
 // const baseUrl = process.env.REACT_APP_BACKEND_API
 const baseUrl = "https://app.onboard.com.ng/onboard/v1"
@@ -15,23 +19,46 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [courses, setCourses] = useState<Array<Course | null>>([])
   const {loading, sendRequest} = useHttpRequest()
   const [query, setQuery] = useState<string>('')
-  const [page] = useState<number>(1)
+  const [page, setPage] = useState<number>(1)
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false)
+  const { authorization: { access_token }} = useSelector((store: RootState) => store.authStore)
+
+  const [paginationEl, setPaginationEl] = useState<PaginationProps | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams();
   
   const getUniversityInfo = async(id: string) => {
     const headers = {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${access_token}`
     }
     try {
       const data = await sendRequest(`${baseUrl}/university/view/${id}`, 'GET', null, headers)
-      const courseData = await sendRequest(`${baseUrl}/course/by-sch/${id}/?limit=10&${page}`, 'GET', null, headers)
+      const courseData = await sendRequest(`${baseUrl}/course/by-sch/${id}/?limit=10&page=${page}`, 'GET', null, headers)
 
       const [result, courseResult] = await Promise.all([data, courseData])
       if(result === undefined || courseResult === undefined) return
-      console.log({result, courseResult})
       setUniversityData(result?.data)
+      setPaginationEl(courseResult?.data?.allCourses)
       setCourses(courseResult?.data?.allCourses?.data)
     } catch (error) {}
+  }
+
+  // pagination
+  useEffect(() => {
+    setPage(parseInt(searchParams?.get('page') || "1"));
+  }, [searchParams])
+
+  const onPageChange = (page: number) => {
+    setSearchParams({page: page.toString()})
+    getUniversityInfo(id)
+  }
+
+  const handlePagination = () => {
+    if(paginationEl) {
+      return <Pagination onPageChange={onPageChange} pageSize={paginationEl?.perPage} currentPage={page} totalCount={paginationEl?.totalDocs} />
+    } else {
+      return <></>
+    }
   }
 
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)
@@ -41,13 +68,17 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
+  useEffect(() => {
+    console.log(paginationEl)
+  },[paginationEl])
+
   if(loading) return <PageLoader />
 
   return (
     <>
     {isAddingReview && <AddRating onClose={() => setIsAddingReview(false)} />}
     {universityData && (
-      <div className='w-full flex flex-row gap-[8px] px-5'>
+      <div className='w-full flex flex-row gap-[32px] px-5'>
         <div className='flex flex-col items-center'>
           <div className='w-[571px] h-[400px] rounded-[8px] border-[1px] border-gray-200 mb-4'>
             <img src={universityData?.university?.pictures[0]} alt={universityData?.university?.name} className='w-full h-full rounded-[8px] object-cover' />
@@ -59,8 +90,8 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
           </div>
           <div className='w-full flex items-center justify-between bg-[#E7FAFF] p-[20px] mt-[23px]'>
             <p className='font-[500] text-base leading-[22px]'>Ratings & Reviews</p>
-            <button onClick={() => setIsAddingReview(true)} className='flex items-center gaop-[12.67px] bg-transparent text-primary'>
-              <FiPlus />
+            <button onClick={() => setIsAddingReview(true)} className='flex items-center gap-[12.67px] bg-transparent text-primary'>
+              <FiPlus className='text-[]'/>
               <p className='font-[700] text-[10px] leading-4 capitalize'>
                 write a review/rating
               </p>
@@ -74,7 +105,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
             <p>Ratings: {universityData.university.ratings}</p>
           </div>
           <div className='flex items-center gap-[8px] my-[20px]'>
-            <FiMapPin className='text-primary fill-primary' />
+            <HiMapPin className='text-primary' />
             <p className='font-[500] text-lg leading-8'>{universityData?.university.address}</p>
           </div>
           <div className='w-full'>
@@ -95,26 +126,30 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
             ) : (
               <>
               {courses.map((course, index) => (
-                <div key={index} className='w-full flex flex-col p-[20px]'>
+                <div key={index} className='w-full flex flex-col p-[20px] bg-white rounded-[10px]'>
                   <div className='w-full flex items-center justify-between'>
                     <div className='flex flex-col'>
-                      <p className='font-[500] text-lg leading-8'>{course?.name}</p>
-                      <p className='font-[500] text-sm leading-[26px] text-[#8B8BA4]'>{course?.description}</p>
+                      <p className='font-[500] text-lg leading-8 capitalize mb-[5px]'>{course?.name}</p>
+                      <p className='font-[500] text-sm leading-[26px] text-[#8B8BA4]'>
+                        Application closes on {course?.application_closing && new Date(course?.application_closing).toDateString()}
+                      </p>
                     </div>
-                    <Link to={`/schools/${course?.id}/apply`} className='w-[158px] h-[60px] flex items-center gap-2 bg-primary text-white rounded-[4px]'>
+                    <Link to={`/schools/${course?.id}/apply`} className='w-[158px] h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
                       apply now
                       <FiChevronRight />
                     </Link>
-                    <hr className='w-full h-[1px] bg-[#DADAE7]' />
-                    <div className='w-full'>
-                      <p className=''>{course?.description}</p>
-                    </div>
+                  </div>
+                  <hr className='w-full h-[1px] bg-[#DADAE7] mt-3 mb-5' />
+                  <div className='w-full'>
+                    <p className='first-letter:capitalize font-medium text-base leading-[22px] text-[#8B8BA4]'>{course?.description}</p>
                   </div>
                 </div>
               ))}
               </>
             )}
           </div>
+          {/* Pagination goes here */}
+          {handlePagination()}
         </div>
       </div>
     )}

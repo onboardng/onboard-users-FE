@@ -34,9 +34,9 @@ export const useHttpRequest = () => {
 
     const clearError = () => setError(null)
 
-    useEffect(() => {
-        return () => activeHttpRequest.current.forEach(abortCtrl => abortCtrl.abort())
-    },[])
+    // useEffect(() => {
+    //     return () => activeHttpRequest.current.forEach(abortCtrl => abortCtrl.abort())
+    // },[])
 
     return {clearError, error, loading, sendRequest}
 }

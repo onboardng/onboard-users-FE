@@ -1,3 +1,20 @@
+
+export interface User {
+    accessTokens: string
+    avatar?: string | null
+    created_at?: string | Date
+    deleted?: boolean
+    email: string
+    full_name: string
+    id: string
+    isBlocked?: boolean
+    isVerified?: boolean
+    method?: string
+    phone_number: string | null
+    profile_picture?: string | null
+    updated_at?: string | Date
+}
+
 export interface CardProps {
     id: string
     name?: string
@@ -52,9 +69,22 @@ export interface UniversityResponse {
 }
 
 export interface Course {
+    application_closing: string | Date
+    application_opening: string | Date
+    description: string
     id: string
     name: string
-    description: string
-    UniversityId: string
-    ProgramId: string
+    program_name: string
+    school_name: string
+}
+
+export interface PaginationProps {
+    currentPage: number
+    hasNextPage?: boolean
+    hasPrevPage?: boolean
+    next?: number
+    pageCount: number
+    perPage: number
+    previous?: number
+    totalDocs: number
 }

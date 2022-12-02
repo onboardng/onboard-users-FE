@@ -33,3 +33,7 @@ body {
 input:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
 }
+
+.modal {
+  z-index: 100000 !important;
+}

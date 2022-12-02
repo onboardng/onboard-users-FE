@@ -65,7 +65,7 @@ const SearchMain = ({
         {data && data?.length === 0 ? (
           <p className="my-5 text-lg">No data found. Please try a new search.</p>
         ): (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] mb-4">
+          <div className="flex flex-wrap items-center justify-center gap-[59.5px]">
             {data?.map((result:CardProps) => <Card key={result.id} {...result} />)}
           </div>
         )}

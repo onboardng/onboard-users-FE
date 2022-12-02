@@ -31,7 +31,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
 
   return (
     <>
-    {openModal && <Modal heading='Logout' message='Do you want logout?' onClose={() => setOpenModal(false)} onConfirm={handleLogout} />}
+    {openModal && <Modal heading='Sign Out' message='Do you want logout?' onClose={() => setOpenModal(false)} onConfirm={handleLogout} />}
       <div
         className={`tab:hidden relative md:pt-[17px] flex justify-between items-center ${
           !home ? "bg-white sticky top-0 z-[10] px-[57px] py-3" : "mx-[57px]"
