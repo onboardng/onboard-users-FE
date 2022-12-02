@@ -5,10 +5,11 @@ export interface User {
     created_at?: string | Date
     deleted?: boolean
     email: string
-    full_name: string
+    first_name: string
     id: string
     isBlocked?: boolean
     isVerified?: boolean
+    last_name: string
     method?: string
     phone_number: string | null
     profile_picture?: string | null
