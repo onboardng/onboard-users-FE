@@ -70,7 +70,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
                   <Link to='/user' className="flex items-center pt-5 pb-3 cursor-pointer" onClick={() => {setDropDown((val) => !val)}}>
                     <img className=" w-10 h-10 mr-2 rounded-full" alt="avatar" src={user?.profile_picture || `/svgs/Avatar.svg`} />
                     <aside>
-                      <h1 className=" text-sm text-black font-semibold">{user?.full_name || `Onboard User`}</h1>
+                      <h1 className=" text-sm text-black font-semibold">{user?.first_name || `Onboard User`}</h1>
                       <p className=" font-medium text-[#1B1B1B] text-[12px] leading-[22.4px]">
                         {user.email}
                       </p>

@@ -28,7 +28,6 @@ const Profile:React.FC = () => {
         try {
             const data = await sendRequest(`${baseUrl}/auth/view-profile`, 'GET', null, headers)
             if(!data || data === undefined) return
-            console.log(data)
             setUserProfile(data?.data)
         } catch (error) {}
     }
@@ -40,9 +39,8 @@ const Profile:React.FC = () => {
 
     const setFields = () => {
         if(userProfile) {
-            const stringArray = userProfile?.full_name.split(" ")
-            setFirst_name(stringArray[0])
-            setLast_name(stringArray[1])
+            setFirst_name(userProfile?.first_name !== null ? userProfile?.first_name : "" )
+            setLast_name(userProfile?.last_name !== null ? userProfile?.last_name : "" )
             setEmail(userProfile?.email !== null ? userProfile?.email : "")
             setPhone_number(userProfile?.phone_number !== null ? userProfile?.phone_number : "")
         }

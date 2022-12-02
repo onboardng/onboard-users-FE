@@ -3,7 +3,8 @@ import storageSession from "redux-persist/lib/storage/session";
 
 const initialState = {
   user: {
-    full_name: "",
+    first_name: "",
+    last_name: "",
     email: "",
     profile_picture: "",
   },

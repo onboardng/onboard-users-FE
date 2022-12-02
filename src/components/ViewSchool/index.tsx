@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { FiChevronRight, FiPlus, FiSearch } from 'react-icons/fi'
-import { HiMapPin } from 'react-icons/hi2'
+import { HiMapPin, HiXCircle } from 'react-icons/hi2'
 import { useSelector } from 'react-redux'
 import { Link, useSearchParams } from 'react-router-dom'
 
@@ -110,8 +110,11 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
           <div className='w-full flex items-center justify-between mt-[44px]'>
             <p className='font-[500] text-xl leading-3[38px]'>Courses</p>
             <div className='w-[209px] h-[44px] flex items-center bg-white border-[1px] border-[#DADAE7] focus-within:border-primary rounded-md'>
-              <FiSearch className='text-primary fill-primary mx-[2px]' />
-              <input type="text" value={query} onChange={handleQueryChange} placeholder='Search...' className='w-full h-full border-none outline-none px-[2px] rounded-md' />
+              <div className='flex items-center'>
+                <FiSearch fontSize={25} className='text-primary fill-primary ml-[12px]' />
+                <input type="text" value={query} onChange={handleQueryChange} placeholder='Search here' className='w-full border-none outline-none px-[2px] rounded-md ml-[12.5px]' />
+              </div>
+              <HiXCircle onClick={() => setQuery("")} fontSize={25} className='text-primary fill-primary mr-[12px] cursor-pointer' />
             </div>
           </div>
           <div className='w-full flex flex-col gap-[20px] mt-[20px]'>

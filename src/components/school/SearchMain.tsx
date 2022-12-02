@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { useSearchParams } from 'react-router-dom'
 import Icon from "../Icons";
 
 import Card from "../Shared/Card";
@@ -13,12 +14,17 @@ const SearchMain = ({
   setShowFilter: typeof showEdit;
   data: any;
 }) => {
+  const [searchParams] = useSearchParams()
+  const searchQuery = searchParams
+  const country_name = searchQuery.get("country_name")
+  const course_name = searchQuery.get("course_name")
+  const program_name = searchQuery.get("program_name")
 
   return (
     <div className="md:w-[70%] w-full mx-5">
       <div className="py-7 px-5 flex md:flex-row flex-col items-center justify-between bg-white rounded-xl">
         <p className="text-md">
-          University in <b>Lagos Nigeria,</b> offering <b>BSc.</b> for <b>Political Science</b>
+          University {country_name && <b>in {country_name}</b>} offering {program_name && <b>{program_name} program in</b>} {course_name && <b>{course_name}</b>}
         </p>
         <div className="flex items-center gap-3 mt-4 md:mt-0 rounded-xl">
           <div
@@ -65,7 +71,7 @@ const SearchMain = ({
         {data && data?.length === 0 ? (
           <p className="my-5 text-lg">No data found. Please try a new search.</p>
         ): (
-          <div className="flex flex-wrap items-center justify-center gap-[30px]">
+          <div className="flex flex-wrap items-center justify-evenly gap-[30px]">
             {data?.map((result:CardProps) => <Card key={result.id} {...result} />)}
           </div>
         )}
