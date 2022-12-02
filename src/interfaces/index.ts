@@ -33,6 +33,7 @@ export interface CardProps {
     UniversityId?: string
     ProgramId?: string
     FacultyId?: string
+    width?: string | number
 }
 
 export interface UniversityProps {
