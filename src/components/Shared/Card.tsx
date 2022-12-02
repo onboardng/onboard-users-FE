@@ -1,18 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FiCamera, FiChevronRight, FiMapPin } from 'react-icons/fi'
 
 import { CardProps } from '../../interfaces'
-import image from '../../assets/test-images.jpg'
+import Backdrop from './Backdrop'
+import image from '../../assets/univ.jpg'
 
 const Card:React.FC<CardProps> = ({id, school_name, country, UniversityId, }) => {
+    const [largeView, setLargeView] = useState<boolean>(false)
+
   return (
-    <div className='w-[496.5px] flex flex-col gap-[30px] bg-white'>
-        <div className='w-[487px] h-[259px] rounded-[6px] relative'>
-            <Link to='/' className='w-[71px] h-[46px] flex items-center gap-[10px] px-[10px] bg-primary text-white absolute right-5 top-2 rounded-md'>
+    <>
+    {largeView && (
+        <Backdrop onClick={() => setLargeView(false)}>
+            <img src={image} alt={school_name} className='w-2/3 object-contain' />
+        </Backdrop>
+    )}
+    <div className='w-[487px] flex flex-col gap-[30px] bg-white'>
+        <div className='w-full h-[259px] rounded-[6px] relative'>
+            <button onClick={() => setLargeView(true)} className='w-[71px] h-[46px] flex items-center gap-[10px] px-[10px] bg-primary text-white absolute right-5 top-2 rounded-md'>
                 <FiCamera />
-            </Link>
-            <img src={image} alt={school_name} className='w-full h-full object-contain rounded-[6px]' />
+            </button>
+            <img src={image} alt={school_name} className='w-[487px] h-[259px] rounded-[6px]' />
         </div>
         <div className='flex flex-col px-5'>
             <p className='w-11/12 font-[600] text-[28px] leading-[39px] capitalize'>
@@ -31,6 +40,7 @@ const Card:React.FC<CardProps> = ({id, school_name, country, UniversityId, }) =>
             </Link>
         </div>
     </div>
+    </>
   )
 }
 
