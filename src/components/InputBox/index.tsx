@@ -64,7 +64,7 @@ const InputBox = ({
           onKeyDown={keyDown}
           defaultValue={value || ""}
           placeholder={placeholder}
-          className={`focus:outline-none w-full  ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
+          className={`focus:outline-none w-full rounded-[8px] ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
             iconId ? "pl-[40px]" : "pl-[20px]"
           } pr-[20px] py-[17px] border-[1.5px] ${isError ? "border-[#DA0000]" : "border-[#DADAE7]"} ${isRounded && "rounded-[8px]"}`}
         />{" "}

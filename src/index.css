@@ -37,3 +37,7 @@ input:-webkit-autofill {
 .modal {
   z-index: 100000 !important;
 }
+
+.star-input {
+  display: none;
+}
