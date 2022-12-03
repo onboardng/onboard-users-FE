@@ -7,7 +7,7 @@ const LargeInputBox = ({ label, iconId, placeholder, handleChange, value, name, 
       <Icon width={24} height={24} id={iconId} />
       <div className="flex flex-col gap-3">
         <h2 className="text-[14px] md:text-[16px]">{label}</h2>
-        <input name={name} value={value} onChange={handleChange} onFocus={onFocus} onBlur={onBlur} type="text" placeholder={placeholder} className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent border-transparent border-2 focus-within:border-primary  w-full" />
+        <input name={name} value={value} onChange={handleChange} onFocus={onFocus} onBlur={onBlur} type="text" placeholder={placeholder} className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent border-transparent border-2 focus-within:border-primary  w-full rounded-[8px]" />
       </div>
     </div>
   );

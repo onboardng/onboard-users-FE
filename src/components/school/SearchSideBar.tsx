@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Icon from "../Icons";
 import InputBox from "../InputBox";
+import Ratings from '../Shared/Ratings'
 
 const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
+  const [rating, setRating] = useState<number>(0)
   return (
     <div
       className={` bg-white rounded-xl  ${
@@ -20,12 +22,8 @@ const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
         <InputBox placeholder="Enter name here" height={24} width={24} />
         <p className="text-[14px] text-[#8B8BA4] mt-1">Press enter to search</p>
         <p className="mt-[30px] font-semibold">Rating</p>
-        <div className="flex gap-2 mt-[14px]">
-          {Array(5)
-            .fill("")
-            .map((_, index) => (
-              <Icon id="star-icon" width={18} height={17} key={index} />
-            ))}
+        <div className=" mt-[14px]">
+          <Ratings ratings={rating} size='large' />
         </div>
         <p className="text-xs mt-1 text-grey-500">Select a star to set rating parameter</p>
       </div>

@@ -55,7 +55,7 @@ const LargeSelectBox = ({ placeholder, options, handleChange, disabled, value, n
             onChange={(val)=>handleChange(val)}
             isDisabled={disabled}
             isLoading={loading}
-            className="border-transparent border-2 focus-within:border-primary "
+            className="border-transparent border-2 focus-within:border-primary rounded-[8px]"
         />
     </>
   )

@@ -7,6 +7,7 @@ const initialState = {
     last_name: "",
     email: "",
     profile_picture: "",
+    avatar: "",
   },
   authorization: { access_token: "" },
 };
