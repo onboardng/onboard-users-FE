@@ -60,7 +60,7 @@ const ApplySchoolCom = () => {
       <div className="md:w-[70%] bg-white rounded-[20px]">
         <div className="md:px-10 px-5">
           <div className="flex items-center border-dashed border-b-2 border-[#DADAE7] md:py-5 py-2.5">
-            <img src={carouselImage} className="w-[50px] h-[50px] rounded-[6px] " alt="Apply" />
+            {/* <img src={carouselImage} className="w-[50px] h-[50px] rounded-[6px] " alt="Apply" /> */}
             <p className="px-3 font-medium text-[14px] leading-[22.4px] md:font-bold md:text-[16px] md:leading-[25.6px] capitalize">
               BSC. in {Course?.data?.name} <span className="md:font-medium capitalize">at</span> {Course?.data?.university_name}
             </p>
