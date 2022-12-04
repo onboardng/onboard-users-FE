@@ -1,18 +1,18 @@
-import { CourseData } from "../../utils/interfaces";
 import Icon from "../Icons";
 import Modal from "../Modal/Modal";
 import ModalClose from "../Modal/ModalClose";
 import ApplySchool from "../school/PopUpContent/ApplySchool";
 import dayjs from 'dayjs';
+import { Course } from "../../interfaces";
 
-const AdmissionsCard = ({course}: { course: Partial<CourseData> }) => {
+const AdmissionsCard = ({course}: { course: Course }) => {
   return (
     <div className="my-5 bg-white relative rounded-[10px]">
       <div className="md:px-10 px-5 pt-5">
         <div className="flex w-full justify-between items-center border-b-[1px] pb-5">
           <div className="">
             <p className="text-[16px] leading-[25.6px] font-medium md:text-[20px] md:leading-[32px] capitalize">{course?.name}</p>
-            <p className="md:text-[16px] md:leading-[25.6px] text-[14px] leading-[22.4px] text-[#8B8BA4]">Application closes on {dayjs(course?.available_diet?.application_closing).format("D MMM, YYYY")}</p>
+            <p className="md:text-[16px] md:leading-[25.6px] text-[14px] leading-[22.4px] text-[#8B8BA4]">Application closes on {dayjs(course?.application_closing).format("D MMM, YYYY")}</p>
           </div>
           <Modal
             trigger={
@@ -26,7 +26,7 @@ const AdmissionsCard = ({course}: { course: Partial<CourseData> }) => {
               <div>
                 <ModalClose close={close} />
                 <div className="p-[20px] md:p-[30px] w-[80vw] md:w-[50vw] max-h-[76vh] overflow-scroll">
-                  <ApplySchool course={course} close={close} />
+                  <ApplySchool course={course} close={close} courseId={course.id} />
                 </div>
               </div>
             )}
@@ -49,7 +49,7 @@ const AdmissionsCard = ({course}: { course: Partial<CourseData> }) => {
             <div>
               <ModalClose close={close} />
               <div className="p-[20px] md:p-[30px] w-[80vw] md:w-[50vw] max-h-[76vh] overflow-scroll">
-                <ApplySchool course={course} close={close} />
+                <ApplySchool course={course} close={close} courseId={course.id} />
               </div>
             </div>
           )}
