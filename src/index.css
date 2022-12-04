@@ -35,9 +35,14 @@ input:-webkit-autofill {
 }
 
 .modal {
-  z-index: 100000 !important;
+  z-index: 1000 !important;
 }
 
 .star-input {
   display: none;
+}
+
+.pop-up {
+  z-index: 10000 !important;
+  backdrop-filter: blur(4px);
 }

@@ -14,6 +14,8 @@ import FileBox from "../InputBox/FileBox";
 import InputSelect from "../InputSelect";
 import PageLoader from "../Loader/PageLoader";
 import Spinner from "../Loader/Spinner";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const ApplySchoolCom = () => {
   const { handleClick, onChange, imageRef, image } = useUploadImage();
@@ -22,6 +24,7 @@ const ApplySchoolCom = () => {
   const [phoneCode, setPhoneCode] = useState("+234");
   const { data: Course, isLoading: loading } = useGetACourseQuery(id as string);
   const navigate = useNavigate();
+  const { user } = useSelector((store: RootState) => store.authStore)
 
   const { values, handleChange, handleSubmit, handleBlur, touched, errors, setFieldValue } = useFormik({
     initialValues: initialApplicationValues,
@@ -196,7 +199,7 @@ const ApplySchoolCom = () => {
       </div>
       <div className="md:w-[30%] tab:hidden pl-5">
         <div className="bg-white rounded-[10px] px-5 py-10">
-          <h5 className="md:text-[20px] md:leading-[32px]">John Doe</h5>
+          <h5 className="md:text-[20px] md:leading-[32px]">{user.first_name}, {user.last_name}</h5>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">School</h5>
             <p className="md:text-[20px] md:leading-[32px] capitalize">{Course?.data?.university_name}</p>

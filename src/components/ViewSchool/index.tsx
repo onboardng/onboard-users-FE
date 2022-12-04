@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import { FiChevronRight, FiPlus, FiSearch } from 'react-icons/fi'
 import { HiMapPin, HiXCircle } from 'react-icons/hi2'
 import { useSelector } from 'react-redux'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import { useHttpRequest } from '../../hooks/useHttpRequest'
 import { Course, PaginationProps, UniversityResponse } from '../../interfaces'
@@ -10,6 +10,8 @@ import PageLoader from "../../components/Loader/PageLoader";
 import { RootState } from '../../redux/store'
 import AddRating from './AddRatings'
 import Pagination from '../Pagination/Pagination'
+import Ratings from '../Shared/Ratings'
+import ApplySchool from '../school/PopUpContent/ApplySchool'
 
 // const baseUrl = process.env.REACT_APP_BACKEND_API
 const baseUrl = "https://app.onboard.com.ng/onboard/v1"
@@ -22,6 +24,14 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [page, setPage] = useState<number>(1)
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false)
   const { authorization: { access_token }} = useSelector((store: RootState) => store.authStore)
+
+  interface PopupProps {
+    open: boolean
+    course: Course | null
+    courseId: string | undefined
+  }
+  const [openPopup, setOpenPopup] = useState<PopupProps>({open: false, course: null, courseId: ""})
+  const closePop = () => setOpenPopup({open: false, course: null, courseId: ""})
 
   const [paginationEl, setPaginationEl] = useState<PaginationProps | null>(null)
   const [searchParams, setSearchParams] = useSearchParams();
@@ -73,6 +83,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   return (
     <>
     {isAddingReview && <AddRating onClose={() => setIsAddingReview(false)} />}
+    {openPopup.open && <ApplySchool close={() => closePop()} course={openPopup.course} courseId={openPopup.courseId} />}
     {universityData && (
       <div className='w-full flex flex-row gap-[32px] px-5'>
         <div className='flex flex-col items-center'>
@@ -98,7 +109,12 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
         <div className='flex flex-grow flex-col'>
           <p className='font-[600] text-[40px] leading-[56px] text-black capitalize mb-[14px]'>{universityData?.university?.name}</p>
           <div className='flex flex-col mb-[10px]'>
-            <p>Ratings: {universityData.university.ratings}</p>
+            {universityData?.university?.ratings && universityData?.university.ratings === null ? (
+                <Ratings ratings={0} size='large' disabled />
+              ) : ( 
+                <Ratings ratings={universityData.university.ratings} size='large' disabled />
+            )}
+            <p className='font-normal text-sm leading-[26px]'>{universityData?.university?.ratings || '0'} ratings total</p>
           </div>
           <div className='flex items-center gap-[8px] my-[20px]'>
             <HiMapPin className='text-primary' />
@@ -127,23 +143,23 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
               {courses.map((course, index) => (
                 <div key={index} className='w-full flex flex-col p-[20px] bg-white rounded-[10px]'>
                   <div className='w-full flex items-center justify-between'>
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col w-[60%]'>
                       <p className='font-[500] text-lg leading-8 capitalize mb-[5px]'>{course?.name}</p>
                       <p className='font-[500] text-sm leading-[26px] text-[#8B8BA4]'>
                         Application closes on {course?.application_closing && new Date(course?.application_closing).toDateString()}
                       </p>
                     </div>
-                    <Link to={`/schools/${course?.id}/apply`} className='w-[158px] h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
+                    <button onClick={() => setOpenPopup({open: true, course: course, courseId: course?.id})} className='w-[158px] h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
                       apply now
                       <FiChevronRight />
-                    </Link>
+                    </button>
                   </div>
                   <hr className='w-full h-[1px] bg-[#DADAE7] mt-3 mb-5' />
                   <div className='w-full'>
                     <p className='first-letter:capitalize font-medium text-base leading-[22px] text-[#8B8BA4]'>{course?.description}</p>
                   </div>
                 </div>
-              ))}
+              ))} 
               </>
             )}
           </div>

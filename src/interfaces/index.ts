@@ -136,3 +136,42 @@ export interface NewCourse {
     tuition: number
     update_at: string | Date
 }
+
+export interface AvailableDiet {
+    AdmissionId: string
+    CourseId: string
+    added_by: string
+    application_closing: string | Date
+    application_fees: any
+    application_opening: string
+    class_diet: string
+    class_year: number
+    course_name: string
+    course_tuition: number
+    created_at: string
+    id: string
+    status_of_admission: string
+    total_applicants: number
+    updated_at: string | Date
+}
+
+export interface Courses {
+    ProgramId: string
+    UniversityId: string
+    application_closing: string
+    application_opening: string
+    available_diet: AvailableDiet
+    conversion_rate: string
+    country: string
+    created_at: string | Date
+    description: string
+    id: string
+    name: string
+    price_in_naira: number
+    program: string
+    service_charge: any
+    total_applicants: number
+    tuition: number
+    university_name: string
+    updated_at: string | Date
+}
