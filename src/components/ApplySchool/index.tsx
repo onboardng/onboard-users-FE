@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import carouselImage from "../../assets/Image Card.svg";
@@ -8,7 +8,6 @@ import { useCreateApplicationMutation, useGetACourseQuery } from "../../redux/se
 import { ApplicationSchema, initialApplicationValues } from "../../schemas/AuthSchema";
 import { countryCodes } from "../../utils/selectOptions";
 import Button from "../Button/Button";
-import Icon from "../Icons";
 import InputBox from "../InputBox";
 import FileBox from "../InputBox/FileBox";
 import InputSelect from "../InputSelect";
@@ -16,6 +15,8 @@ import PageLoader from "../Loader/PageLoader";
 import Spinner from "../Loader/Spinner";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { FiChevronRight } from 'react-icons/fi'
+import { Envelope, Upload } from '../../assets/icons'
 
 const ApplySchoolCom = () => {
   const { handleClick, onChange, imageRef, image } = useUploadImage();
@@ -25,6 +26,9 @@ const ApplySchoolCom = () => {
   const { data: Course, isLoading: loading } = useGetACourseQuery(id as string);
   const navigate = useNavigate();
   const { user } = useSelector((store: RootState) => store.authStore)
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [numberOfStudent, setNumberOfStudent] = useState<number>(1)
 
   const { values, handleChange, handleSubmit, handleBlur, touched, errors, setFieldValue } = useFormik({
     initialValues: initialApplicationValues,
@@ -75,7 +79,7 @@ const ApplySchoolCom = () => {
                   name="first_name"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.first_name}
+                  value={user.first_name || values.first_name}
                   error={errors.first_name}
                   touched={touched.first_name}
                 />
@@ -89,7 +93,7 @@ const ApplySchoolCom = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   name="last_name"
-                  value={values.last_name}
+                  value={user.last_name || values.last_name}
                   error={errors.last_name}
                   touched={touched.last_name}
                 />
@@ -130,6 +134,7 @@ const ApplySchoolCom = () => {
 
                   <div className="py-3">
                     <InputBox
+                      icon={<Envelope />}
                       iconId="green-mail-icon"
                       height={24}
                       width={24}
@@ -141,13 +146,14 @@ const ApplySchoolCom = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       name="email"
-                      value={values.email}
+                      value={user.email || values.email}
                       error={errors.email}
                       touched={touched.email}
                     />
                   </div>
                   <label className="py-3" htmlFor="uploadResult" onClick={handleClick}>
                     <FileBox
+                      icon={<Upload />}
                       iconId="upload-icon"
                       height={24}
                       width={24}
@@ -178,7 +184,7 @@ const ApplySchoolCom = () => {
                       className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto"
                     >
                       <p className="text-center">Proceed</p>
-                      <Icon width={24} height={24} id="arrow-right-icon" />
+                      <FiChevronRight className='text-white' />
                     </Button>
                   </div>
                 </div>
@@ -194,7 +200,7 @@ const ApplySchoolCom = () => {
           className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto"
         >
           <p className="text-center">Proceed</p>
-          {isLoading ? <Spinner/> : <Icon width={24} height={24} id="arrow-right-icon" />}
+          {isLoading ? <Spinner/> : <FiChevronRight className='text-white' />}
         </button>
       </div>
       <div className="md:w-[30%] tab:hidden pl-5">
@@ -210,18 +216,20 @@ const ApplySchoolCom = () => {
           </div>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">Admission closes on</h5>
-            <p className="md:text-[20px] md:leading-[32px]">Jan 1, 2023</p>
+            <p className="md:text-[20px] md:leading-[32px]">
+              {Course?.data?.application_closing && new Date(Course?.data?.application_closing).toDateString()}
+            </p>
           </div>
         </div>
         <div className="bg-white rounded-[10px] px-5 my-10 py-10">
           <h5 className="md:text-[20px] md:leading-[32px]">Pricing</h5>
           <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] py-5">
-            <p className="md:text-[16px] md:leading-[25.6px]">1 Student</p>
-            <p className="md:text-[16px] md:leading-[25.6px]">₦10,000</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">{numberOfStudent} Student</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">${Course?.data?.tuition}</p>
           </div>
           <div className="flex justify-between items-center py-5">
             <p className="md:text-[16px] md:leading-[25.6px]">Total</p>
-            <p className="md:text-[20px] md:leading-[32px] font-semibold">₦10,000</p>
+            <p className="md:text-[20px] md:leading-[32px] font-semibold">${numberOfStudent * (Course?.data?.tuition)}</p>
           </div>
         </div>
       </div>

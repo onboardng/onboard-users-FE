@@ -18,6 +18,7 @@ const FileBox = ({
   error,
   touched,
   fullWidth,
+  icon,
 }: {
   fullWidth?: boolean;
   isRounded?: boolean;
@@ -40,6 +41,7 @@ const FileBox = ({
   error?: string;
   touched?: boolean;
   keyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  icon?: any
 }) => {
   return (
     <div className={`${fullWidth && "w-full"}`}>
@@ -48,11 +50,10 @@ const FileBox = ({
           {label} <span className="text-[#DA0000]">{label2}</span>
         </label>
       )}
-      <div className="flex gap-4 items-center justify-center relative md:justify-start w-full md:w-auto">
+      <div className="flex gap-4 items-center justify-center relative md:justify-start w-full md:w-auto border-2 border-[#DADAE7] rounded-[8px] pl-[15px]">
+        {icon && icon}
         <div
-          className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
-            iconId ? "pl-[40px]" : "pl-[20px]"
-          } pr-[20px] py-[17px] border-[1.5px] border-[#DADAE7] text-gray-400  ${isRounded && "rounded-[8px]"}`}
+          className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} pr-[20px] py-[17px] border-none text-gray-400  ${isRounded && "rounded-[8px]"}`}
         >
           {value || placeholder}
         </div>
