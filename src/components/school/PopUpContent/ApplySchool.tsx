@@ -53,7 +53,7 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
               <ClockAlt />
               <div className="font-medium text-sm leading-[26px]">
                 <>
-                Course Duration: 
+                Course Duration: {courseData?.duration} {courseData?.duration && courseData?.duration <= 1 ? 'Year' : 'Years'}
                 </>
               </div>
             </div>
@@ -89,7 +89,7 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
                 await close();
                 navigate(`/schools/${courseData?.id}/apply`);
               }}
-              className="w-[119px] h-[60px] bg-primary text-white rounded-[4px] flex items-center justify-center gap-[17px]"
+              className="w-[119px] h-[60px] bg-primary text-white rounded-[4px] flex items-center justify-center gap-[17px] cursor-pointer"
             >
               <p className="text-center">Apply </p>
               <FiChevronRight />

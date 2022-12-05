@@ -165,6 +165,7 @@ export interface Courses {
     country: string
     created_at: string | Date
     description: string
+    duration?: number
     id: string
     name: string
     price_in_naira: number

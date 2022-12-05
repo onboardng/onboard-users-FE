@@ -136,7 +136,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
               onChange={formik.handleChange}
               type="text"
               placeholder="Select Course"
-              className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent border-transparent border-2 focus-within:border-primary  w-full"
+              className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent border-transparent border-2 focus-within:border-primary rounded-md w-full px-2"
             />
           </div>
         </div>

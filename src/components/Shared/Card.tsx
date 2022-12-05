@@ -7,6 +7,7 @@ import { School } from '../../interfaces'
 import Backdrop from './Backdrop'
 import image from '../../assets/univ.jpg'
 import Ratings from './Ratings'
+import Carousel from './Carousel'
 
 const Card:React.FC<School> = ({country, created_at, description, id, name, pictures, ratings, updated_at}) => {
     const [largeView, setLargeView] = useState<boolean>(false)
@@ -15,7 +16,8 @@ const Card:React.FC<School> = ({country, created_at, description, id, name, pict
     <>
     {largeView && (
         <Backdrop onClick={() => setLargeView(false)}>
-            <img src={`${pictures ? pictures[0] : image}`} alt={name} className='w-2/3 object-contain' />
+            {pictures && (<Carousel images={pictures} />)}
+            {/* // <img src={`${pictures ? pictures[0] : image}`} alt={name} className='w-2/3 object-contain' /> */}
         </Backdrop>
     )}
     <div className='w-[400px] flex flex-col gap-[30px] bg-white'>
