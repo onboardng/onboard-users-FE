@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import carouselImage from "../../assets/Image Card.svg";
+// import carouselImage from "../../assets/Image Card.svg";
 import useUploadImage from "../../hooks/useUploadImage";
 import { useCreateApplicationMutation, useGetACourseQuery } from "../../redux/services";
 import { ApplicationSchema, initialApplicationValues } from "../../schemas/AuthSchema";
@@ -79,7 +79,7 @@ const ApplySchoolCom = () => {
                   name="first_name"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={user.first_name || values.first_name}
+                  value={values.first_name}
                   error={errors.first_name}
                   touched={touched.first_name}
                 />
@@ -93,7 +93,7 @@ const ApplySchoolCom = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   name="last_name"
-                  value={user.last_name || values.last_name}
+                  value={values.last_name}
                   error={errors.last_name}
                   touched={touched.last_name}
                 />
@@ -146,7 +146,7 @@ const ApplySchoolCom = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       name="email"
-                      value={user.email || values.email}
+                      value={values.email}
                       error={errors.email}
                       touched={touched.email}
                     />
