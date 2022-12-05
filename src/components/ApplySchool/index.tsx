@@ -135,7 +135,6 @@ const ApplySchoolCom = () => {
                   <div className="py-3">
                     <InputBox
                       icon={<Envelope />}
-                      iconId="green-mail-icon"
                       height={24}
                       width={24}
                       placeholder="Email here"
