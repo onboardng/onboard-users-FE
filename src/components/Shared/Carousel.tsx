@@ -21,7 +21,7 @@ const Carousel:React.FC<Props> = ({images}) => {
             <FiChevronRight />
         </button>
         {images.map((image: string, index: number) => (
-            <div key={index} className={`w-2/3 ${index === current ? '' : ''}`}>
+            <div key={index} className={`w-full h-[700px] ${index === current ? 'block duration-700 ease-in-out' : 'hidden duration-700 ease-in-out'}`}>
                 {index === current && <img src={image} alt='pic' className='w-full h-full object-cover' />}
             </div>
         ))}

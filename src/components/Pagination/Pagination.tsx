@@ -24,7 +24,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         }
       };
     
-      let lastPage = paginationRange[paginationRange.length - 1];
+      let lastPage = paginationRange && paginationRange[paginationRange?.length - 1];
       return (
         <div className="pb-6 pt-2" >
             <div className="flex justify-center md:justify-end">
@@ -37,7 +37,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
                 >
                     <span className="text-[16px] font-normal cursor-pointer relative block py-0.5 px-2 rounded border-0 bg-transparent outline-none transition-all duration-300" >Previous</span>
                 </li>
-                {paginationRange.map((pageNumber: any, index: number) => {
+                {paginationRange?.map((pageNumber: any, index: number) => {
                     if (pageNumber === DOTS) {
                     return <li key={index} className="pagination-item dots">&#8230;</li>;
                     }

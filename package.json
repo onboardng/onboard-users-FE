@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@manaflair/redux-batch": "^1.0.0",
+    "@react-oauth/google": "^0.5.1",
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

@@ -118,7 +118,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
           </div>
           <div className='flex items-center gap-[8px] my-[20px]'>
             <HiMapPin className='text-primary' />
-            <p className='font-[500] text-lg leading-8'>{universityData?.university.address}</p>
+            <p className='font-[500] text-lg leading-8'>{universityData?.university.address}, {universityData?.university?.country}</p>
           </div>
           <div className='w-full'>
             <p className='w-full font-[500] text-base leading-[22px]'>{universityData.university.description}</p>
@@ -134,13 +134,13 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
             </div>
           </div>
           <div className='w-full flex flex-col gap-[20px] mt-[20px]'>
-            {courses && courses.length === 0 ? (
+            {courses && courses?.length === 0 ? (
               <div>
                 <p>No courses available.</p>
               </div>
             ) : (
               <>
-              {courses.map((course, index) => (
+              {courses?.map((course, index) => (
                 <div key={index} className='w-full flex flex-col p-[20px] bg-white rounded-[10px]'>
                   <div className='w-full flex items-center justify-between'>
                     <div className='flex flex-col w-[60%]'>

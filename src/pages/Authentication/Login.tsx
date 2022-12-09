@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import InputBox from "../../components/InputBox";
 import { Link, useNavigate } from "react-router-dom";
 import AuthScreen from "../../components/Authentication/AuthScreen";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUserLoginMutation } from "../../redux/services";
 import { useFormik } from "formik";
 import { initialSigninValues, LoginSchema } from "../../schemas/AuthSchema";
@@ -11,6 +11,11 @@ import { toast } from "react-toastify";
 import Button from "../../components/Button/Button";
 import { useDispatch } from "react-redux";
 import { setLoginUser } from "../../redux/slices/auth";
+
+import { useHttpRequest } from "../../hooks/useHttpRequest";
+import PageLoader from "../../components/Loader/PageLoader";
+
+const baseUrl = process.env.REACT_APP_BACKEND_API
 
 const Login = () => {
   const [login, { data, isLoading, isSuccess, isError, error }] = useUserLoginMutation();
@@ -40,6 +45,25 @@ const Login = () => {
       toast.error(error?.data?.message);
     }
   }, [data, isLoading, isSuccess, isError, error, resetForm, navigate, dispatch]);
+
+  const {loading, sendRequest} = useHttpRequest()
+
+  const googleAuthentication = async() => {
+    try {
+      const data = await sendRequest(`${baseUrl}/auth/google-passport`, 'GET', null, )
+      if(!data || data === undefined) return
+      toast.success("Login successful");
+      dispatch(setLoginUser(data));
+      navigate("/");
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    error && toast.error(`${error}`)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+  if(loading) return <PageLoader />
 
   return (
     <AuthScreen title={"Welcome Back"} subtitle={"Sign in to have access to your account"}>
@@ -94,10 +118,10 @@ const Login = () => {
       <div className="flex justify-center md:justify-end mt-5">
         <div className="flex items-center gap-4 text-base md:flex-row flex-col">
           <p>You can also sign in with</p>
-          <div className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
+          <button onClick={() => googleAuthentication()} type='button' className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
             <FcGoogle />
             <p className="text-sm font-medium text-green">Google</p>
-          </div>
+          </button>
         </div>
       </div>
 
