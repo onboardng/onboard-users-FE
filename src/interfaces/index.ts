@@ -86,7 +86,9 @@ export interface PaginationProps {
     hasPrevPage?: boolean
     pageCount: number
     perPage: number
+    no_of_schools: number
     totalDocs: number
+    totalPages: number
 }
 
 export interface School {
@@ -100,21 +102,8 @@ export interface School {
     updated_at: string | Date
 }
 
-interface CourseData {
-    count: number
-    rows: Array<NewCourse>
-}
-interface SchoolData {
-    count: number
-    rows: Array<School>
-}
-
 export interface SchoolResponse extends PaginationProps {
-    data: SchoolData
-}
-
-export interface CourseResponse extends PaginationProps {
-    data: CourseData
+    foundSchools: Array<School>
 }
 
 export interface NewCourse {
@@ -175,4 +164,19 @@ export interface Courses {
     tuition: number
     university_name: string
     updated_at: string | Date
+}
+
+export interface State {
+    name: string
+    state_code: string
+}
+
+export interface Country {
+    name: string
+    ios3: string
+    states: Array<State>
+}
+
+export interface CountryList {
+    data: Array<Country>
 }

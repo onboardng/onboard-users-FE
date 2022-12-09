@@ -2,9 +2,8 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useSearchParams } from 'react-router-dom'
 import Icon from "../Icons";
 import Card from "../Shared/Card";
-import Card2 from "../Shared/Card2"
-import { CourseResponse, NewCourse, School, SchoolResponse } from "../../interfaces";
-// import Pagination from "../Pagination/Pagination";
+import { School, SchoolResponse } from "../../interfaces";
+import Pagination from "../Pagination/Pagination";
 // import { useHttpRequest } from "../../hooks/useHttpRequest";
 
 const SearchMain = ({
@@ -22,34 +21,33 @@ const SearchMain = ({
   const course_name = searchQuery.get("course_name")
   const program_name = searchQuery.get("program_name")
 
-  const [courses, setCourses] = useState<CourseResponse | null>(null)
   const [schools, setSchools] = useState<SchoolResponse | null>(null)
   
   const destructureData = () => {
     if(data) {
-      const { data: { courses, schools}} = data
-      setCourses(courses)
-      setSchools(schools)
+      setSchools(data?.data)
     }
   }
 
-  // const [page, setPage] = useState<number>(1)
+  const [page, setPage] = useState<number>(1)
 
-  // useEffect(() => {
-  //   setPage(parseInt(searchParams?.get('page') || "1"));
-  // }, [searchParams])
+  useEffect(() => {
+    setPage(parseInt(searchParams?.get('page') || "1"));
+  }, [searchParams])
 
-  // const onPageChange = (page: number) => {
-  //   setSearchParams({page: page.toString()})
-  // }
+  const onPageChange = (page: number) => {
+    setSearchParams({page: page.toString()})
+  }
 
-  // const handlePagination = () => {
-  //   if(schools) {
-  //     return <Pagination onPageChange={onPageChange} pageSize={10} currentPage={page} totalCount={schools?.totalDocs} />
-  //   } else {
-  //     return <></>
-  //   }
-  // }
+  const handlePagination = () => {
+    if(schools) {
+      if(schools?.no_of_schools > 10) {
+        return <Pagination onPageChange={onPageChange} pageSize={10} currentPage={page} totalCount={schools?.no_of_schools} />
+      } else {
+        return <></>
+      }
+    }
+  }
 
   useEffect(() => {
     destructureData()
@@ -95,27 +93,16 @@ const SearchMain = ({
         </div>
       </div>
 
-      <div className="my-8">
-        {courses && courses?.data?.rows?.length > 0 && (
-          <div className="font-bold text-lg leading-8">
-            {courses?.data?.rows?.length < 2 ? '1 university found' : `${courses?.data?.rows?.length} universities found.`}
-          </div>
-        )}
-      </div>
-
       <div className="my-10">
-        {(courses || schools) && (courses?.data?.rows?.length === 0 || schools?.data?.rows?.length === 0) ? (
-          <p className="my-5 text-lg">No data found. Please try a new search.</p>
-        ): (
+        {schools && (
           <div className="flex flex-wrap items-center justify-evenly gap-[30px]">
-            {schools?.data?.rows?.map((school: School) => <Card key={school.id} {...school} />)}
-            {courses?.data?.rows?.map((course: NewCourse, index: number) => <Card2 key={course.id} {...course} />)}
+            {schools?.foundSchools?.map((school: School) => <Card key={school.id} {...school} />)}
           </div>
         )}
       </div>
       <div id="bookhere"></div>
       {/* pagination */}
-      {/* {handlePagination()} */}
+      {handlePagination()}
     </div>
   );
 };

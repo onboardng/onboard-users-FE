@@ -7,7 +7,7 @@ export const courseApi = createApi({
     baseQuery: baseQueryWithReauth as BaseQueryFn<string | FetchArgs, unknown, CustomError, Record<string, any>>,
     endpoints: (builder) => ({
         getAllCourses: builder.query<any, { page: number, limit: number }>({
-            query: ({ page, limit }) => createRequestWithParams('course/all/', { page, limit }),
+            query: ({ page, limit }) => createRequestWithParams('course/big-search/', { page, limit }),
             providesTags: (result, _error, _arg) => result?.data ? [...result?.data?.courses?.data?.rows?.map(({ id }: { id: string })=> ({type: "courses", id})), "courses"] : ["courses"],
         }),
 
