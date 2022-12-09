@@ -1,0 +1,8 @@
+export { default as Airplane } from './Airplane'
+export { default as AlertTriangle } from './AlertTriangle'
+export { default as Book } from './Book'
+export { default as GraduationCap } from './GraduationCap'
+export { default as Hotel } from './Hotel'
+export { default as LocationPin } from './LocationPin'
+export { default as School } from './School'
+export { default as VisaCard } from './VisaCard'

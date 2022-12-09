@@ -1,19 +1,22 @@
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import carouselImage from "../../assets/Image Card.svg";
+// import carouselImage from "../../assets/Image Card.svg";
 import useUploadImage from "../../hooks/useUploadImage";
 import { useCreateApplicationMutation, useGetACourseQuery } from "../../redux/services";
 import { ApplicationSchema, initialApplicationValues } from "../../schemas/AuthSchema";
 import { countryCodes } from "../../utils/selectOptions";
 import Button from "../Button/Button";
-import Icon from "../Icons";
 import InputBox from "../InputBox";
 import FileBox from "../InputBox/FileBox";
 import InputSelect from "../InputSelect";
 import PageLoader from "../Loader/PageLoader";
 import Spinner from "../Loader/Spinner";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { FiChevronRight } from 'react-icons/fi'
+import { Envelope, Upload } from '../../assets/icons'
 
 const ApplySchoolCom = () => {
   const { handleClick, onChange, imageRef, image } = useUploadImage();
@@ -22,6 +25,10 @@ const ApplySchoolCom = () => {
   const [phoneCode, setPhoneCode] = useState("+234");
   const { data: Course, isLoading: loading } = useGetACourseQuery(id as string);
   const navigate = useNavigate();
+  const { user } = useSelector((store: RootState) => store.authStore)
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [numberOfStudent, setNumberOfStudent] = useState<number>(1)
 
   const { values, handleChange, handleSubmit, handleBlur, touched, errors, setFieldValue } = useFormik({
     initialValues: initialApplicationValues,
@@ -53,7 +60,7 @@ const ApplySchoolCom = () => {
       <div className="md:w-[70%] bg-white rounded-[20px]">
         <div className="md:px-10 px-5">
           <div className="flex items-center border-dashed border-b-2 border-[#DADAE7] md:py-5 py-2.5">
-            <img src={carouselImage} className="w-[50px] h-[50px] rounded-[6px] " alt="Apply" />
+            {/* <img src={carouselImage} className="w-[50px] h-[50px] rounded-[6px] " alt="Apply" /> */}
             <p className="px-3 font-medium text-[14px] leading-[22.4px] md:font-bold md:text-[16px] md:leading-[25.6px] capitalize">
               BSC. in {Course?.data?.name} <span className="md:font-medium capitalize">at</span> {Course?.data?.university_name}
             </p>
@@ -127,7 +134,7 @@ const ApplySchoolCom = () => {
 
                   <div className="py-3">
                     <InputBox
-                      iconId="green-mail-icon"
+                      icon={<Envelope />}
                       height={24}
                       width={24}
                       placeholder="Email here"
@@ -145,6 +152,7 @@ const ApplySchoolCom = () => {
                   </div>
                   <label className="py-3" htmlFor="uploadResult" onClick={handleClick}>
                     <FileBox
+                      icon={<Upload />}
                       iconId="upload-icon"
                       height={24}
                       width={24}
@@ -175,7 +183,7 @@ const ApplySchoolCom = () => {
                       className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto"
                     >
                       <p className="text-center">Proceed</p>
-                      <Icon width={24} height={24} id="arrow-right-icon" />
+                      <FiChevronRight className='text-white' />
                     </Button>
                   </div>
                 </div>
@@ -191,12 +199,12 @@ const ApplySchoolCom = () => {
           className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto"
         >
           <p className="text-center">Proceed</p>
-          {isLoading ? <Spinner/> : <Icon width={24} height={24} id="arrow-right-icon" />}
+          {isLoading ? <Spinner/> : <FiChevronRight className='text-white' />}
         </button>
       </div>
       <div className="md:w-[30%] tab:hidden pl-5">
         <div className="bg-white rounded-[10px] px-5 py-10">
-          <h5 className="md:text-[20px] md:leading-[32px]">John Doe</h5>
+          <h5 className="md:text-[20px] md:leading-[32px]">{user.first_name}, {user.last_name}</h5>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">School</h5>
             <p className="md:text-[20px] md:leading-[32px] capitalize">{Course?.data?.university_name}</p>
@@ -207,18 +215,20 @@ const ApplySchoolCom = () => {
           </div>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">Admission closes on</h5>
-            <p className="md:text-[20px] md:leading-[32px]">Jan 1, 2023</p>
+            <p className="md:text-[20px] md:leading-[32px]">
+              {Course?.data?.application_closing && new Date(Course?.data?.application_closing).toDateString()}
+            </p>
           </div>
         </div>
         <div className="bg-white rounded-[10px] px-5 my-10 py-10">
           <h5 className="md:text-[20px] md:leading-[32px]">Pricing</h5>
           <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] py-5">
-            <p className="md:text-[16px] md:leading-[25.6px]">1 Student</p>
-            <p className="md:text-[16px] md:leading-[25.6px]">₦10,000</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">{numberOfStudent} Student</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">${Course?.data?.tuition}</p>
           </div>
           <div className="flex justify-between items-center py-5">
             <p className="md:text-[16px] md:leading-[25.6px]">Total</p>
-            <p className="md:text-[20px] md:leading-[32px] font-semibold">₦10,000</p>
+            <p className="md:text-[20px] md:leading-[32px] font-semibold">${numberOfStudent * (Course?.data?.tuition)}</p>
           </div>
         </div>
       </div>

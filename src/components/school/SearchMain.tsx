@@ -1,8 +1,10 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useSearchParams } from 'react-router-dom'
 import Icon from "../Icons";
-
 import Card from "../Shared/Card";
-import { CardProps } from "../../interfaces";
+import { School, SchoolResponse } from "../../interfaces";
+import Pagination from "../Pagination/Pagination";
+// import { useHttpRequest } from "../../hooks/useHttpRequest";
 
 const SearchMain = ({
   showEdit,
@@ -11,14 +13,52 @@ const SearchMain = ({
 }: {
   showEdit: Dispatch<SetStateAction<boolean>>;
   setShowFilter: typeof showEdit;
-  data: any;
+  data: any
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchQuery = searchParams
+  const country_name = searchQuery.get("country_name")
+  const course_name = searchQuery.get("course_name")
+  const program_name = searchQuery.get("program_name")
+
+  const [schools, setSchools] = useState<SchoolResponse | null>(null)
+  
+  const destructureData = () => {
+    if(data) {
+      setSchools(data?.data)
+    }
+  }
+
+  const [page, setPage] = useState<number>(1)
+
+  useEffect(() => {
+    setPage(parseInt(searchParams?.get('page') || "1"));
+  }, [searchParams])
+
+  const onPageChange = (page: number) => {
+    setSearchParams({page: page.toString()})
+  }
+
+  const handlePagination = () => {
+    if(schools) {
+      if(schools?.no_of_schools > 10) {
+        return <Pagination onPageChange={onPageChange} pageSize={10} currentPage={page} totalCount={schools?.no_of_schools} />
+      } else {
+        return <></>
+      }
+    }
+  }
+
+  useEffect(() => {
+    destructureData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
 
   return (
     <div className="md:w-[70%] w-full mx-5">
       <div className="py-7 px-5 flex md:flex-row flex-col items-center justify-between bg-white rounded-xl">
         <p className="text-md">
-          University in <b>Lagos Nigeria,</b> offering <b>BSc.</b> for <b>Political Science</b>
+          University {country_name && <b>in {country_name}</b>} offering {program_name && <b>{program_name} program in</b>} {course_name && <b>{course_name}</b>}
         </p>
         <div className="flex items-center gap-3 mt-4 md:mt-0 rounded-xl">
           <div
@@ -53,24 +93,16 @@ const SearchMain = ({
         </div>
       </div>
 
-      <div className="my-8">
-        {data && data?.length > 0 && (
-          <div className="font-bold text-lg leading-8">
-            {data?.length < 2 ? '1 university found' : `${data?.length} universities found.`}
-          </div>
-        )}
-      </div>
-
       <div className="my-10">
-        {data && data?.length === 0 ? (
-          <p className="my-5 text-lg">No data found. Please try a new search.</p>
-        ): (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] mb-4">
-            {data?.map((result:CardProps) => <Card key={result.id} {...result} />)}
+        {schools && (
+          <div className="flex flex-wrap items-center justify-evenly gap-[30px]">
+            {schools?.foundSchools?.map((school: School) => <Card key={school.id} {...school} />)}
           </div>
         )}
       </div>
       <div id="bookhere"></div>
+      {/* pagination */}
+      {handlePagination()}
     </div>
   );
 };

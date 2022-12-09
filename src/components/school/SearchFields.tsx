@@ -102,7 +102,6 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
             <h2 className="text-[14px] md:text-[16px]">Country</h2>
             <LargeSelectBox
               value={formik.values.country_name}
-              disabled
               matches={matches}
               name="country_name"
               placeholder="Enter Country"
@@ -129,7 +128,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
         </div>{" "}
         <div className="bg-grey-600 text-grey-500 flex gap-4 rounded-xl items-center h-full px-2 md:px-8 py-6">
           <Icon width={24} height={24} id="course-icon" />
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 w-full">
             <h2 className="text-[14px] md:text-[16px]">Course</h2>
             <input
               name="course_name"
@@ -137,14 +136,13 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
               onChange={formik.handleChange}
               type="text"
               placeholder="Select Course"
-              className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent"
+              className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent border-transparent border-2 focus-within:border-primary rounded-md w-full px-2"
             />
           </div>
         </div>
       </div>
       <button
         type="button"
-        disabled={!formik.values.program_name || !formik.values.course_name}
         onClick={() => formik.handleSubmit()}
         className="w-full col-span-2 cursor-pointer justify-center bg-green text-white flex gap-4 rounded-lg items-center px-[30px] py-[22px] disabled:bg-gray-500"
       >

@@ -29,3 +29,20 @@ body {
   margin: 0;
   overflow-x: hidden;
 }
+
+input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.modal {
+  z-index: 1000 !important;
+}
+
+.star-input {
+  display: none;
+}
+
+.pop-up {
+  z-index: 10000 !important;
+  backdrop-filter: blur(4px);
+}
