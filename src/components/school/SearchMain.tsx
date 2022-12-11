@@ -19,6 +19,7 @@ const SearchMain = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const searchQuery = searchParams
+  const school_name = searchQuery.get("school_name")
   const country_name = searchQuery.get("country_name")
   const course_name = searchQuery.get("course_name")
   const program_name = searchQuery.get("program_name")
@@ -35,7 +36,8 @@ const SearchMain = ({
   const getMoreUniversity = async(page: string) => {
     const headers = { 'Content-Type': 'application/json' }
     try {
-      const data = await sendRequest(`${baseUrl}/course/big-search?limit=10&page=${page}`, 'GET', null, headers)
+      const data = await sendRequest(
+        `${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
       if(!data || data === undefined) return
       console.log(data)
       setSchools(data?.data)
