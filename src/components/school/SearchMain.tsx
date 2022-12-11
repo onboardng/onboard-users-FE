@@ -4,7 +4,9 @@ import Icon from "../Icons";
 import Card from "../Shared/Card";
 import { School, SchoolResponse } from "../../interfaces";
 import Pagination from "../Pagination/Pagination";
-// import { useHttpRequest } from "../../hooks/useHttpRequest";
+import { useHttpRequest } from "../../hooks/useHttpRequest";
+
+const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
 const SearchMain = ({
   showEdit,
@@ -29,6 +31,17 @@ const SearchMain = ({
     }
   }
 
+  const { sendRequest } = useHttpRequest()
+  const getMoreUniversity = async(page: string) => {
+    const headers = { 'Content-Type': 'application/json' }
+    try {
+      const data = await sendRequest(`${baseUrl}/course/big-search?limit=10&page=${page}`, 'GET', null, headers)
+      if(!data || data === undefined) return
+      console.log(data)
+      setSchools(data?.data)
+    } catch(error) {}
+  }
+
   const [page, setPage] = useState<number>(1)
 
   useEffect(() => {
@@ -48,6 +61,11 @@ const SearchMain = ({
       }
     }
   }
+
+  useEffect(() => {
+    getMoreUniversity(page.toString())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[page])
 
   useEffect(() => {
     destructureData()
@@ -92,10 +110,10 @@ const SearchMain = ({
           </div>
         </div>
       </div>
-
-      <div className="my-10">
+      
+      <div className="w-full my-10">
         {schools && (
-          <div className="flex flex-wrap items-center justify-evenly gap-[30px]">
+          <div className="w-full flex flex-wrap items-center justify-between gap-[30px]">
             {schools?.foundSchools?.map((school: School) => <Card key={school.id} {...school} />)}
           </div>
         )}
