@@ -39,7 +39,6 @@ const SearchMain = ({
       const data = await sendRequest(
         `${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
       if(!data || data === undefined) return
-      console.log(data)
       setSchools(data?.data)
     } catch(error) {}
   }
@@ -52,6 +51,7 @@ const SearchMain = ({
 
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
+    window.scrollTo(0, 0)
   }
 
   const handlePagination = () => {
