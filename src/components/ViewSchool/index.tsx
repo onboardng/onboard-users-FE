@@ -61,6 +61,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
     getUniversityInfo(id)
+    window.scrollTo(0, 0)
   }
 
   const handlePagination = () => {
