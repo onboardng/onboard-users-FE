@@ -27,7 +27,7 @@ const Update = ({ imgSrc }: { imgSrc: string }) => {
     if(search.length > 0){searchApplication({tracking_id: search})}
   }
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2  mx-4 md:mx-12 space-x-0 md:items-start items-center bg-[#EDEDF2]" >
+    <div className="flex flex-col items-center md:flex-row bg-[#EDEDF2]">
       <img src={imgSrc} alt="update" className="w-full h-auto" />
       <div className="bg-[#EDEDF2] w-full p-[20px] md:p-[50px]">
         <h4 className="text-[20px] md:text-[28px] w-[239px] md:w-auto font-medium md:leading-[39px]">Get the update on your booking.</h4>
