@@ -12,11 +12,11 @@ import Button from "../../components/Button/Button";
 import { useDispatch } from "react-redux";
 import { setLoginUser } from "../../redux/slices/auth";
 
-import { useGoogleLogin } from '@react-oauth/google'
 import { useHttpRequest } from "../../hooks/useHttpRequest";
 import PageLoader from "../../components/Loader/PageLoader";
 
 const baseUrl = process.env.REACT_APP_BACKEND_API as string
+const clientId = process.env.REACT_APP_BACKEND_API as string
 
 const Login = () => {
   const [login, { data, isLoading, isSuccess, isError, error }] = useUserLoginMutation();
@@ -48,26 +48,18 @@ const Login = () => {
   }, [data, isLoading, isSuccess, isError, error, resetForm, navigate, dispatch]);
 
   const {loading, sendRequest} = useHttpRequest()
-  const googleAuth = useGoogleLogin({
-    onSuccess: async(response) => {
-      const token = response
-      console.log(token)
-      const payload = {
-        first_name: '',
-        last_name: '',
-        email: '',
-        avatar: ''
-      }
-      try {
-        const data = await sendRequest(`${baseUrl}/auth/google-passport/callback`, 'POST', JSON.stringify(payload), )
-        if(!data || data === undefined) return
-        toast.success("Login successful");
-        dispatch(setLoginUser(data));
-        navigate("/");
-      } catch (error) {}
-    },
-    onError: (response) => console.log(response),
-  })
+  const googleAuth = async() => {
+    const headers = { 'Content-Type': 'application/json' }
+    const payload = {  }
+    try {
+      const data = await sendRequest(`${baseUrl}/auth/google-passport/callback`, 'POST', JSON.stringify(payload), headers
+      )
+      if(!data || data === undefined) return
+      toast.success("Login successful");
+      dispatch(setLoginUser(data));
+      navigate("/");
+    } catch (error) {}
+  }
 
   useEffect(() => {
     error && toast.error(`${error}`)
@@ -129,7 +121,7 @@ const Login = () => {
       <div className="flex justify-center md:justify-end mt-5">
         <div className="flex items-center gap-4 text-base md:flex-row flex-col">
           <p>You can also sign in with</p>
-          <button onClick={() => googleAuth()} type='button' className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
+          <button onClick={() => {}} type='button' className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
             <FcGoogle />
             <p className="text-sm font-medium text-green">Google</p>
           </button>
