@@ -12,19 +12,22 @@ const SearchMain = ({
   showEdit,
   setShowFilter,
   data,
+  school_name
 }: {
   showEdit: Dispatch<SetStateAction<boolean>>;
   setShowFilter: typeof showEdit;
   data: any
+  school_name?: string
 }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const searchQuery = searchParams
-  const school_name = searchQuery.get("school_name")
+  // const school_name = searchQuery.get("school_name")
   const country_name = searchQuery.get("country_name")
   const course_name = searchQuery.get("course_name")
   const program_name = searchQuery.get("program_name")
 
   const [schools, setSchools] = useState<SchoolResponse | null>(null)
+  const [result, setResult] = useState<Array<School> | undefined>([])
   
   const destructureData = () => {
     if(data) {
@@ -36,11 +39,17 @@ const SearchMain = ({
   const getMoreUniversity = async(page: string) => {
     const headers = { 'Content-Type': 'application/json' }
     try {
-      const data = await sendRequest(
-        `${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
+      const data = await sendRequest(`${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
       if(!data || data === undefined) return
       setSchools(data?.data)
     } catch(error) {}
+  }
+
+  const searchByName = async(name: string) => {
+    if(!name || name === undefined) return setResult(schools?.foundSchools)
+    const value = name.toLowerCase()
+    const filtered = schools?.foundSchools?.filter((school) => school?.name.toLowerCase().includes(value))
+    setResult(filtered)
   }
 
   const [page, setPage] = useState<number>(1)
@@ -48,6 +57,18 @@ const SearchMain = ({
   useEffect(() => {
     setPage(parseInt(searchParams?.get('page') || "1"));
   }, [searchParams])
+
+  useEffect(() => {
+    if(schools) {
+      setResult(schools?.foundSchools)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    school_name && searchByName(school_name)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [school_name])
 
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
@@ -114,9 +135,9 @@ const SearchMain = ({
       </div>
       
       <div className="w-full my-10">
-        {schools && (
+        {result && (
           <div className="w-full flex flex-wrap items-center justify-between gap-[30px]">
-            {schools?.foundSchools?.map((school: School) => <Card key={school.id} {...school} />)}
+            {result?.map((school: School) => <Card key={school.id} {...school} />)}
           </div>
         )}
       </div>

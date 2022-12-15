@@ -41,7 +41,7 @@ input {
 }
 
 .modal {
-  z-index: 1000 !important;
+  z-index: 100000000 !important;
 }
 
 .star-input {
