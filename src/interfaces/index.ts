@@ -73,11 +73,18 @@ export interface UniversityResponse {
 export interface Course {
     application_closing?: string | Date
     application_opening?: string | Date
+    currency: string
     description?: string
     id?: string
     name?: string
+    ProgramId?: string
     program_name?: string
+    required_documents: Array<string>
     school_name: string
+    service_charge: number
+    tuition?: number
+    UniversityId?: string
+    university_name?: string
 }
 
 export interface PaginationProps {
