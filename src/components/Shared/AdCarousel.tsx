@@ -13,7 +13,7 @@ const AdCarousel = () => {
     },[current])
 
   return (
-    <div className='w-full md:w-[700px] overflow-hidden' >
+    <div className='w-full overflow-hidden' >
         {CAROUSEL_DATA.map((image, index) => (
             <div key={index} className={`w-full ${index === current ? 'block' : 'hidden'}`}>
                 {index === current && <img src={image.image} alt={image.name} className='w-full animate-slide-in transition-all ease-in-out' />}
