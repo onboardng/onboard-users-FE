@@ -158,13 +158,8 @@ const ApplySchoolCom = () => {
         </div>
       </div>
       <div className="py-10 flex justify-end md:hidden">
-        <button
-          onClick={(e: any)=>handleSubmit(e)}
-          disabled={loading}
-          className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto"
-        >
-          <p className="text-center">Proceed</p>
-          {loading ? <Spinner/> : <FiChevronRight className='text-white' />}
+        <button disabled={loading} className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto">
+          {loading ? <Spinner/> : <div className='flex items-center gap-3'>Proceed <FiChevronRight className='text-white' /></div>}
         </button>
       </div>
       <div className="md:w-[30%] tab:hidden pl-5">
