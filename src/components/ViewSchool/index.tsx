@@ -24,6 +24,9 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [page, setPage] = useState<number>(1)
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false)
   const { authorization: { access_token }} = useSelector((store: RootState) => store.authStore)
+  const [imageCount, setImageCount] = useState<number>(0)
+
+  const handleImageSwitch = (index: number) => setImageCount(index)
 
   interface PopupProps {
     open: boolean
@@ -89,11 +92,11 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
       <div className='w-full flex flex-row gap-[32px] px-5'>
         <div className='flex flex-col items-center'>
           <div className='w-[571px] h-[400px] rounded-[8px] border-[1px] border-gray-200 mb-4'>
-            <img src={universityData?.university?.pictures[0]} alt={universityData?.university?.name} className='w-full h-full rounded-[8px] object-cover' />
+            <img src={universityData?.university?.pictures[imageCount]} alt={universityData?.university?.name} className='w-full h-full rounded-[8px] object-cover' />
           </div>
           <div className='w-full flex items-center gap-[21px]'>
             {universityData?.university?.pictures.map((pic, index) => (
-              <img key={index} src={pic} alt={universityData?.university?.name} className='w-[98px] h-[98px] rounded-md object-cover' />
+              <img key={index} src={pic} alt={universityData?.university?.name} onClick={() => handleImageSwitch(index)} className='w-[98px] h-[98px] rounded-md object-cover cursor-pointer' />
             ))}
           </div>
           <div className='w-full flex items-center justify-between bg-[#E7FAFF] p-[20px] mt-[23px]'>
