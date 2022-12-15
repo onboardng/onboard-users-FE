@@ -95,13 +95,13 @@ const ApplySchoolCom = () => {
                 <div className='w-full'>
                   <label htmlFor={first_name}>First Name</label>
                   <div className="w-full h-[62px] flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary rounded-lg pl-[15px]">
-                    <input type="text" name='first_name' onChange={handleChange} className='w-full h-full bg-transparent outline-none border-none text-lg' placeholder="Enter first name" />
+                    <input type="text" name='first_name' onChange={handleChange} className='w-full h-full bg-transparent outline-none border-none text-sm' placeholder="Enter first name" />
                   </div>
                 </div>
                 <div className='w-full'>
                   <label htmlFor={last_name}>Last Name</label>
                   <div className="w-full h-[62px]  flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary rounded-lg pl-[15px]">
-                    <input type="text" name='last_name' onChange={handleChange}  className='w-full h-full bg-transparent outline-none border-none text-lg' placeholder="Enter last name" />
+                    <input type="text" name='last_name' onChange={handleChange}  className='w-full h-full bg-transparent outline-none border-none text-sm' placeholder="Enter last name" />
                   </div>
                 </div>
               </div>
@@ -111,7 +111,7 @@ const ApplySchoolCom = () => {
                   <div className="w-full flex items-center">
                     <div className="mr-[10px] w-[30%] md:w-[15%]">
                       <div className="h-[62px] text-center bg-[#DADAE7] rounded-lg px-2">
-                        <select name="phone_code" value={phone_code}  onChange={handleChange}  className='w-full h-full bg-transparent outline-none border-none text-lg cursor-pointer'>
+                        <select name="phone_code" value={phone_code}  onChange={handleChange}  className='w-full h-full bg-transparent outline-none border-none text-sm cursor-pointer'>
                           {countryCodes.sort((a, b) => a.value.localeCompare(b.value)).map((code, index) => (
                             <option key={index}value={code.value}>{code.label}</option>
                           ))}
@@ -119,7 +119,7 @@ const ApplySchoolCom = () => {
                       </div>
                     </div>
                     <div className="w-full h-[62px]  flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary rounded-lg pl-[15px]">
-                      <input type="text" name='phone_number' onChange={handleChange} className='w-full h-full bg-transparent outline-none border-none text-lg' />
+                      <input type="text" name='phone_number' onChange={handleChange} className='w-full h-full bg-transparent outline-none border-none text-sm' />
                     </div>
                   </div>
                 </div>
@@ -137,12 +137,12 @@ const ApplySchoolCom = () => {
                     <label htmlFor={email}>Email</label>
                     <div className="w-full h-[62px] flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary rounded-lg pl-[15px]">
                       <Envelope />
-                      <input type="email" name='email' onChange={handleChange} className='w-full h-full bg-transparent outline-none border-none text-lg' placeholder='Enter email address' />
+                      <input type="email" name='email' onChange={handleChange} className='w-full h-full bg-transparent outline-none border-none text-sm' placeholder='Enter email address' />
                     </div>
                   </div>
                   {course?.required_documents && course?.required_documents.map((doc, index) => (
                     <div key={index} className="w-full h-[62px]  flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary rounded-lg pl-[15px]">
-                      <input type="input" name={doc} multiple={false} className='w-full h-full bg-transparent outline-none border-none text-lg' />
+                      <input type="input" name={doc} multiple={false} className='w-full h-full bg-transparent outline-none border-none text-sm' />
                     </div>
                   ))}
                   <div className="py-3 flex justify-end tab:hidden">
