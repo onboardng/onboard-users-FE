@@ -24,6 +24,8 @@ const SearchResult = () => {
   // TODO: #5 fix search to match all fields
   const { data, isLoading } = useSearchCourseQuery({ page, limit: 10, ...searchQuery});
 
+  const [school_name, setSchool_name] = useState<string>('')
+
   useEffect(() => {
     if (matches) {
       setShowFilter(false);
@@ -65,8 +67,8 @@ const SearchResult = () => {
           <PageLoader />
         ) : (
           <>
-            <SearchSideBar showFilter={showFilter} />
-            {data && <SearchMain data={data} showEdit={showEdit} setShowFilter={setShowFilter} />}
+            <SearchSideBar showFilter={showFilter} setSchool_name={setSchool_name} />
+            {data && <SearchMain data={data} showEdit={showEdit} setShowFilter={setShowFilter} school_name={school_name} />}
           </>
         )}
       </div>
