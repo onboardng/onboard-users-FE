@@ -4,29 +4,54 @@ import Icon from "../Icons";
 import Card from "../Shared/Card";
 import { School, SchoolResponse } from "../../interfaces";
 import Pagination from "../Pagination/Pagination";
-// import { useHttpRequest } from "../../hooks/useHttpRequest";
+import { useHttpRequest } from "../../hooks/useHttpRequest";
+
+const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
 const SearchMain = ({
   showEdit,
   setShowFilter,
   data,
+  school_query
 }: {
   showEdit: Dispatch<SetStateAction<boolean>>;
   setShowFilter: typeof showEdit;
   data: any
+  school_query?: string
 }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const searchQuery = searchParams
+  // const school_name = searchQuery.get("school_name")
   const country_name = searchQuery.get("country_name")
   const course_name = searchQuery.get("course_name")
   const program_name = searchQuery.get("program_name")
 
   const [schools, setSchools] = useState<SchoolResponse | null>(null)
+  const [result, setResult] = useState<Array<School> | undefined>([])
   
   const destructureData = () => {
     if(data) {
       setSchools(data?.data)
+      setResult(data?.data?.foundSchools)
     }
+  }
+
+  const { sendRequest } = useHttpRequest()
+  const getMoreUniversity = async(page: string) => {
+    const headers = { 'Content-Type': 'application/json' }
+    try {
+      const data = await sendRequest(`${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
+      if(!data || data === undefined) return
+      setSchools(data?.data)
+      setResult(data?.data?.foundSchools)
+    } catch(error) {}
+  }
+
+  const searchByName = async(name: string) => {
+    if(!name || name === undefined) return setResult(schools?.foundSchools)
+    const value = name.toLowerCase()
+    const filtered = schools?.foundSchools?.filter((school) => school?.name.toLowerCase().includes(value))
+    setResult(filtered)
   }
 
   const [page, setPage] = useState<number>(1)
@@ -35,8 +60,19 @@ const SearchMain = ({
     setPage(parseInt(searchParams?.get('page') || "1"));
   }, [searchParams])
 
+  useEffect(() => {
+    schools && setResult(schools?.foundSchools)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    school_query && searchByName(school_query)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [school_query])
+
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
+    window.scrollTo(0, 0)
   }
 
   const handlePagination = () => {
@@ -48,6 +84,11 @@ const SearchMain = ({
       }
     }
   }
+
+  useEffect(() => {
+    getMoreUniversity(page.toString())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[page])
 
   useEffect(() => {
     destructureData()
@@ -92,11 +133,11 @@ const SearchMain = ({
           </div>
         </div>
       </div>
-
-      <div className="my-10">
-        {schools && (
-          <div className="flex flex-wrap items-center justify-evenly gap-[30px]">
-            {schools?.foundSchools?.map((school: School) => <Card key={school.id} {...school} />)}
+      
+      <div className="w-full my-10">
+        {result && (
+          <div className="w-full flex flex-wrap items-center justify-between gap-[30px]">
+            {result?.map((school: School) => <Card key={school.id} {...school} />)}
           </div>
         )}
       </div>

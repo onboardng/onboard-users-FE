@@ -73,11 +73,18 @@ export interface UniversityResponse {
 export interface Course {
     application_closing?: string | Date
     application_opening?: string | Date
+    currency: string
     description?: string
     id?: string
     name?: string
+    ProgramId?: string
     program_name?: string
+    required_documents: RequiredDocuments
     school_name: string
+    service_charge: number
+    tuition?: number
+    UniversityId?: string
+    university_name?: string
 }
 
 export interface PaginationProps {
@@ -159,11 +166,18 @@ export interface Courses {
     name: string
     price_in_naira: number
     program: string
+    required_documents?: RequiredDocuments
     service_charge: any
     total_applicants: number
     tuition: number
     university_name: string
     updated_at: string | Date
+}
+
+interface RequiredDocuments {
+    undergraduate?: Array<string>
+    graduate?: Array<string>
+    postgraduate?: Array<string>
 }
 
 export interface State {

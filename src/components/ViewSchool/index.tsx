@@ -13,17 +13,21 @@ import Pagination from '../Pagination/Pagination'
 import Ratings from '../Shared/Ratings'
 import ApplySchool from '../school/PopUpContent/ApplySchool'
 
-// const baseUrl = process.env.REACT_APP_BACKEND_API
-const baseUrl = "https://app.onboard.com.ng/onboard/v1"
+const baseUrl = process.env.REACT_APP_BACKEND_API
+// const baseUrl = "https://app.onboard.com.ng/onboard/v1"
 
 const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [universityData, setUniversityData] = useState<UniversityResponse | null>(null)
   const [courses, setCourses] = useState<Array<Course | null>>([])
+  const [result, setResult] = useState<Array<Course | null>>([])
   const {loading, sendRequest} = useHttpRequest()
   const [query, setQuery] = useState<string>('')
   const [page, setPage] = useState<number>(1)
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false)
   const { authorization: { access_token }} = useSelector((store: RootState) => store.authStore)
+  const [imageCount, setImageCount] = useState<number>(0)
+
+  const handleImageSwitch = (index: number) => setImageCount(index)
 
   interface PopupProps {
     open: boolean
@@ -53,6 +57,10 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     } catch (error) {}
   }
 
+  useEffect(() => {
+    setResult(courses)
+  }, [courses])
+
   // pagination
   useEffect(() => {
     setPage(parseInt(searchParams?.get('page') || "1"));
@@ -61,6 +69,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
     getUniversityInfo(id)
+    window.scrollTo(0, 0)
   }
 
   const handlePagination = () => {
@@ -71,7 +80,19 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     }
   }
 
-  const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)
+  const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+
+    setQuery(e.target.value)
+    filterCourses(e.target.value)
+  }
+
+  const filterCourses = (query: string) => {
+    if(!query || query === '') return setResult(courses)
+    const value = query.toLowerCase()
+    const data = courses?.filter((course) => course?.name?.toLowerCase().includes(value))
+    setResult(data)
+  }
 
   useEffect(() => {
     getUniversityInfo(id)
@@ -82,17 +103,17 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
 
   return (
     <>
-    {isAddingReview && <AddRating onClose={() => setIsAddingReview(false)} />}
+    {isAddingReview && <AddRating onClose={() => setIsAddingReview(false)} id={id} />}
     {openPopup.open && <ApplySchool close={() => closePop()} course={openPopup.course} courseId={openPopup.courseId} />}
     {universityData && (
       <div className='w-full flex flex-row gap-[32px] px-5'>
         <div className='flex flex-col items-center'>
           <div className='w-[571px] h-[400px] rounded-[8px] border-[1px] border-gray-200 mb-4'>
-            <img src={universityData?.university?.pictures[0]} alt={universityData?.university?.name} className='w-full h-full rounded-[8px] object-cover' />
+            <img src={universityData?.university?.pictures[imageCount]} alt={universityData?.university?.name} className='w-full h-full rounded-[8px] object-cover' />
           </div>
-          <div className='w-full flex items-center gap-[21px]'>
+          <div className='w-full flex items-center gap-[21px] overflow-x-scroll'>
             {universityData?.university?.pictures.map((pic, index) => (
-              <img key={index} src={pic} alt={universityData?.university?.name} className='w-[98px] h-[98px] rounded-md object-cover' />
+              <img key={index} src={pic} alt={universityData?.university?.name} onClick={() => handleImageSwitch(index)} className='w-[98px] h-[98px] rounded-md object-cover cursor-pointer' />
             ))}
           </div>
           <div className='w-full flex items-center justify-between bg-[#E7FAFF] p-[20px] mt-[23px]'>
@@ -140,7 +161,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
               </div>
             ) : (
               <>
-              {courses?.map((course, index) => (
+              {result?.map((course, index) => (
                 <div key={index} className='w-full flex flex-col p-[20px] bg-white rounded-[10px]'>
                   <div className='w-full flex items-center justify-between'>
                     <div className='flex flex-col w-[60%]'>

@@ -15,7 +15,8 @@ import { setLoginUser } from "../../redux/slices/auth";
 import { useHttpRequest } from "../../hooks/useHttpRequest";
 import PageLoader from "../../components/Loader/PageLoader";
 
-const baseUrl = process.env.REACT_APP_BACKEND_API
+const baseUrl = process.env.REACT_APP_BACKEND_API as string
+const clientId = process.env.REACT_APP_BACKEND_API as string
 
 const Login = () => {
   const [login, { data, isLoading, isSuccess, isError, error }] = useUserLoginMutation();
@@ -47,10 +48,12 @@ const Login = () => {
   }, [data, isLoading, isSuccess, isError, error, resetForm, navigate, dispatch]);
 
   const {loading, sendRequest} = useHttpRequest()
-
-  const googleAuthentication = async() => {
+  const googleAuth = async() => {
+    const headers = { 'Content-Type': 'application/json' }
+    const payload = {  }
     try {
-      const data = await sendRequest(`${baseUrl}/auth/google-passport`, 'GET', null, )
+      const data = await sendRequest(`${baseUrl}/auth/google-passport/callback`, 'POST', JSON.stringify(payload), headers
+      )
       if(!data || data === undefined) return
       toast.success("Login successful");
       dispatch(setLoginUser(data));
@@ -118,7 +121,7 @@ const Login = () => {
       <div className="flex justify-center md:justify-end mt-5">
         <div className="flex items-center gap-4 text-base md:flex-row flex-col">
           <p>You can also sign in with</p>
-          <button onClick={() => googleAuthentication()} type='button' className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
+          <button onClick={() => {}} type='button' className="flex items-center py-2 px-5 gap-4 border-2 border-green rounded-md cursor-pointer">
             <FcGoogle />
             <p className="text-sm font-medium text-green">Google</p>
           </button>
