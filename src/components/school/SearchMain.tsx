@@ -12,12 +12,12 @@ const SearchMain = ({
   showEdit,
   setShowFilter,
   data,
-  school_name
+  school_query
 }: {
   showEdit: Dispatch<SetStateAction<boolean>>;
   setShowFilter: typeof showEdit;
   data: any
-  school_name?: string
+  school_query?: string
 }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const searchQuery = searchParams
@@ -32,6 +32,7 @@ const SearchMain = ({
   const destructureData = () => {
     if(data) {
       setSchools(data?.data)
+      setResult(data?.data?.foundSchools)
     }
   }
 
@@ -42,6 +43,7 @@ const SearchMain = ({
       const data = await sendRequest(`${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
       if(!data || data === undefined) return
       setSchools(data?.data)
+      setResult(data?.data?.foundSchools)
     } catch(error) {}
   }
 
@@ -59,16 +61,14 @@ const SearchMain = ({
   }, [searchParams])
 
   useEffect(() => {
-    if(schools) {
-      setResult(schools?.foundSchools)
-    }
+    schools && setResult(schools?.foundSchools)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    school_name && searchByName(school_name)
+    school_query && searchByName(school_query)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [school_name])
+  }, [school_query])
 
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
