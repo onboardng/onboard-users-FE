@@ -48,6 +48,9 @@ const ApplySchoolCom:React.FC = () => {
     e.preventDefault()
 
     if(!first_name || !last_name || !email || !phone_number) return toast.error('Please fill all fields.')
+    for(let i = 0; i < required_documents.length; i++) {
+      if(!required_documents[i].file) return toast.error(`Please upload all required documents.`)
+    }
 
     const headers = { 'Authorization': `Bearer ${access_token}`}
     const formData = new FormData()
