@@ -68,7 +68,7 @@ const SearchResult = () => {
         ) : (
           <>
             <SearchSideBar showFilter={showFilter} setSchool_name={setSchool_name} />
-            {data && <SearchMain data={data} showEdit={showEdit} setShowFilter={setShowFilter} school_name={school_name} />}
+            {data && <SearchMain data={data} showEdit={showEdit} setShowFilter={setShowFilter} school_query={school_name} />}
           </>
         )}
       </div>

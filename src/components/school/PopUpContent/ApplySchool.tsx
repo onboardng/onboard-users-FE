@@ -83,6 +83,21 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
             </div>
           </div>
           <hr className="w-full h-[1px] bg-[#DADAE7] my-5" />
+          <div className="w-full flex flex-col gap-[10px]">
+            <p className="font-bold text-base leading-[22px] py-5">Document Requirements</p>
+            <div className="w-full flex flex-col gap-[10px]">
+              {courseData?.program === 'undergraduate' && courseData?.required_documents?.undergraduate?.map((doc: string, index: number) => (
+                <p key={index} className='font-medium text-base leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
+              ))}
+              {courseData?.program === 'graduate' && courseData?.required_documents?.undergraduate?.map((doc: string, index: number) => (
+                <p key={index} className='font-medium text-base leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
+              ))}
+              {courseData?.program === 'postgraduate' && courseData?.required_documents?.undergraduate?.map((doc: string, index: number) => (
+                <p key={index} className='font-medium text-base leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
+              ))}
+            </div>
+          </div>
+          <hr className="w-full h-[1px] bg-[#DADAE7] my-5" />
           <div className=" w-full flex tab:justify-center justify-end mt-[30px]">
             <div
               onClick={async () => {

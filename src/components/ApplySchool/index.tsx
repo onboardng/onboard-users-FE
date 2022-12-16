@@ -13,39 +13,58 @@ import { Course } from '../../interfaces'
 import Spinner from "../Loader/Spinner";
 import Button from "../Button/Button";
 
+interface DocObj {
+  name: string
+  file: File
+}
+
 const initialState = { first_name: '', last_name: '', email: '', phone_number: '', phone_code: '' }
 const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
-const ApplySchoolCom = () => {
+const ApplySchoolCom:React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useSelector((store: RootState) => store.authStore)
+  const { user, authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
   const [course, setCourse] = useState<Course | undefined>(undefined)
   const {error, loading, sendRequest} = useHttpRequest()
   const [inputs, formState] = useState<typeof initialState>(initialState)
   const { email, first_name, last_name, phone_code, phone_number } = inputs
   const [total, setTotal] = useState<number>(0)
 
-  // const [required_documents, setRequired_documents] = useState<Array<File>>([])
+  const [required_documents, setRequiredDocuments] = useState<Array<DocObj>>([])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     formState({...inputs, [e.target.name]: e.target.value})
+  }
+
+  const onAddFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if(!e.target.files) return
+    const file = e.target.files[0]
+    if(file.type !== 'application/pdf') return toast.error('Wrong file type. Please upload a PDF file.')
+    setRequiredDocuments(current => [...current, {name: e.target.name, file: file}])
   }
 
   const handleSubmit = async(e: FormEvent) => {
     e.preventDefault()
 
     if(!first_name || !last_name || !email || !phone_number) return toast.error('Please fill all fields.')
+    for(let i = 0; i < required_documents.length; i++) {
+      if(!required_documents[i].file) return toast.error(`Please upload all required documents.`)
+    }
 
+    const headers = { 'Authorization': `Bearer ${access_token}`}
     const formData = new FormData()
 
     formData.append('first_name', first_name)
     formData.append('last_name', last_name)
     formData.append('email', email)
     formData.append('phone_number', `${phone_code}-${phone_number}`)
+    for(let i = 0; i < required_documents.length; i++) {
+      formData.append(`${required_documents[i].name}`, required_documents[i].file)
+    }
 
     try {
-      const data = await sendRequest(`${baseUrl}/application/create`, 'POST', formData, )
+      const data = await sendRequest(`${baseUrl}/application/create`, 'POST', formData, headers)
       if(!data || data === undefined) return
       console.log(data)
     } catch (error) {}
@@ -140,11 +159,18 @@ const ApplySchoolCom = () => {
                       <input type="email" name='email' onChange={handleChange} className='w-full h-full bg-transparent outline-none border-none text-sm' placeholder='Enter email address' />
                     </div>
                   </div>
-                  {course?.required_documents && course?.required_documents.map((doc, index) => (
-                    <div key={index} className="w-full h-[62px]  flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary rounded-lg pl-[15px]">
-                      <input type="input" name={doc} multiple={false} className='w-full h-full bg-transparent outline-none border-none text-sm' />
-                    </div>
-                  ))}
+                  <div className='my-4'>
+                    <p className='font-medium text-lg leading-[32px]'>Required Documents</p>
+                    {course?.required_documents && course?.required_documents?.undergraduate?.map((doc, index) => (
+                      <div key={index} className='my-1'>
+                        <label htmlFor={doc} className='capitalize text-base'>{doc.split('_').join(' ')}</label>
+                        <div className="w-full h-[62px] flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary rounded-lg pl-[15px]">
+                          <Upload />
+                          <input type="file" name={doc} multiple={false} onChange={onAddFile} className='w-full bg-transparent outline-none border-none text-sm cursor-pointer' />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                   <div className="py-3 flex justify-end tab:hidden">
                     <Button loader={loading} disabled={loading} className="col-span-2 justify-center bg-green text-white flex gap-4 rounded-md items-center px-[20px] py-[17px] md:w-auto">
                       <p className="text-center">Proceed</p>

@@ -111,7 +111,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
           <div className='w-[571px] h-[400px] rounded-[8px] border-[1px] border-gray-200 mb-4'>
             <img src={universityData?.university?.pictures[imageCount]} alt={universityData?.university?.name} className='w-full h-full rounded-[8px] object-cover' />
           </div>
-          <div className='w-full flex items-center gap-[21px]'>
+          <div className='w-full flex items-center gap-[21px] overflow-x-scroll'>
             {universityData?.university?.pictures.map((pic, index) => (
               <img key={index} src={pic} alt={universityData?.university?.name} onClick={() => handleImageSwitch(index)} className='w-[98px] h-[98px] rounded-md object-cover cursor-pointer' />
             ))}
