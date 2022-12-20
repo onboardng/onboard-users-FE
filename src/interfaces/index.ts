@@ -73,6 +73,7 @@ export interface UniversityResponse {
 export interface Course {
     application_closing?: string | Date
     application_opening?: string | Date
+    available_diet?: AvailableDiet
     currency: string
     description?: string
     id?: string
@@ -193,4 +194,12 @@ export interface Country {
 
 export interface CountryList {
     data: Array<Country>
+}
+
+export interface Payment {
+    application_id: string
+    email: string
+    phone_number: string
+    service_charge: number
+    onClose: () => void
 }
