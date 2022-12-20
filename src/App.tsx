@@ -1,11 +1,28 @@
-import React from "react";
-import "./App.css";
-import AllRoutes from "./config/routes";
+import React, { useEffect } from "react";
+import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "reactjs-popup/dist/index.css";
-import { Slide, ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+
+import { setLoginUser } from "./redux/slices/auth";
+import AllRoutes from "./config/routes";
+import "./App.css";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const getUser = () => {
+    const data = localStorage.getItem('user')
+    if(!data) return
+    const user = JSON.stringify(data)
+    dispatch(setLoginUser(user))
+  };
+
+  useEffect(() => {
+    getUser()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
+
   return (
     <div className="min-h-screen">
       <ToastContainer

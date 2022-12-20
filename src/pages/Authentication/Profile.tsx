@@ -23,7 +23,8 @@ const Profile:React.FC = () => {
     
     const getProfile = async() => {
         const headers = {
-            'Authorization': `Bearer ${access_token}`
+            'Authorization': `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
         }
         try {
             const data = await sendRequest(`${baseUrl}/auth/view-profile`, 'GET', null, headers)
@@ -57,7 +58,8 @@ const Profile:React.FC = () => {
         const image = imageFile as unknown as string
         const formData = new FormData()
         formData.append('image', image)
-        formData.append('full_name', first_name+""+last_name)
+        formData.append('first_name', first_name)
+        formData.append('last_name', last_name)
         formData.append('email', email)
         formData.append('phone_number', phone_number)
 
@@ -75,8 +77,9 @@ const Profile:React.FC = () => {
 
     const handleFile = (file: File) => {
         if(!file) return
-        const { type } = file
+        const { type, size } = file
         if(type === 'image/png' || type === 'image/jpg' || type === 'image/jpeg') {
+            if(size > 5120000) return toast.error('Please select an image below 5MB.')
             const fileReader = new FileReader()
             fileReader.onload = () => setPreviewURL(fileReader.result)
             fileReader.readAsDataURL(file)
@@ -142,7 +145,7 @@ const Profile:React.FC = () => {
                     <div className='w-[50px] h-[50px] rounded-full overflow-hidden'>
                         <img src={userProfile?.avatar !== null ? userProfile?.avatar : "/svgs/Avatar.svg"} alt="" className='w-full h-full rounded-full object-cover' />
                     </div>
-                    <div className='w-[630px] h-[165px] bg-white rounded-[4px] border-[1px] border-[#DADAE7] ml-2'>
+                    <div className='w-[576px] max-w-[80%] h-[324px] bg-white rounded-[4px] border-[1px] border-[#DADAE7] ml-2'>
                         {previewURL === null ? (
                             <label className='w-full h-full flex items-center justify-center relative overflow-hidden'>
                                 {!dragActive && (
@@ -168,11 +171,11 @@ const Profile:React.FC = () => {
                                 />
                             </label>
                         ) : (
-                            <div className='w-full h-full relative'>
+                            <div className='w-full h-full flex items-center justify-center relative'>
                                 <button type='button' onClick={() => setPreviewURL(null)} className='rounded-full bg-white text-black p-3 absolute top-2 left-2'>
                                     <FiTrash />
                                 </button>
-                                <img src={`${previewURL}`} alt="" className='w-full h-full object-cover' />
+                                <img src={`${previewURL}`} alt="" className='h-full object-contain border rounded-[4px]' />
                             </div>
                         )}
                     </div>
