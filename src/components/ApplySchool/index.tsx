@@ -93,8 +93,8 @@ const ApplySchoolCom:React.FC = () => {
   },[])
 
   useEffect(() => {
-    if(course?.tuition && course?.service_charge) {
-      let totalCost = course?.tuition + course?.service_charge
+    if(course?.price_in_naira && course?.service_charge) {
+      let totalCost = course?.price_in_naira + course?.service_charge
       setTotal(totalCost)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,7 +114,7 @@ const ApplySchoolCom:React.FC = () => {
         <div className="md:px-10 px-5">
           <div className="flex items-center border-dashed border-b-2 border-[#DADAE7] md:py-5 py-2.5">
             <p className="px-3 font-medium text-[14px] leading-[22.4px] md:font-bold md:text-[16px] md:leading-[25.6px] capitalize">
-              {course?.program_name} studies in {course?.name} <span className="md:font-medium capitalize">at</span> {course?.university_name}
+              {course?.program} studies in {course?.name} <span className="md:font-medium capitalize">at</span> {course?.university_name}
             </p>
           </div>
           <form onSubmit={handleSubmit} className="py-2.5 md:py-6">
@@ -198,7 +198,7 @@ const ApplySchoolCom:React.FC = () => {
       </div>
       <div className="md:w-[30%] tab:hidden pl-5">
         <div className="bg-white rounded-[10px] px-5 py-10">
-          <h5 className="md:text-[20px] md:leading-[32px]">{user.first_name}, {user.last_name}</h5>
+          <h5 className="md:text-[20px] md:leading-[32px]">{user?.first_name}, {user?.last_name}</h5>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">School</h5>
             <p className="md:text-[20px] md:leading-[32px] capitalize">{course?.university_name}</p>
@@ -218,15 +218,15 @@ const ApplySchoolCom:React.FC = () => {
           <h5 className="md:text-[20px] md:leading-[32px]">Pricing</h5>
           <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] py-5">
             <p className="md:text-[16px] md:leading-[25.6px]">Tuition</p>
-            <p className="md:text-[16px] md:leading-[25.6px]">{course?.currency}{' '}{course?.tuition}</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">{course?.currency}{' '}{course?.tuition} (~NGN {course?.price_in_naira})</p>
           </div>
           <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] py-5">
             <p className="md:text-[16px] md:leading-[25.6px]">Service charge</p>
-            <p className="md:text-[16px] md:leading-[25.6px]">{course?.currency}{' '}{course?.service_charge || 0}</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">NGN{' '}{course?.service_charge || 0}</p>
           </div>
           <div className="flex justify-between items-center py-5">
             <p className="md:text-[16px] md:leading-[25.6px]">Total</p>
-            <p className="md:text-[20px] md:leading-[32px] font-semibold">{course?.currency}{' '}{total}</p>
+            <p className="md:text-[20px] md:leading-[32px] font-semibold">NGN{' '}{total}</p>
           </div>
         </div>
       </div>
