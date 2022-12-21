@@ -71,21 +71,23 @@ export interface UniversityResponse {
 }
 
 export interface Course {
+    ProgramId: string
+    UniversityId: string
     application_closing?: string | Date
     application_opening?: string | Date
     available_diet?: AvailableDiet
     currency: string
-    description?: string
-    id?: string
-    name?: string
-    ProgramId?: string
-    program_name?: string
-    required_documents: RequiredDocuments
+    description: string
+    duration?: number
+    id: string
+    name: string
+    price_in_naira: number
+    program: string
+    required_documents?: RequiredDocuments
     school_name: string
     service_charge: number
-    tuition?: number
-    UniversityId?: string
-    university_name?: string
+    tuition: number
+    university_name: string
 }
 
 export interface PaginationProps {
