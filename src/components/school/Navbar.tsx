@@ -17,6 +17,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
+    localStorage.removeItem('user')
   };
 
   useOnClickOutside(ref, () => {
@@ -54,8 +55,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
             <div ref={ref} className="group relative ">
               <div className="pl-8">
                 <li className="flex items-center pt-2 cursor-pointer" onClick={() => setDropDown((val) => !val)}>
-                  <img className=" w-10 h-10 mr-2 object-contain rounded-full" alt="avatar" src={user?.avatar || `/svgs/Avatar.svg`} />
-
+                  <img className=" w-10 h-10 mr-2 object-cover rounded-full" alt="avatar" src={user?.avatar || `/svgs/Avatar.svg`} />
                   <span className="pl-3">
                     <Icon id={"arrow-down-icon"} width={24} height={24} />
                   </span>
@@ -68,7 +68,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
               >
                 <div className="px-5">
                   <Link to='/user' className="flex items-center pt-5 pb-3 cursor-pointer" onClick={() => {setDropDown((val) => !val)}}>
-                    <img className=" w-10 h-10 mr-2 object-contain rounded-full" alt="avatar" src={user?.avatar || `/svgs/Avatar.svg`} />
+                    <img className=" w-10 h-10 mr-2 object-cover rounded-full" alt="avatar" src={user?.avatar || `/svgs/Avatar.svg`} />
                     <aside>
                       <h1 className=" text-sm text-black font-semibold">{user?.first_name || `Onboard User`}</h1>
                       <p className=" font-medium text-[#1B1B1B] text-[12px] leading-[22.4px]">
