@@ -3,23 +3,24 @@ import { FiTrash, FiUploadCloud } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-import { RootState } from '../../redux/store'
-import Navbar from '../../components/school/Navbar'
+import PasswordModal from '../../components/Modal/PasswordModal'
 import InputField from '../../components/Shared/InputField'
 import { useHttpRequest } from '../../hooks/useHttpRequest'
 import PageLoader from '../../components/Loader/PageLoader'
+import Navbar from '../../components/school/Navbar'
+import { RootState } from '../../redux/store'
 import { User } from '../../interfaces'
 
 const baseUrl = 'https://app.onboard.com.ng/onboard/v1'
 
 const Profile:React.FC = () => {
+    const [isOpen, setIsOpen] = useState<boolean>(false)
     const [previewURL, setPreviewURL] = useState<string | ArrayBuffer | null>(null)
     const [dragActive, setDragActive] = useState<boolean>(false)
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [userProfile, setUserProfile] = useState<User | null>(null)
     const {error, loading, sendRequest} = useHttpRequest()
     const { authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
-
     
     const getProfile = async() => {
         const headers = {
@@ -122,6 +123,7 @@ const Profile:React.FC = () => {
 
   return (
     <>
+    {isOpen && <PasswordModal onClose={() => setIsOpen(false)} />}
     <Navbar />
     <div className='w-full h-full bg-[#F7F7F7] grid place-items-center'>
         <div className='w-[690px] min-w-[300px] mb-[125px]'>
@@ -190,7 +192,7 @@ const Profile:React.FC = () => {
                 <p className='font-medium text-[#8B8BA4] text-sm leading-[26px] mt-[10px] mb-[20px]'>
                     Update your password here
                 </p>
-                <button className='w-[174px] h-[42px] bg-white border-[1px] border-primary rounded-[4px] text-primary'>
+                <button onClick={() => setIsOpen(true)} className='w-[174px] h-[42px] bg-white border-[1px] border-primary rounded-[4px] text-primary'>
                     Update
                 </button>
             </div>
