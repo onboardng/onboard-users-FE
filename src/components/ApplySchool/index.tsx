@@ -29,7 +29,6 @@ const ApplySchoolCom:React.FC = () => {
   const {error, loading, sendRequest} = useHttpRequest()
   const [inputs, formState] = useState<typeof initialState>(initialState)
   const { email, first_name, last_name, phone_code, phone_number } = inputs
-  const [total, setTotal] = useState<number>(0)
 
   const [paymentDetails, setPaymentDetails] = useState<Payment | null>(null)
 
@@ -91,14 +90,6 @@ const ApplySchoolCom:React.FC = () => {
     id && getCourse(id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
-
-  useEffect(() => {
-    if(course?.price_in_naira && course?.service_charge) {
-      let totalCost = course?.price_in_naira + course?.service_charge
-      setTotal(totalCost)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[total])
 
   useEffect(() => {
     error && toast.error(`${error}`)
@@ -210,23 +201,21 @@ const ApplySchoolCom:React.FC = () => {
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">Admission closes on</h5>
             <p className="md:text-[20px] md:leading-[32px]">
+              {course?.application_opening && new Date(course?.application_opening).toDateString()}
+            </p>
+          </div>
+          <div className="py-3">
+            <h5 className="font-medium text-[14px] leading-[22.4px]">Admission closes on</h5>
+            <p className="md:text-[20px] md:leading-[32px]">
               {course?.application_closing && new Date(course?.application_closing).toDateString()}
             </p>
           </div>
         </div>
         <div className="bg-white rounded-[10px] px-5 my-10 py-10">
-          <h5 className="md:text-[20px] md:leading-[32px]">Pricing</h5>
-          <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] py-5">
-            <p className="md:text-[16px] md:leading-[25.6px]">Tuition</p>
-            <p className="md:text-[16px] md:leading-[25.6px]">{course?.currency}{' '}{course?.tuition} (~NGN {course?.price_in_naira})</p>
-          </div>
-          <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] py-5">
-            <p className="md:text-[16px] md:leading-[25.6px]">Service charge</p>
-            <p className="md:text-[16px] md:leading-[25.6px]">NGN{' '}{course?.service_charge || 0}</p>
-          </div>
-          <div className="flex justify-between items-center py-5">
-            <p className="md:text-[16px] md:leading-[25.6px]">Total</p>
-            <p className="md:text-[20px] md:leading-[32px] font-semibold">NGN{' '}{total}</p>
+          <h5 className="md:text-[20px] md:leading-[32px]">Pricing</h5>      
+          <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] font-bold py-5">
+            <p className="md:text-[20px] md:leading-[25.6px]">Service charge</p>
+            <p className="md:text-[20px] md:leading-[25.6px]">NGN{' '}{(course?.service_charge)?.toLocaleString('en-US') || 0}</p>
           </div>
         </div>
       </div>
