@@ -73,6 +73,7 @@ export interface UniversityResponse {
 export interface Course {
     ProgramId: string
     UniversityId: string
+    amount_payable: number
     application_closing?: string | Date
     application_opening?: string | Date
     available_diet?: AvailableDiet
@@ -199,9 +200,117 @@ export interface CountryList {
 }
 
 export interface Payment {
+    amount_payable: number
     application_id: string
     email: string
     phone_number: string
     service_charge: number
     onClose: () => void
+}
+
+export interface ApplicationDetails {
+    completedTransaction: CompletedTrxn
+    dietApplied: DietApplied
+    finalApplication: FinalApplication
+    programType: ProgramType
+    schoolApplied: SchoolApplied
+}
+
+interface FinalApplication {
+    id: string
+    first_name: string
+    last_name: string
+    middle_name: string
+    gender: string
+    nationality: string
+    email: string
+    phone_number: string
+    status: string
+    service_charge: string
+    tracking_id: string
+    result: string
+    user_id: string
+    class_year: number
+    class_diet: string
+    course_name: string
+    course_tuition: number
+    program_name: string
+    school_name: string
+    access_code: string
+    isPaid: boolean
+    required_documents: Array<string>
+    created_at: Date | string
+    updated_at: Date | string
+    CourseId: string
+    ClassId: string
+}
+
+interface CompletedTrxn {
+    id: string
+    tx_ref: string
+    amount: number
+    currency: string
+    application_id: string
+    booking_id: string
+    email: string
+    phone_number: string
+    type: string
+    status: string
+    flw_transaction_id: string
+    paystack_transaction_id: string
+    provider: string
+    created_at: Date | string
+    updated_at: Date | string
+    UserId: string
+}
+
+interface SchoolApplied {
+    added_by: string
+    address: string
+    country: string
+    created_at: Date | string
+    currency: string
+    deleted: boolean
+    description: string
+    id: string
+    name: string
+    pictures: Array<string>
+    ratings: number
+    required_documents: Array<string>
+    service_charge: number
+    total_admissions: number
+    updated_at: Date | string
+}
+
+interface DietApplied {
+    AdmissionId: string
+    CourseId: string
+    added_by: string
+    application_closing: Date | string
+    application_fees: number
+    application_opening: Date | string
+    class_diet: string
+    class_year: number
+    course_name: string
+    course_tuition: number
+    created_at: Date | string
+    deleted: boolean
+    id: string
+    status_of_admission: string
+    total_applicants: number
+    updated_at: Date | string
+}
+
+interface ProgramType {
+    UniversityId: string
+    added_by: string
+    country: string
+    created_at: string
+    deleted: boolean
+    description: string
+    duration: number
+    id: string
+    name: string
+    university_name: string
+    updated_at: Date | string
 }

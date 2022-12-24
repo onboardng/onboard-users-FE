@@ -10,16 +10,16 @@ import { Course, Payment } from '../../interfaces'
 import { FiChevronRight } from 'react-icons/fi';
 import PageLoader from "../Loader/PageLoader";
 import { RootState } from "../../redux/store";
+import PaymentModal from '../Shared/Payment'
 import Spinner from "../Loader/Spinner";
 import Button from "../Button/Button";
-import PaymentModal from '../Shared/Payment'
 
 interface DocObj {
   name: string
   file: File
 }
 
-const initialState = { first_name: '', last_name: '', email: '', phone_number: '', phone_code: '' }
+const initialState = { first_name: '', last_name: '', email: '', phone_number: '', phone_code: '+234' }
 const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
 const ApplySchoolCom:React.FC = () => {
@@ -70,11 +70,11 @@ const ApplySchoolCom:React.FC = () => {
     try {
       const data = await sendRequest(`${baseUrl}/application/create/${CourseId}/${id}`, 'POST', formData, headers)
       if(!data || data === undefined) return
-      console.log(data)
       const { data : { paymentDetails }, message } = data
       toast.success(`${message}`)
       setPaymentDetails(paymentDetails)
     } catch (error) {}
+    formState({email: '', first_name: '', last_name: '', phone_code: '+234', phone_number: ''})
   }
 
   const getCourse = async(id: string) => {
@@ -213,9 +213,18 @@ const ApplySchoolCom:React.FC = () => {
         </div>
         <div className="bg-white rounded-[10px] px-5 my-10 py-10">
           <h5 className="md:text-[20px] md:leading-[32px]">Pricing</h5>      
-          <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] font-bold py-5">
-            <p className="md:text-[20px] md:leading-[25.6px]">Service charge</p>
-            <p className="md:text-[20px] md:leading-[25.6px]">NGN{' '}{(course?.service_charge)?.toLocaleString('en-US') || 0}</p>
+          <div className="flex justify-between font-medium py-2">
+            <p className="md:text-[16px] md:leading-[25.6px]">Service charge</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">₦{' '}{(course?.service_charge)?.toLocaleString('en-US') || 0}</p>
+          </div>
+          <div className="flex justify-between font-medium py-2">
+            <p className="md:text-[16px] md:leading-[25.6px]">Amount payable</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">₦{' '}{(course?.amount_payable)?.toLocaleString('en-US') || 0}</p>
+          </div>
+          <div className="border-dashed border border-[#DADAE7]" />
+          <div className="flex justify-between font-bold py-2">
+            <p className="md:text-[16px] md:leading-[25.6px]">Total</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">₦{' '}{(course?.amount_payable)?.toLocaleString('en-US') || 0}</p>
           </div>
         </div>
       </div>
