@@ -10,25 +10,24 @@ import Backdrop from './Backdrop'
 import paystack from '../../assets/images/paystack.svg'
 
 const baseUrl = process.env.REACT_APP_BACKEND_API
-// const public_key = process.env.REACT_APP_PUBLIC_KEY as string
 
-const PaymentModal:React.FC<Payment> = ({application_id, email, phone_number, service_charge, onClose}) => {
+const PaymentModal:React.FC<Payment> = ({amount_payable, application_id, email, phone_number, service_charge, onClose}) => {
   const {error, loading, sendRequest} = useHttpRequest()
   const { authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
 
   const handlePayment = async() => {
     const headers = {
       'Authorization': `Bearer ${access_token}`,
-      'Content-Type': 'appllication/json'
+      'Content-Type': 'application/json'
     }
     const payload = {application_id, email, phone_number, service_charge}
-    console.log(payload)
     try {
-      const data = await sendRequest(`${baseUrl}/flw-payment/edu-application/initiate`, 'POST', JSON.stringify(payload), headers)
+      const data = await sendRequest(`${baseUrl}/paystack-payment/edu-application/initiate`, 'POST', JSON.stringify(payload), headers)
       if(!data || data === undefined) return
-      console.log(data)
-      const { message } = data
+      const { message, data: { data: { data: { authorization_url } } } } = data
       toast.success(`${message}`)
+      window.open(`${authorization_url}`, '_blank')
+      onClose()
     } catch (error) {}
   }
 
