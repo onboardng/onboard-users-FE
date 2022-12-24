@@ -210,7 +210,9 @@ export interface Payment {
 
 export interface ApplicationDetails {
     completedTransaction: CompletedTrxn
+    dietApplied: DietApplied
     finalApplication: FinalApplication
+    programType: ProgramType
     schoolApplied: SchoolApplied
 }
 
@@ -277,5 +279,38 @@ interface SchoolApplied {
     required_documents: Array<string>
     service_charge: number
     total_admissions: number
+    updated_at: Date | string
+}
+
+interface DietApplied {
+    AdmissionId: string
+    CourseId: string
+    added_by: string
+    application_closing: Date | string
+    application_fees: number
+    application_opening: Date | string
+    class_diet: string
+    class_year: number
+    course_name: string
+    course_tuition: number
+    created_at: Date | string
+    deleted: boolean
+    id: string
+    status_of_admission: string
+    total_applicants: number
+    updated_at: Date | string
+}
+
+interface ProgramType {
+    UniversityId: string
+    added_by: string
+    country: string
+    created_at: string
+    deleted: boolean
+    description: string
+    duration: number
+    id: string
+    name: string
+    university_name: string
     updated_at: Date | string
 }

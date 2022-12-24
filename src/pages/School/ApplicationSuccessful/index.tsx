@@ -104,13 +104,13 @@ const ApplicationSuccessful = () => {
                 </div>
                 <div className="w-full flex flex-wrap items-center gap-5">
                   <div className="w-[45%] flex items-center gap-3">
-                    <ClockAlt /> <p className="font-medium text-sm leading-[26px]">Course Duration: {}</p>
+                    <ClockAlt /> <p className="font-medium text-sm leading-[26px]">Course Duration: {applicationDetails?.programType?.duration} years</p>
                   </div>
                   <div className="w-[45%] flex items-center gap-3">
-                    <Calendar /> <p className="font-medium text-sm leading-[26px]">Application Open: </p>
+                    <Calendar /> <p className="font-medium text-sm leading-[26px]">Application Open: {new Date(applicationDetails?.dietApplied?.application_opening).toLocaleDateString()}</p>
                   </div>
                   <div className="w-[45%] flex items-center gap-3">
-                    <Calendar /> <p className="font-medium text-sm leading-[26px]">Application Closes: </p>
+                    <Calendar /> <p className="font-medium text-sm leading-[26px]">Application Closes: {new Date(applicationDetails?.dietApplied?.application_closing).toLocaleDateString()}</p>
                   </div>
                   <div className="w-[45%] flex items-center gap-3">
                     <MoneyBill /> <p className="font-medium text-sm leading-[26px]">
