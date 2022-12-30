@@ -4,7 +4,7 @@ import { setLoginUser } from "../slices/auth";
 import { RootState } from "../store";
 
 // const BACKEND_API = process.env.REACT_APP_BACKEND_API
-const BACKEND_API = "https://app.onboard.com.ng/onboard/v1"
+const BACKEND_API = process.env.REACT_APP_BACKEND_API
 
 export interface CustomError {
   data: {

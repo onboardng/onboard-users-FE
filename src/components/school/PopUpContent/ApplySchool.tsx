@@ -12,7 +12,7 @@ interface Props {
   courseId: string | undefined
 }
 
-const baseUrl = "https://app.onboard.com.ng/onboard/v1"
+const baseUrl = "REACT_APP_b=BACKEND_API"
 
 const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
   const [courseData, setCourseData] = useState<Courses | null>(null)
