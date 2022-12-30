@@ -14,7 +14,7 @@ import Ratings from '../Shared/Ratings'
 import ApplySchool from '../school/PopUpContent/ApplySchool'
 
 const baseUrl = process.env.REACT_APP_BACKEND_API
-// const baseUrl = "https://app.onboard.com.ng/onboard/v1"
+// const baseUrl = process.env.REACT_APP_BACKEND_API
 
 const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [universityData, setUniversityData] = useState<UniversityResponse | null>(null)

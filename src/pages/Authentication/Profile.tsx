@@ -11,7 +11,7 @@ import Navbar from '../../components/school/Navbar'
 import { RootState } from '../../redux/store'
 import { User } from '../../interfaces'
 
-const baseUrl = 'https://app.onboard.com.ng/onboard/v1'
+const baseUrl = process.env.REACT_APP_BACKEND_API
 
 const Profile:React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
