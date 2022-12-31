@@ -12,7 +12,7 @@ interface Props {
   courseId: string | undefined
 }
 
-const baseUrl = "REACT_APP_b=BACKEND_API"
+const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
 const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
   const [courseData, setCourseData] = useState<Courses | null>(null)
