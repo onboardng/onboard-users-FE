@@ -1,15 +1,16 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import { useHttpRequest } from "../../hooks/useHttpRequest";
 import { countryCodes } from "../../utils/selectOptions";
 import { Envelope, Upload } from '../../assets/icons'
+import { Course, Payment } from '../../interfaces'
 import { FiChevronRight } from 'react-icons/fi';
 import PageLoader from "../Loader/PageLoader";
 import { RootState } from "../../redux/store";
-import { Course } from '../../interfaces'
+import PaymentModal from '../Shared/Payment'
 import Spinner from "../Loader/Spinner";
 import Button from "../Button/Button";
 
@@ -18,18 +19,18 @@ interface DocObj {
   file: File
 }
 
-const initialState = { first_name: '', last_name: '', email: '', phone_number: '', phone_code: '' }
+const initialState = { first_name: '', last_name: '', email: '', phone_number: '', phone_code: '+234' }
 const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
 const ApplySchoolCom:React.FC = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { user, authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
   const [course, setCourse] = useState<Course | undefined>(undefined)
   const {error, loading, sendRequest} = useHttpRequest()
   const [inputs, formState] = useState<typeof initialState>(initialState)
   const { email, first_name, last_name, phone_code, phone_number } = inputs
-  const [total, setTotal] = useState<number>(0)
+
+  const [paymentDetails, setPaymentDetails] = useState<Payment | null>(null)
 
   const [required_documents, setRequiredDocuments] = useState<Array<DocObj>>([])
 
@@ -48,9 +49,12 @@ const ApplySchoolCom:React.FC = () => {
     e.preventDefault()
 
     if(!first_name || !last_name || !email || !phone_number) return toast.error('Please fill all fields.')
-    for(let i = 0; i < required_documents.length; i++) {
+    for(let i = 0; i < required_documents?.length; i++) {
       if(!required_documents[i].file) return toast.error(`Please upload all required documents.`)
     }
+
+    if(!course?.available_diet) return toast.error('Admission not in progress.')
+    const { CourseId, id } = course?.available_diet
 
     const headers = { 'Authorization': `Bearer ${access_token}`}
     const formData = new FormData()
@@ -59,15 +63,18 @@ const ApplySchoolCom:React.FC = () => {
     formData.append('last_name', last_name)
     formData.append('email', email)
     formData.append('phone_number', `${phone_code}-${phone_number}`)
-    for(let i = 0; i < required_documents.length; i++) {
+    for(let i = 0; i < required_documents?.length; i++) {
       formData.append(`${required_documents[i].name}`, required_documents[i].file)
     }
 
     try {
-      const data = await sendRequest(`${baseUrl}/application/create`, 'POST', formData, headers)
+      const data = await sendRequest(`${baseUrl}/application/create/${CourseId}/${id}`, 'POST', formData, headers)
       if(!data || data === undefined) return
-      console.log(data)
+      const { data : { paymentDetails }, message } = data
+      toast.success(`${message}`)
+      setPaymentDetails(paymentDetails)
     } catch (error) {}
+    formState({email: '', first_name: '', last_name: '', phone_code: '+234', phone_number: ''})
   }
 
   const getCourse = async(id: string) => {
@@ -85,26 +92,20 @@ const ApplySchoolCom:React.FC = () => {
   },[])
 
   useEffect(() => {
-    if(course?.tuition && course?.service_charge) {
-      let totalCost = course?.tuition + course?.service_charge
-      setTotal(totalCost)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[total])
-
-  useEffect(() => {
     error && toast.error(`${error}`)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[error])
 
   return (
+    <>
+    {paymentDetails && <PaymentModal {...paymentDetails} onClose={() => setPaymentDetails(null)} />}
     <div className="mx-4 md:mx-12 flex flex-col md:flex-row py-5 ">
       {loading && <PageLoader />}
       <div className="md:w-[70%] bg-white rounded-[20px]">
         <div className="md:px-10 px-5">
           <div className="flex items-center border-dashed border-b-2 border-[#DADAE7] md:py-5 py-2.5">
             <p className="px-3 font-medium text-[14px] leading-[22.4px] md:font-bold md:text-[16px] md:leading-[25.6px] capitalize">
-              {course?.program_name} studies in {course?.name} <span className="md:font-medium capitalize">at</span> {course?.university_name}
+              {course?.program} studies in {course?.name} <span className="md:font-medium capitalize">at</span> {course?.university_name}
             </p>
           </div>
           <form onSubmit={handleSubmit} className="py-2.5 md:py-6">
@@ -127,15 +128,13 @@ const ApplySchoolCom:React.FC = () => {
               <div className="w-full mt-[18px]">
                 <div className="py-2 flex flex-col w-full xl:w-full md:w-[408px]">
                   <label htmlFor={phone_number}>Phone Number</label>
-                  <div className="w-full flex items-center">
-                    <div className="mr-[10px] w-[30%] md:w-[15%]">
-                      <div className="h-[62px] text-center bg-[#DADAE7] rounded-lg px-2">
-                        <select name="phone_code" value={phone_code}  onChange={handleChange}  className='w-full h-full bg-transparent outline-none border-none text-sm cursor-pointer'>
-                          {countryCodes.sort((a, b) => a.value.localeCompare(b.value)).map((code, index) => (
-                            <option key={index}value={code.value}>{code.label}</option>
-                          ))}
-                        </select>
-                      </div>
+                  <div className="w-full flex items-center gap-4">
+                    <div className="w-[100px] h-[62px] text-center bg-[#DADAE7] rounded-lg px-2">
+                      <select name="phone_code" value={phone_code}  onChange={handleChange}  className='w-full h-full bg-transparent outline-none border-none text-sm cursor-pointer'>
+                        {countryCodes.sort((a, b) => a.value.localeCompare(b.value)).map((code, index) => (
+                          <option key={index}value={code.value}>{code.label}</option>
+                        ))}
+                      </select>
                     </div>
                     <div className="w-full h-[62px]  flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary rounded-lg pl-[15px]">
                       <input type="text" name='phone_number' onChange={handleChange} className='w-full h-full bg-transparent outline-none border-none text-sm' />
@@ -190,7 +189,7 @@ const ApplySchoolCom:React.FC = () => {
       </div>
       <div className="md:w-[30%] tab:hidden pl-5">
         <div className="bg-white rounded-[10px] px-5 py-10">
-          <h5 className="md:text-[20px] md:leading-[32px]">{user.first_name}, {user.last_name}</h5>
+          <h5 className="md:text-[20px] md:leading-[32px]">{user?.first_name}, {user?.last_name}</h5>
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">School</h5>
             <p className="md:text-[20px] md:leading-[32px] capitalize">{course?.university_name}</p>
@@ -202,27 +201,35 @@ const ApplySchoolCom:React.FC = () => {
           <div className="py-3">
             <h5 className="font-medium text-[14px] leading-[22.4px]">Admission closes on</h5>
             <p className="md:text-[20px] md:leading-[32px]">
+              {course?.application_opening && new Date(course?.application_opening).toDateString()}
+            </p>
+          </div>
+          <div className="py-3">
+            <h5 className="font-medium text-[14px] leading-[22.4px]">Admission closes on</h5>
+            <p className="md:text-[20px] md:leading-[32px]">
               {course?.application_closing && new Date(course?.application_closing).toDateString()}
             </p>
           </div>
         </div>
         <div className="bg-white rounded-[10px] px-5 my-10 py-10">
-          <h5 className="md:text-[20px] md:leading-[32px]">Pricing</h5>
-          <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] py-5">
-            <p className="md:text-[16px] md:leading-[25.6px]">Tuition</p>
-            <p className="md:text-[16px] md:leading-[25.6px]">{course?.currency}{' '}{course?.tuition}</p>
-          </div>
-          <div className="flex justify-between border-dashed border-b-[1px] border-[#DADAE7] py-5">
+          <h5 className="md:text-[20px] md:leading-[32px]">Pricing</h5>      
+          <div className="flex justify-between font-medium py-2">
             <p className="md:text-[16px] md:leading-[25.6px]">Service charge</p>
-            <p className="md:text-[16px] md:leading-[25.6px]">{course?.currency}{' '}{course?.service_charge || 0}</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">₦{' '}{(course?.service_charge)?.toLocaleString('en-US') || 0}</p>
           </div>
-          <div className="flex justify-between items-center py-5">
+          <div className="flex justify-between font-medium py-2">
+            <p className="md:text-[16px] md:leading-[25.6px]">Amount payable</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">₦{' '}{(course?.amount_payable)?.toLocaleString('en-US') || 0}</p>
+          </div>
+          <div className="border-dashed border border-[#DADAE7]" />
+          <div className="flex justify-between font-bold py-2">
             <p className="md:text-[16px] md:leading-[25.6px]">Total</p>
-            <p className="md:text-[20px] md:leading-[32px] font-semibold">{course?.currency}{' '}{total}</p>
+            <p className="md:text-[16px] md:leading-[25.6px]">₦{' '}{(course?.amount_payable)?.toLocaleString('en-US') || 0}</p>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

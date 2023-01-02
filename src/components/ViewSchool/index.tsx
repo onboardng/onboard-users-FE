@@ -1,26 +1,69 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { FiChevronRight, FiPlus, FiSearch } from 'react-icons/fi'
 import { HiMapPin, HiXCircle } from 'react-icons/hi2'
-import { useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
+import { Tab, Tabs, styled } from '@mui/material'
+import { useSelector } from 'react-redux'
 
-import { useHttpRequest } from '../../hooks/useHttpRequest'
 import { Course, PaginationProps, UniversityResponse } from '../../interfaces'
-import PageLoader from "../../components/Loader/PageLoader";
-import { RootState } from '../../redux/store'
-import AddRating from './AddRatings'
-import Pagination from '../Pagination/Pagination'
-import Ratings from '../Shared/Ratings'
 import ApplySchool from '../school/PopUpContent/ApplySchool'
+import PageLoader from "../../components/Loader/PageLoader"
+import { useHttpRequest } from '../../hooks/useHttpRequest'
+import { BookOpen, Globe } from '../../assets/icons'
+import Pagination from '../Pagination/Pagination'
+import { RootState } from '../../redux/store'
+import TabPanel from '../Shared/TabPanel'
+// import Ratings from '../Shared/Ratings'
+import AddRating from './AddRatings'
 
-const baseUrl = process.env.REACT_APP_BACKEND_API
-// const baseUrl = "https://app.onboard.com.ng/onboard/v1"
+const baseUrl = process.env.REACT_APP_BACKEND_API as string
+
+const CustomTabs = styled(Tabs)({
+  '&.MuiTabs-root': {
+    width: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
+    margin: '30px 0 20px',
+  },
+  '& .MuiTabs-indicator': {
+    display: 'none',
+  }
+})
+
+const CustomTab = styled(Tab)({
+  '&.MuiTab-root': {
+    minWidth: '122px',
+    minHeight: '44px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    background: '#EDEDF2',
+    color: '#BFBFD4',
+    borderRadius: '9px',
+    fontWeight: 500,
+    fontSize: '14px',
+    textTransform: 'capitalize',
+    margin: '0 20px 0 0',
+    '& svg': {
+      fill: '#BFBFD4',
+    },
+  },
+  '&.Mui-selected': {
+    background: '#6FA7B4',
+    color: '#FFF',
+    '& svg': {
+      fill: '#FFF',
+    },
+  },
+})
 
 const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [universityData, setUniversityData] = useState<UniversityResponse | null>(null)
   const [courses, setCourses] = useState<Array<Course | null>>([])
   const [result, setResult] = useState<Array<Course | null>>([])
   const {loading, sendRequest} = useHttpRequest()
+  const [tab, setTab] = useState<number>(0)
   const [query, setQuery] = useState<string>('')
   const [page, setPage] = useState<number>(1)
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false)
@@ -29,11 +72,14 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
 
   const handleImageSwitch = (index: number) => setImageCount(index)
 
+  const handleTabSwitch = (e: SyntheticEvent, value: number) => setTab(value)
+
   interface PopupProps {
     open: boolean
     course: Course | null
     courseId: string | undefined
   }
+
   const [openPopup, setOpenPopup] = useState<PopupProps>({open: false, course: null, courseId: ""})
   const closePop = () => setOpenPopup({open: false, course: null, courseId: ""})
 
@@ -129,63 +175,87 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
         {/* second div */}
         <div className='flex flex-grow flex-col'>
           <p className='font-[600] text-[40px] leading-[56px] text-black capitalize mb-[14px]'>{universityData?.university?.name}</p>
-          <div className='flex flex-col mb-[10px]'>
-            {universityData?.university?.ratings && universityData?.university.ratings === null ? (
-                <Ratings ratings={0} size='large' disabled />
-              ) : ( 
-                <Ratings ratings={universityData.university.ratings} size='large' disabled />
-            )}
-            <p className='font-normal text-sm leading-[26px]'>{universityData?.university?.ratings || '0'} ratings total</p>
+          <div className='flex items-center gap-2 mb-[10px] font-medium'>
+            <Globe fill='#6FA7B4' /># Ranking
           </div>
           <div className='flex items-center gap-[8px] my-[20px]'>
-            <HiMapPin className='text-primary' />
-            <p className='font-[500] text-lg leading-8'>{universityData?.university.address}, {universityData?.university?.country}</p>
+            <HiMapPin className='text-primary text-xl' />
+            <p className='font-medium text-lg leading-8'>{universityData?.university.address}, {universityData?.university?.country}</p>
           </div>
           <div className='w-full'>
             <p className='w-full font-[500] text-base leading-[22px]'>{universityData.university.description}</p>
           </div>
-          <div className='w-full flex items-center justify-between mt-[44px]'>
-            <p className='font-[500] text-xl leading-3[38px]'>Courses</p>
-            <div className='w-[209px] h-[44px] flex items-center bg-white border-[1px] border-[#DADAE7] focus-within:border-primary rounded-md'>
-              <div className='flex items-center'>
-                <FiSearch fontSize={25} className='text-primary fill-primary ml-[12px]' />
-                <input type="text" value={query} onChange={handleQueryChange} placeholder='Search here' className='w-full border-none outline-none px-[2px] rounded-md ml-[12.5px]' />
-              </div>
-              <HiXCircle onClick={() => setQuery("")} fontSize={25} className='text-primary fill-primary mr-[12px] cursor-pointer' />
-            </div>
+          <div>
+            <CustomTabs value={tab} onChange={handleTabSwitch}>
+              <CustomTab label='Courses' iconPosition='start' icon={<BookOpen />} />
+              <CustomTab label='Country Profile' iconPosition='start' icon={<Globe />} />
+            </CustomTabs>
           </div>
-          <div className='w-full flex flex-col gap-[20px] mt-[20px]'>
-            {courses && courses?.length === 0 ? (
-              <div>
-                <p>No courses available.</p>
+          <hr className='w-full h-[1px] bg-[#DADAE7]' />
+          <TabPanel value={tab} index={0}>
+            <div className='w-full flex flex-col'>
+              <div className='w-full flex items-center gap-5 mt-5 mb-[22px]'>
+                <p className='w-[147px] h-[42px] flex items-center justify-center font-medium text-base text-primary leading-[22px] border border-primary rounded-[9px]'>
+                  Undergraduates
+                </p>
+                <p className='w-[147px] h-[42px] flex items-center justify-center font-medium text-base text-primary leading-[22px] border border-primary rounded-[9px]'>
+                  Postgraduates
+                </p>
+                <p className='w-[147px] h-[42px] flex items-center justify-center font-medium text-base text-primary leading-[22px] border border-primary rounded-[9px]'>
+                  Doctorates
+                </p>
               </div>
-            ) : (
-              <>
-              {result?.map((course, index) => (
-                <div key={index} className='w-full flex flex-col p-[20px] bg-white rounded-[10px]'>
-                  <div className='w-full flex items-center justify-between'>
-                    <div className='flex flex-col w-[60%]'>
-                      <p className='font-[500] text-lg leading-8 capitalize mb-[5px]'>{course?.name}</p>
-                      <p className='font-[500] text-sm leading-[26px] text-[#8B8BA4]'>
-                        Application closes on {course?.application_closing && new Date(course?.application_closing).toDateString()}
-                      </p>
-                    </div>
-                    <button onClick={() => setOpenPopup({open: true, course: course, courseId: course?.id})} className='w-[158px] h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
-                      apply now
-                      <FiChevronRight />
-                    </button>
+              <hr className='w-full h-[1px] bg-[#DADAE7]' />
+              <div className='w-full flex items-center justify-between mt-[26px]'>
+                <p className='font-[500] text-xl leading-3[38px]'>Courses</p>
+                <div className='w-[209px] h-[44px] flex items-center bg-white border-[1px] border-[#DADAE7] focus-within:border-primary rounded-md'>
+                  <div className='flex items-center'>
+                    <FiSearch fontSize={25} className='text-primary fill-primary ml-[12px]' />
+                    <input type="text" value={query} onChange={handleQueryChange} placeholder='Search here' className='w-full border-none outline-none px-[2px] rounded-md ml-[12.5px]' />
                   </div>
-                  <hr className='w-full h-[1px] bg-[#DADAE7] mt-3 mb-5' />
-                  <div className='w-full'>
-                    <p className='first-letter:capitalize font-medium text-base leading-[22px] text-[#8B8BA4]'>{course?.description}</p>
-                  </div>
+                  <HiXCircle onClick={() => setQuery("")} fontSize={25} className='text-primary fill-primary mr-[12px] cursor-pointer' />
                 </div>
-              ))} 
-              </>
-            )}
-          </div>
+              </div>
+            </div>
+            <div className='w-full flex flex-col gap-[20px] mt-[20px]'>
+              {courses && courses?.length === 0 ? (
+                <div>
+                  <p>No courses available.</p>
+                </div>
+              ) : (
+                <>
+                {result?.map((course, index) => (
+                  <div key={index} className='w-full flex flex-col p-[20px] bg-white rounded-[10px]'>
+                    <div className='w-full flex items-center justify-between'>
+                      <div className='flex flex-col w-[60%]'>
+                        <p className='font-[500] text-lg leading-8 capitalize mb-[5px]'>{course?.name}</p>
+                        <p className='font-[500] text-sm leading-[26px] text-[#8B8BA4]'>
+                          Application closes on {course?.application_closing && new Date(course?.application_closing).toDateString()}
+                        </p>
+                      </div>
+                      <button onClick={() => setOpenPopup({open: true, course: course, courseId: course?.id})} className='w-[158px] h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
+                        apply now
+                        <FiChevronRight />
+                      </button>
+                    </div>
+                    <hr className='w-full h-[1px] bg-[#DADAE7] mt-3 mb-5' />
+                    <div className='w-full'>
+                      <p className='first-letter:capitalize font-medium text-base leading-[22px] text-[#8B8BA4]'>{course?.description}</p>
+                    </div>
+                  </div>
+                ))}
+                </>
+              )}
+            </div>
+          </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <div className='w-full flex items-center justify-between mt-[44px]'>
+              <p className='font-[500] text-xl leading-3[38px]'>Country Profile</p>
+              <div></div>
+            </div>
+          </TabPanel>
           {/* Pagination goes here */}
-          {handlePagination()}
+          {tab === 0 && handlePagination()}
         </div>
       </div>
     )}

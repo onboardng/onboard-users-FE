@@ -1,7 +1,7 @@
-import image_1 from './assets/images/image_1.jpeg'
-import image_2 from './assets/images/image_2.jpeg'
-import image_3 from './assets/images/image_3.jpeg'
-import image_4 from './assets/images/image_4.jpeg'
+import image_1 from './assets/images/image_1.png'
+import image_2 from './assets/images/image_2.png'
+import image_3 from './assets/images/image_3.png'
+import image_4 from './assets/images/image_4.png'
 
 export const CAROUSEL_DATA = [
     { name: 'image 1', image: image_1 },

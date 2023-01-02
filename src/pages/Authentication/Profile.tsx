@@ -3,27 +3,29 @@ import { FiTrash, FiUploadCloud } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-import { RootState } from '../../redux/store'
-import Navbar from '../../components/school/Navbar'
+import PasswordModal from '../../components/Modal/PasswordModal'
 import InputField from '../../components/Shared/InputField'
 import { useHttpRequest } from '../../hooks/useHttpRequest'
 import PageLoader from '../../components/Loader/PageLoader'
+import Navbar from '../../components/school/Navbar'
+import { RootState } from '../../redux/store'
 import { User } from '../../interfaces'
 
-const baseUrl = 'https://app.onboard.com.ng/onboard/v1'
+const baseUrl = process.env.REACT_APP_BACKEND_API
 
 const Profile:React.FC = () => {
+    const [isOpen, setIsOpen] = useState<boolean>(false)
     const [previewURL, setPreviewURL] = useState<string | ArrayBuffer | null>(null)
     const [dragActive, setDragActive] = useState<boolean>(false)
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [userProfile, setUserProfile] = useState<User | null>(null)
     const {error, loading, sendRequest} = useHttpRequest()
     const { authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
-
     
     const getProfile = async() => {
         const headers = {
-            'Authorization': `Bearer ${access_token}`
+            'Authorization': `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
         }
         try {
             const data = await sendRequest(`${baseUrl}/auth/view-profile`, 'GET', null, headers)
@@ -57,7 +59,8 @@ const Profile:React.FC = () => {
         const image = imageFile as unknown as string
         const formData = new FormData()
         formData.append('image', image)
-        formData.append('full_name', first_name+""+last_name)
+        formData.append('first_name', first_name)
+        formData.append('last_name', last_name)
         formData.append('email', email)
         formData.append('phone_number', phone_number)
 
@@ -75,8 +78,9 @@ const Profile:React.FC = () => {
 
     const handleFile = (file: File) => {
         if(!file) return
-        const { type } = file
+        const { type, size } = file
         if(type === 'image/png' || type === 'image/jpg' || type === 'image/jpeg') {
+            if(size > 5120000) return toast.error('Please select an image below 5MB.')
             const fileReader = new FileReader()
             fileReader.onload = () => setPreviewURL(fileReader.result)
             fileReader.readAsDataURL(file)
@@ -119,6 +123,7 @@ const Profile:React.FC = () => {
 
   return (
     <>
+    {isOpen && <PasswordModal onClose={() => setIsOpen(false)} />}
     <Navbar />
     <div className='w-full h-full bg-[#F7F7F7] grid place-items-center'>
         <div className='w-[690px] min-w-[300px] mb-[125px]'>
@@ -142,7 +147,7 @@ const Profile:React.FC = () => {
                     <div className='w-[50px] h-[50px] rounded-full overflow-hidden'>
                         <img src={userProfile?.avatar !== null ? userProfile?.avatar : "/svgs/Avatar.svg"} alt="" className='w-full h-full rounded-full object-cover' />
                     </div>
-                    <div className='w-[630px] h-[165px] bg-white rounded-[4px] border-[1px] border-[#DADAE7] ml-2'>
+                    <div className='w-[576px] max-w-[80%] h-[324px] bg-white rounded-[4px] border-[1px] border-[#DADAE7] ml-2'>
                         {previewURL === null ? (
                             <label className='w-full h-full flex items-center justify-center relative overflow-hidden'>
                                 {!dragActive && (
@@ -168,11 +173,11 @@ const Profile:React.FC = () => {
                                 />
                             </label>
                         ) : (
-                            <div className='w-full h-full relative'>
+                            <div className='w-full h-full flex items-center justify-center relative'>
                                 <button type='button' onClick={() => setPreviewURL(null)} className='rounded-full bg-white text-black p-3 absolute top-2 left-2'>
                                     <FiTrash />
                                 </button>
-                                <img src={`${previewURL}`} alt="" className='w-full h-full object-cover' />
+                                <img src={`${previewURL}`} alt="" className='h-full object-contain border rounded-[4px]' />
                             </div>
                         )}
                     </div>
@@ -187,7 +192,7 @@ const Profile:React.FC = () => {
                 <p className='font-medium text-[#8B8BA4] text-sm leading-[26px] mt-[10px] mb-[20px]'>
                     Update your password here
                 </p>
-                <button className='w-[174px] h-[42px] bg-white border-[1px] border-primary rounded-[4px] text-primary'>
+                <button onClick={() => setIsOpen(true)} className='w-[174px] h-[42px] bg-white border-[1px] border-primary rounded-[4px] text-primary'>
                     Update
                 </button>
             </div>

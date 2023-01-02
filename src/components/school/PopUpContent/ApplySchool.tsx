@@ -12,7 +12,7 @@ interface Props {
   courseId: string | undefined
 }
 
-const baseUrl = "https://app.onboard.com.ng/onboard/v1"
+const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
 const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
   const [courseData, setCourseData] = useState<Courses | null>(null)
@@ -77,7 +77,7 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
               <MoneyBill />
               <div className="font-medium text-sm leading-[26px]">
                 <>
-                Estimated Admission Fee: ${courseData?.tuition}
+                Estimated Admission Fee: ${courseData?.tuition} (~NGN {(courseData?.price_in_naira).toLocaleString('en-US')})
                 </>
               </div>
             </div>
