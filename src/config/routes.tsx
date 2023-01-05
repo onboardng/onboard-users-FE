@@ -3,9 +3,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import PageLoader from "../components/Loader/PageLoader";
 import { persistor } from "../redux/store";
-import { AdvancedMatching } from 'react-facebook-pixel'
-
-const pixelId = process.env.REACT_APP_PIXEL_ID as string
 
 const AllRoutes = () => {
   const Welcome = lazy(() => import("../pages/Authentication/Verify"));
@@ -23,15 +20,16 @@ const AllRoutes = () => {
   const ResetPassword = lazy(() => import("../pages/Authentication/ResetPassword"));
   const location = useLocation()
 
+  // const options = { autoConfig: true, debug: false };
+  // ReactPixel.init(pixelId, undefined, options)
+
   useEffect(() => {
-    const advancedMatchingOptions:AdvancedMatching = {
-      country: "*", ct: "*", db: "*", em: "*", fn: "*", ge: "*", ln: "*", ph: "*", st: "*", zp: "*"
-    };
+    // const advancedMatchingOptions:AdvancedMatching = {};
     const options = { autoConfig: true, debug: false };
     import('react-facebook-pixel')
-      .then((x) => x.default)
+      .then((pixel) => pixel.default)
       .then((ReactPixel) => {
-        ReactPixel.init(pixelId, advancedMatchingOptions, options);
+        ReactPixel.init('1866981493679392', undefined, options);
         // The next line might need to be enabled as per GDPR guidelines
         // ReactPixel.revokeConsent()
         ReactPixel.pageView();
