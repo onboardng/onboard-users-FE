@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ReactPixel from "react-facebook-pixel"
+
 import AddSection from "../../../components/school/AdSection";
 import Explore from "../../../components/school/Explore";
 import Footer from "../../../components/school/Footer";
@@ -11,6 +13,7 @@ import Update from "../../../components/school/Update";
 const HomePage = () => {
   const [toggleMenu, setToggleMenu] = useState("close");
   const [initial, setInitial] = useState(false);
+  ReactPixel.pageView()
 
   return (
     <div className="bg-grey-600 relative">
