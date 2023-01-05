@@ -314,3 +314,28 @@ interface ProgramType {
     university_name: string
     updated_at: Date | string
 }
+
+export interface CountryProfile {
+    id: string
+    name: string
+    average_rent: string
+    average_monthly_expenses: string
+    health_insurance: string
+    health_insurance_description: string
+    job_availability: string
+    certificate_recognition: number
+    average_income_per_hour: string
+    required_working_hours_per_day: string
+    popular_jobs: Array<string>
+    expert_take: string
+    currency: String
+    additional_section: Array<any>
+    deleted: boolean
+    created_at: Date | string
+    updated_at: Date | string
+}
+
+export interface ProfileRows {
+    count: number
+    rows: Array<CountryProfile>
+}

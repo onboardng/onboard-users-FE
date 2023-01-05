@@ -5,7 +5,8 @@ import { useSearchParams } from 'react-router-dom'
 import { Tab, Tabs, styled } from '@mui/material'
 import { useSelector } from 'react-redux'
 
-import { Course, PaginationProps, UniversityResponse } from '../../interfaces'
+import { Bed, BriefcaseMoney, Bus, ClipboardText, Clock, Hospital, Wallet } from '../../assets/icons'
+import { Course, PaginationProps, UniversityResponse, ProfileRows } from '../../interfaces'
 import ApplySchool from '../school/PopUpContent/ApplySchool'
 import PageLoader from "../../components/Loader/PageLoader"
 import { useHttpRequest } from '../../hooks/useHttpRequest'
@@ -15,8 +16,14 @@ import { RootState } from '../../redux/store'
 import TabPanel from '../Shared/TabPanel'
 // import Ratings from '../Shared/Ratings'
 import AddRating from './AddRatings'
+import Block from '../Shared/Block'
 
 const baseUrl = process.env.REACT_APP_BACKEND_API as string
+interface PopupProps {
+  open: boolean
+  course: Course | null
+  courseId: string | undefined
+}
 
 const CustomTabs = styled(Tabs)({
   '&.MuiTabs-root': {
@@ -60,6 +67,7 @@ const CustomTab = styled(Tab)({
 
 const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [universityData, setUniversityData] = useState<UniversityResponse | null>(null)
+  const [countryProfile, setCountryProfile] = useState<ProfileRows | null>(null)
   const [courses, setCourses] = useState<Array<Course | null>>([])
   const [result, setResult] = useState<Array<Course | null>>([])
   const {loading, sendRequest} = useHttpRequest()
@@ -69,23 +77,15 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false)
   const { authorization: { access_token }} = useSelector((store: RootState) => store.authStore)
   const [imageCount, setImageCount] = useState<number>(0)
-
-  const handleImageSwitch = (index: number) => setImageCount(index)
-
-  const handleTabSwitch = (e: SyntheticEvent, value: number) => setTab(value)
-
-  interface PopupProps {
-    open: boolean
-    course: Course | null
-    courseId: string | undefined
-  }
-
-  const [openPopup, setOpenPopup] = useState<PopupProps>({open: false, course: null, courseId: ""})
-  const closePop = () => setOpenPopup({open: false, course: null, courseId: ""})
-
   const [paginationEl, setPaginationEl] = useState<PaginationProps | null>(null)
   const [searchParams, setSearchParams] = useSearchParams();
-  
+  const [openPopup, setOpenPopup] = useState<PopupProps>({open: false, course: null, courseId: ""})
+
+  const handleImageSwitch = (index: number) => setImageCount(index)
+  const closePop = () => setOpenPopup({open: false, course: null, courseId: ""})
+  const handleTabSwitch = (e: SyntheticEvent, value: number) => setTab(value)
+
+
   const getUniversityInfo = async(id: string) => {
     const headers = {
       'Content-Type': 'application/json',
@@ -100,6 +100,19 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
       setUniversityData(result?.data)
       setPaginationEl(courseResult?.data?.allCourses)
       setCourses(courseResult?.data?.allCourses?.data)
+    } catch (error) {}
+  }
+
+  const getCountryProfile = async(name: string) => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${access_token}`
+    }
+    try {
+      const data = await sendRequest(`${baseUrl}/country/search?limit=10&page=1&search=${name}`, 'GET', null, headers)
+      if(!data || data === undefined) return
+      console.log(data)
+      setCountryProfile(data?.foundCountries?.data)
     } catch (error) {}
   }
 
@@ -128,7 +141,6 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
 
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-
     setQuery(e.target.value)
     filterCourses(e.target.value)
   }
@@ -144,6 +156,14 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     getUniversityInfo(id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
+
+  useEffect(() => {
+    if(universityData) {
+      const country = universityData?.university?.country
+      getCountryProfile(country)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[universityData])
 
   if(loading) return <PageLoader />
 
@@ -249,10 +269,45 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
             </div>
           </TabPanel>
           <TabPanel value={tab} index={1}>
-            <div className='w-full flex items-center justify-between mt-[44px]'>
-              <p className='font-[500] text-xl leading-3[38px]'>Country Profile</p>
-              <div></div>
-            </div>
+            {countryProfile && countryProfile?.rows?.filter((country) => country.name === universityData?.university?.country)
+            .map((country, index) => (
+              <div key={index} className='w-full flex items-center justify-between mt-[44px]'>
+                <div className="w-full flex flex-col">
+                  <p className='font-medium text-lg leading-[32px]'>Spendings</p>
+                  <div className="flex items-center justify-between gap-[33px]">
+                    <Block icon={<Bed fill='#6FA7B4' />} title='Average rent' text={country?.average_rent} />
+                    <Block icon={<Bus/>} title='Average monthly expenses' text={country?.average_monthly_expenses} />
+                    <Block icon={<Hospital/>} title='Health insurance' text={country?.health_insurance} />
+                  </div>
+                </div>
+                <Block icon={<Hospital/>} title='Helath insurance description' text={country?.health_insurance_description} />
+                <div className="w-full flex flex-col">
+                  <p className="font-medium text-lg leading-[32px]">Work & Study</p>
+                  <div className="flex flex-wrap items-center gap-[33px]">
+                      <Block icon={<BriefcaseMoney />} title='Job Availability' text={country?.job_availability} />
+                      <Block icon={<ClipboardText/>} title='School certificate recognition' text={country?.certificate_recognition} />
+                      <Block icon={<Wallet/>} title='Average income' text={country?.average_income_per_hour} />
+                      <Block icon={<Clock/>} title='Required work hours' text={country?.required_working_hours_per_day} />
+                  </div>
+                </div>
+                <div className="w-full flex flex-col">
+                  <p className="font-medium text-lg leading-[32px]">Popular Jobs</p>
+                  <div className="flex flex-wrap items-center gap-5">
+                    {country?.popular_jobs?.map((job, index) => (
+                      <div key={index} className='max-w-fit h-[46px] flex items-center gap-[22px] py-[10px] px-5 bg-[#F0F0F0] rounded-[10px] capitalize'>
+                        <BriefcaseMoney /> <p>{job}</p>
+                      </div>
+                    ))}           
+                  </div>
+                </div>
+                <div className="w-full flex flex-col">
+                    <p className="font-medium text-lg leading-[32px]">Expert Take</p>
+                    <div className='w-full h-[46px] py-[10px] px-5 bg-[#F0F0F0] rounded-[10px]'>
+                        <p>{country?.expert_take}</p>
+                    </div>
+                </div>
+              </div>
+            ))}
           </TabPanel>
           {/* Pagination goes here */}
           {tab === 0 && handlePagination()}
