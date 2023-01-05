@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import ReactPixel from "react-facebook-pixel"
 
 import { useHttpRequest } from '../../hooks/useHttpRequest'
 import Spinner from '../../assets/icons/Spinner'
@@ -10,9 +11,11 @@ const baseUrl = process.env.REACT_APP_BACKEND_API
 const Subscribe = () => {
     const [email, setEmail] = useState<string>('')
     const {error, loading, sendRequest} = useHttpRequest()
+    const handlePixel = () => ReactPixel.trackCustom('Subscribe to Newsletter')
 
     const handleSubmit = async(e: FormEvent) => {
         e.preventDefault()
+        handlePixel()
         if(!email || email === '') return toast.error('Please enter a valid email.')
         const headers = { 'Content-Type': 'application/json' }
         try {

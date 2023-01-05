@@ -1,6 +1,7 @@
 import React, { MouseEvent, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
+import ReactPixel from "react-facebook-pixel"
 
 import { useHttpRequest } from '../../hooks/useHttpRequest'
 import { RootState } from '../../redux/store'
@@ -15,7 +16,10 @@ const PaymentModal:React.FC<Payment> = ({amount_payable, application_id, email, 
   const {error, loading, sendRequest} = useHttpRequest()
   const { authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
 
+  const handlePixel = () => ReactPixel.trackCustom('Made Payment')
+
   const handlePayment = async() => {
+    handlePixel()
     const headers = {
       'Authorization': `Bearer ${access_token}`,
       'Content-Type': 'application/json'

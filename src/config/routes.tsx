@@ -1,8 +1,11 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { lazy, Suspense, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import PageLoader from "../components/Loader/PageLoader";
 import { persistor } from "../redux/store";
+import { AdvancedMatching } from 'react-facebook-pixel'
+
+const pixelId = process.env.REACT_APP_PIXEL_ID as string
 
 const AllRoutes = () => {
   const Welcome = lazy(() => import("../pages/Authentication/Verify"));
@@ -18,11 +21,30 @@ const AllRoutes = () => {
   const TrackSchoolBooking = lazy(() => import("../pages/School/TrackSchoolBooking"));
   const ForgotPassword = lazy(() => import("../pages/Authentication/ForgotPassword"));
   const ResetPassword = lazy(() => import("../pages/Authentication/ResetPassword"));
+  const location = useLocation()
+
+  useEffect(() => {
+    const advancedMatchingOptions:AdvancedMatching = {
+      country: "*", ct: "*", db: "*", em: "*", fn: "*", ge: "*", ln: "*", ph: "*", st: "*", zp: "*"
+    };
+    const options = { autoConfig: true, debug: false };
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init(pixelId, advancedMatchingOptions, options);
+        // The next line might need to be enabled as per GDPR guidelines
+        // ReactPixel.revokeConsent()
+        ReactPixel.pageView();
+
+        window.addEventListener('DOMContentLoaded', () => {
+          ReactPixel.pageView();
+        });
+      });
+  }, [location]);
   
   return (
     <PersistGate loading={null} persistor={persistor}>
       <Suspense fallback={<PageLoader />}>
-        <BrowserRouter>
           <Routes>
             <Route path="/" element={<SchoolHomePage />} />
             <Route path="/login" element={<Login />} />
@@ -38,7 +60,6 @@ const AllRoutes = () => {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
-        </BrowserRouter>
       </Suspense>
     </PersistGate>
   );
