@@ -252,7 +252,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                 <p className='font-medium text-lg leading-[32px]'>Country Profile not available</p>
               </div>
             ): (
-              <div className='w-full flex items-center justify-between mt-[44px]'>
+              <div className='w-full flex flex-col gap-5 py-5 mt-[44px]'>
                 <div className="w-full flex flex-col">
                   <p className='font-medium text-lg leading-[32px]'>Spendings</p>
                   <div className="flex items-center justify-between gap-[33px]">
