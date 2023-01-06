@@ -68,6 +68,7 @@ export interface Program {
 export interface UniversityResponse {
     university: UniversityProps
     available_programs: Array<Program>
+    country_profile: CountryProfile
 }
 
 export interface Course {
@@ -333,9 +334,4 @@ export interface CountryProfile {
     deleted: boolean
     created_at: Date | string
     updated_at: Date | string
-}
-
-export interface ProfileRows {
-    count: number
-    rows: Array<CountryProfile>
 }

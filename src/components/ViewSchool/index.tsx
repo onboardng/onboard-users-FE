@@ -6,7 +6,7 @@ import { Tab, Tabs, styled } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 import { Bed, BriefcaseMoney, Bus, ClipboardText, Clock, Hospital, Wallet } from '../../assets/icons'
-import { Course, PaginationProps, UniversityResponse, ProfileRows } from '../../interfaces'
+import { Course, PaginationProps, UniversityResponse } from '../../interfaces'
 import ApplySchool from '../school/PopUpContent/ApplySchool'
 import PageLoader from "../../components/Loader/PageLoader"
 import { useHttpRequest } from '../../hooks/useHttpRequest'
@@ -67,7 +67,6 @@ const CustomTab = styled(Tab)({
 
 const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [universityData, setUniversityData] = useState<UniversityResponse | null>(null)
-  const [countryProfile, setCountryProfile] = useState<ProfileRows | null>(null)
   const [courses, setCourses] = useState<Array<Course | null>>([])
   const [result, setResult] = useState<Array<Course | null>>([])
   const {loading, sendRequest} = useHttpRequest()
@@ -100,19 +99,6 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
       setUniversityData(result?.data)
       setPaginationEl(courseResult?.data?.allCourses)
       setCourses(courseResult?.data?.allCourses?.data)
-    } catch (error) {}
-  }
-
-  const getCountryProfile = async(name: string) => {
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${access_token}`
-    }
-    try {
-      const data = await sendRequest(`${baseUrl}/country/search?limit=10&page=1&search=${name}`, 'GET', null, headers)
-      if(!data || data === undefined) return
-      console.log(data)
-      setCountryProfile(data?.foundCountries?.data)
     } catch (error) {}
   }
 
@@ -156,14 +142,6 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     getUniversityInfo(id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
-
-  useEffect(() => {
-    if(universityData) {
-      const country = universityData?.university?.country
-      getCountryProfile(country)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[universityData])
 
   if(loading) return <PageLoader />
 
@@ -269,31 +247,34 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
             </div>
           </TabPanel>
           <TabPanel value={tab} index={1}>
-            {countryProfile && countryProfile?.rows?.filter((country) => country.name === universityData?.university?.country)
-            .map((country, index) => (
-              <div key={index} className='w-full flex items-center justify-between mt-[44px]'>
+            {universityData?.country_profile === null ? (
+              <div className='w-full flex items-center justify-between mt-[44px]'>
+                <p className='font-medium text-lg leading-[32px]'>Country Profile not available</p>
+              </div>
+            ): (
+              <div className='w-full flex flex-col gap-5 py-5 mt-[44px]'>
                 <div className="w-full flex flex-col">
                   <p className='font-medium text-lg leading-[32px]'>Spendings</p>
                   <div className="flex items-center justify-between gap-[33px]">
-                    <Block icon={<Bed fill='#6FA7B4' />} title='Average rent' text={country?.average_rent} />
-                    <Block icon={<Bus/>} title='Average monthly expenses' text={country?.average_monthly_expenses} />
-                    <Block icon={<Hospital/>} title='Health insurance' text={country?.health_insurance} />
+                    <Block icon={<Bed fill='#6FA7B4' />} title='Average rent' text={universityData?.country_profile?.average_rent} />
+                    <Block icon={<Bus/>} title='Average monthly expenses' text={universityData?.country_profile?.average_monthly_expenses} />
+                    <Block icon={<Hospital/>} title='Health insurance' text={universityData?.country_profile?.health_insurance} />
                   </div>
                 </div>
-                <Block icon={<Hospital/>} title='Helath insurance description' text={country?.health_insurance_description} />
+                <Block icon={<Hospital/>} title='Helath insurance description' text={universityData?.country_profile?.health_insurance_description} />
                 <div className="w-full flex flex-col">
                   <p className="font-medium text-lg leading-[32px]">Work & Study</p>
                   <div className="flex flex-wrap items-center gap-[33px]">
-                      <Block icon={<BriefcaseMoney />} title='Job Availability' text={country?.job_availability} />
-                      <Block icon={<ClipboardText/>} title='School certificate recognition' text={country?.certificate_recognition} />
-                      <Block icon={<Wallet/>} title='Average income' text={country?.average_income_per_hour} />
-                      <Block icon={<Clock/>} title='Required work hours' text={country?.required_working_hours_per_day} />
+                      <Block icon={<BriefcaseMoney />} title='Job Availability' text={universityData?.country_profile?.job_availability} />
+                      <Block icon={<ClipboardText/>} title='School certificate recognition' text={universityData?.country_profile?.certificate_recognition} />
+                      <Block icon={<Wallet/>} title='Average income' text={universityData?.country_profile?.average_income_per_hour} />
+                      <Block icon={<Clock/>} title='Required work hours' text={universityData?.country_profile?.required_working_hours_per_day} />
                   </div>
                 </div>
                 <div className="w-full flex flex-col">
                   <p className="font-medium text-lg leading-[32px]">Popular Jobs</p>
                   <div className="flex flex-wrap items-center gap-5">
-                    {country?.popular_jobs?.map((job, index) => (
+                    {universityData?.country_profile?.popular_jobs?.map((job, index) => (
                       <div key={index} className='max-w-fit h-[46px] flex items-center gap-[22px] py-[10px] px-5 bg-[#F0F0F0] rounded-[10px] capitalize'>
                         <BriefcaseMoney /> <p>{job}</p>
                       </div>
@@ -303,11 +284,11 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                 <div className="w-full flex flex-col">
                     <p className="font-medium text-lg leading-[32px]">Expert Take</p>
                     <div className='w-full h-[46px] py-[10px] px-5 bg-[#F0F0F0] rounded-[10px]'>
-                        <p>{country?.expert_take}</p>
+                        <p>{universityData?.country_profile?.expert_take}</p>
                     </div>
                 </div>
               </div>
-            ))}
+            )}
           </TabPanel>
           {/* Pagination goes here */}
           {tab === 0 && handlePagination()}
