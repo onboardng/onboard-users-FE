@@ -17,6 +17,7 @@ import TabPanel from '../Shared/TabPanel'
 // import Ratings from '../Shared/Ratings'
 import AddRating from './AddRatings'
 import Block from '../Shared/Block'
+import Spinner from '../Loader/Spinner'
 
 const baseUrl = process.env.REACT_APP_BACKEND_API as string
 interface PopupProps {
@@ -65,25 +66,50 @@ const CustomTab = styled(Tab)({
   },
 })
 
+const CustomTab2 = styled(Tab)({
+  '&.MuiTab-root': {
+    minWidth: '147px',
+    minHeight: '42px',
+    display: 'flex',
+    alignItems: 'center',
+    background: 'transparent',
+    color: '#BFBFD4',
+    border: '1px solid #BFBFD4',
+    borderRadius: '9px',
+    fontWeight: 500,
+    fontSize: '14px',
+    textTransform: 'capitalize',
+    margin: '0 20px 0 0',
+  },
+  '&.Mui-selected': {
+    border: '1px solid #6FA7B4',
+    color: '#6FA7B4',
+  },
+})
+
 const ViewSchool:React.FC<{id: string}> = ({id}) => {
-  const [universityData, setUniversityData] = useState<UniversityResponse | null>(null)
-  const [courses, setCourses] = useState<Array<Course | null>>([])
-  const [result, setResult] = useState<Array<Course | null>>([])
-  const {loading, sendRequest} = useHttpRequest()
-  const [tab, setTab] = useState<number>(0)
-  const [query, setQuery] = useState<string>('')
-  const [page, setPage] = useState<number>(1)
-  const [isAddingReview, setIsAddingReview] = useState<boolean>(false)
-  const { authorization: { access_token }} = useSelector((store: RootState) => store.authStore)
-  const [imageCount, setImageCount] = useState<number>(0)
-  const [paginationEl, setPaginationEl] = useState<PaginationProps | null>(null)
+  const [openPopup, setOpenPopup] = useState<PopupProps>({open: false, course: null, courseId: ""});
+  const { authorization: { access_token }} = useSelector((store: RootState) => store.authStore);
+  const [universityData, setUniversityData] = useState<UniversityResponse | null>(null);
+  const [paginationEl, setPaginationEl] = useState<PaginationProps | null>(null);
+  const [isAddingReview, setIsAddingReview] = useState<boolean>(false);
+  const [courses, setCourses] = useState<Array<Course | null>>([]);
+  const [program, setProgram] = useState<string>('undergraduate');
+  const [result, setResult] = useState<Array<Course | null>>([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [openPopup, setOpenPopup] = useState<PopupProps>({open: false, course: null, courseId: ""})
+  const [imageCount, setImageCount] = useState<number>(0);
+  const {loading, sendRequest} = useHttpRequest();
+  const [query, setQuery] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [tab2, setTab2] = useState<number>(0);
+  const [tab, setTab] = useState<number>(0);
+  const courseReq = useHttpRequest();
 
-  const handleImageSwitch = (index: number) => setImageCount(index)
-  const closePop = () => setOpenPopup({open: false, course: null, courseId: ""})
-  const handleTabSwitch = (e: SyntheticEvent, value: number) => setTab(value)
-
+  const closePop = () => setOpenPopup({open: false, course: null, courseId: ""});
+  const handleTabSwitch2 = (e: SyntheticEvent, value: number) => setTab2(value);
+  const handleTabSwitch = (e: SyntheticEvent, value: number) => setTab(value);
+  const handleImageSwitch = (index: number) => setImageCount(index);
+  const handleProgramSwitch = (name: string) => setProgram(name);
 
   const getUniversityInfo = async(id: string) => {
     const headers = {
@@ -92,24 +118,39 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     }
     try {
       const data = await sendRequest(`${baseUrl}/university/view/${id}`, 'GET', null, headers)
-      const courseData = await sendRequest(`${baseUrl}/course/by-sch/${id}/?limit=10&page=${page}`, 'GET', null, headers)
+      if(!data || data === undefined) return
+      setUniversityData(data?.data)
+    } catch (error) {}
+  }
 
-      const [result, courseResult] = await Promise.all([data, courseData])
-      if(result === undefined || courseResult === undefined) return
-      setUniversityData(result?.data)
-      setPaginationEl(courseResult?.data?.allCourses)
-      setCourses(courseResult?.data?.allCourses?.data)
+  const getCourses = async(program: string) => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${access_token}`
+    }
+    try {
+      const data = await courseReq.sendRequest(`${baseUrl}/course/in-uni/${id}/by-prg-name?limit=10&page=${page}&program_name=${program}`, 'GET', null, headers)
+      if(!data || data === undefined) return
+      console.log(data)
+      const { data: { allCourses }} = data
+      setPaginationEl(allCourses)
+      setCourses(allCourses?.data?.rows)
     } catch (error) {}
   }
 
   useEffect(() => {
     setResult(courses)
-  }, [courses])
+  },[courses])
+
+  useEffect(() => {
+    getCourses(program)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[program, page])
 
   // pagination
   useEffect(() => {
     setPage(parseInt(searchParams?.get('page') || "1"));
-  }, [searchParams])
+  },[searchParams])
 
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
@@ -118,8 +159,8 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   }
 
   const handlePagination = () => {
-    if(paginationEl) {
-      return <Pagination onPageChange={onPageChange} pageSize={paginationEl?.perPage} currentPage={page} totalCount={paginationEl?.totalDocs} />
+    if(paginationEl && paginationEl.total > 10) {
+      return <Pagination onPageChange={onPageChange} pageSize={paginationEl?.perPage} currentPage={page} totalCount={paginationEl?.total} />
     } else {
       return <></>
     }
@@ -193,15 +234,11 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
           <TabPanel value={tab} index={0}>
             <div className='w-full flex flex-col'>
               <div className='w-full flex items-center gap-5 mt-5 mb-[22px]'>
-                <p className='w-[147px] h-[42px] flex items-center justify-center font-medium text-base text-primary leading-[22px] border border-primary rounded-[9px]'>
-                  Undergraduates
-                </p>
-                <p className='w-[147px] h-[42px] flex items-center justify-center font-medium text-base text-primary leading-[22px] border border-primary rounded-[9px]'>
-                  Postgraduates
-                </p>
-                <p className='w-[147px] h-[42px] flex items-center justify-center font-medium text-base text-primary leading-[22px] border border-primary rounded-[9px]'>
-                  Doctorates
-                </p>
+                <CustomTabs value={tab2} onChange={handleTabSwitch2}>
+                  {universityData?.available_programs?.map((_, index) => (
+                    <CustomTab2 key={index} label={_.name} onClick={() => handleProgramSwitch(_.name)} />
+                  ))}
+                </CustomTabs>
               </div>
               <hr className='w-full h-[1px] bg-[#DADAE7]' />
               <div className='w-full flex items-center justify-between mt-[26px]'>
@@ -216,13 +253,13 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
               </div>
             </div>
             <div className='w-full flex flex-col gap-[20px] mt-[20px]'>
-              {courses && courses?.length === 0 ? (
-                <div>
-                  <p>No courses available.</p>
+              {courseReq.loading ? (
+                <div className='p-8'>
+                  <Spinner />
                 </div>
-              ) : (
+              ):(
                 <>
-                {result?.map((course, index) => (
+                {courses && result?.map((course, index) => (
                   <div key={index} className='w-full flex flex-col p-[20px] bg-white rounded-[10px]'>
                     <div className='w-full flex items-center justify-between'>
                       <div className='flex flex-col w-[60%]'>
@@ -235,12 +272,12 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                         apply now
                         <FiChevronRight />
                       </button>
-                    </div>
-                    <hr className='w-full h-[1px] bg-[#DADAE7] mt-3 mb-5' />
-                    <div className='w-full'>
-                      <p className='first-letter:capitalize font-medium text-base leading-[22px] text-[#8B8BA4]'>{course?.description}</p>
-                    </div>
                   </div>
+                  <hr className='w-full h-[1px] bg-[#DADAE7] mt-3 mb-5' />
+                  <div className='w-full'>
+                    <p className='first-letter:capitalize font-medium text-base leading-[22px] text-[#8B8BA4]'>{course?.description}</p>
+                  </div>
+                </div>
                 ))}
                 </>
               )}

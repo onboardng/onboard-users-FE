@@ -54,14 +54,15 @@ export interface UniversityProps {
 
 export interface Program {
     UniversityId: string
-    added_b: string
+    added_by: string
+    country: string
     created_at: string | Date
     delete: boolean
     description: string
     duration: number
     id: string
     name: string
-    university_name: string 
+    university_name: string
     updated_at: string | Date
 }
 
@@ -94,11 +95,12 @@ export interface Course {
 
 export interface PaginationProps {
     currentPage: number
-    hasNextPage?: boolean
-    hasPrevPage?: boolean
+    hasNextPage: boolean
+    hasPrevPage: boolean
     pageCount: number
     perPage: number
     no_of_schools: number
+    total: number
     totalDocs: number
     totalPages: number
 }
