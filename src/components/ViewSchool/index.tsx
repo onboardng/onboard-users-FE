@@ -215,7 +215,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
         <div className='flex flex-grow flex-col'>
           <p className='font-[600] text-[40px] leading-[56px] text-black capitalize mb-[14px]'>{universityData?.university?.name}</p>
           <div className='flex items-center gap-2 mb-[10px] font-medium'>
-            <Globe fill='#6FA7B4' /># Ranking
+            <Globe fill='#6FA7B4' /># {universityData?.university?.world_ranking}
           </div>
           <div className='flex items-center gap-[8px] my-[20px]'>
             <HiMapPin className='text-primary text-xl' />

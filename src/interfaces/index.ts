@@ -49,7 +49,8 @@ export interface UniversityProps {
     pictures: Array<string>
     ratings?: number
     total_admission: number
-    updated_at?: string | Date
+    updated_at: string | Date
+    world_ranking: number
 }
 
 export interface Program {
