@@ -131,7 +131,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     try {
       const data = await courseReq.sendRequest(`${baseUrl}/course/in-uni/${id}/by-prg-name?limit=10&page=${page}&program_name=${program}`, 'GET', null, headers)
       if(!data || data === undefined) return
-      console.log(data)
+      // console.log(data)
       const { data: { allCourses }} = data
       setPaginationEl(allCourses)
       setCourses(allCourses?.data?.rows)
