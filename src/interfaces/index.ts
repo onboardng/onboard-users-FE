@@ -336,5 +336,5 @@ export interface CountryProfile {
     additional_section: Array<any>
     deleted: boolean
     created_at: Date | string
-    updated_at: Date | string
+    updated_at: Date | strin
 }

@@ -3,8 +3,8 @@ import { FiChevronRight, FiPlus, FiSearch } from 'react-icons/fi'
 import { HiMapPin, HiXCircle } from 'react-icons/hi2'
 import { useSearchParams } from 'react-router-dom'
 import { Tab, Tabs, styled } from '@mui/material'
-import { useSelector } from 'react-redux'
-
+import { useSelector } from 'react-redu
+ 
 import { Bed, BriefcaseMoney, Bus, ClipboardText, Clock, Hospital, Wallet } from '../../assets/icons'
 import { Course, PaginationProps, UniversityResponse } from '../../interfaces'
 import ApplySchool from '../school/PopUpContent/ApplySchool'
@@ -203,7 +203,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
           </div>
           <div className='w-full flex items-center justify-between bg-[#E7FAFF] p-[20px] mt-[23px]'>
             <p className='font-[500] text-base leading-[22px]'>Ratings & Reviews</p>
-            <button onClick={() => setIsAddingReview(true)} className='flex items-center gap-[12.67px] bg-transparent text-primary'>
+            <button onClick={( => setIsAddingReview(true)} className='flex items-center gap-[12.67px] bg-transparent text-primary'>
               <FiPlus className='text-[]'/>
               <p className='font-[700] text-[10px] leading-4 capitalize'>
                 write a review/rating
@@ -213,10 +213,9 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
         </div>
         {/* second div */}
         <div className='flex flex-grow flex-col'>
-          <p className='font-[600] text-[40px] leading-[56px] text-black capitalize mb-[14px]'>{universityData?.university?.name}</p>
-          <div className='flex items-center gap-2 mb-[10px] font-medium'>
-            <Globe fill='#6FA7B4' /># {universityData?.university?.world_ranking}
-          </div>
+          <p className='font-[600] text-[40px]leading-[56px] text-black capitalize mb-[14px]'>{universityData?.university?.name}</p>
+          <div className='flex items-ceter gap-2 mb-[10px] fonmedium'>
+            <Globe fill='#6FA7B4' /># {universityData?.university?.world_ranking} 
           <div className='flex items-center gap-[8px] my-[20px]'>
             <HiMapPin className='text-primary text-xl' />
             <p className='font-medium text-lg leading-8'>{universityData?.university.address}, {universityData?.university?.country}</p>
@@ -277,6 +276,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                   <div className='w-full'>
                     <p className='first-letter:capitalize font-medium text-base leading-[22px] text-[#8B8BA4]'>{course?.description}</p>
                   </div>
+                  <HiXCircle onClick={() => setQuery("")} fontSize={25} className='text-primary fill-primary mr-[12px] cursor-pointer' />
                 </div>
                 ))}
                 </>
