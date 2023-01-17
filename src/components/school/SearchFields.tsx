@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from "usehooks-ts";
 import { useUniversitySearchQuery } from "../../redux/services";
@@ -8,6 +8,7 @@ import { countryList, schoolPrograms } from "../../utils/selectOptions";
 import Icon from "../Icons";
 import LargeInputBox from "../InputBox/LargeInputBox";
 import LargeSelectBox from "../InputSelect/LargeSelectBox";
+import { FiChevronRight } from "react-icons/fi"
 
 const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
   const navigate = useNavigate();
@@ -95,13 +96,12 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
             </div>
           )}
         </div>
-        {/* <LargeInputBox handleChange={formik.handleChange} value={formik.values.country_name} name="country_name" label="Country" iconId="location-icon" placeholder="Enter Country" /> */}
         <div className="bg-grey-600 text-grey-500 rounded-xl flex gap-4 items-center px-2 md:px-8 py-6 h-full largeselect tab:h-[105px]">
           <Icon width={24} height={24} id="location-icon" />
           <div className="flex flex-col gap-3 w-full">
             <h2 className="text-[14px] md:text-[16px]">Country</h2>
             <LargeSelectBox
-              value={formik.values.program_name}
+              value={formik.values.country_name}
               matches={matches}
               name="country_name"
               placeholder="Enter Country"
@@ -128,7 +128,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
         </div>{" "}
         <div className="bg-grey-600 text-grey-500 flex gap-4 rounded-xl items-center h-full px-2 md:px-8 py-6">
           <Icon width={24} height={24} id="course-icon" />
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 w-full">
             <h2 className="text-[14px] md:text-[16px]">Course</h2>
             <input
               name="course_name"
@@ -136,39 +136,18 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
               onChange={formik.handleChange}
               type="text"
               placeholder="Select Course"
-              className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent"
+              className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent border-transparent border-2 focus-within:border-primary rounded-md w-full px-2"
             />
           </div>
         </div>
-        {/* <div className="bg-grey-600 text-grey-500 pr-10 flex gap-4 rounded-xl md:rounded-none md:rounded-tr-xl md:rounded-br-xl items-center px-2 md:px-8 py-6 largeselect tab:h-[105px]">
-          <Icon width={24} height={24} id="course-icon" />
-          <div className="flex flex-col gap-3 w-full">
-            <h2 className="text-[14px] md:text-[16px]">Course</h2>
-            <LargeSelectBox matches={matches} name="course" placeholder="Select Course" handleChange={()=>{}} options={countryCodes} />
-          </div>
-        </div> */}
-        {/* <div className="bg-grey-600 text-grey-500 rounded-xl  md:rounded-tl-xl md:rounded-none  md:rounded-bl-xl flex gap-4 items-center px-8 py-6">
-          <Icon width={24} height={24} id="graduation-icon" />
-          <div className="flex flex-col gap-3">
-            <h2 className="text-[14px] md:text-[16px]">Program</h2>
-            <input type="text" placeholder="Select Country" className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent" />
-          </div>
-        </div>{" "}
-        <div className="bg-grey-600 text-grey-500 pr-10 flex gap-4 rounded-xl md:rounded-none md:rounded-tr-xl md:rounded-br-xl items-center px-8 py-6">
-          <Icon width={24} height={24} id="course-icon" />
-          <div className="flex flex-col gap-3">
-            <h2 className="text-[14px] md:text-[16px]">Course</h2>
-            <input type="text" placeholder="Select Course" className="text-[#1B1B1B] outline-none text-[16px] md:text-[20px] bg-transparent" />
-          </div>
-        </div> */}
       </div>
       <button
         type="button"
         onClick={() => formik.handleSubmit()}
-        className="w-full col-span-2 cursor-pointer justify-center bg-green text-white flex gap-4 rounded-lg items-center px-[30px] py-[22px]"
+        className="w-full col-span-2 cursor-pointer justify-center bg-green text-white flex gap-4 rounded-lg items-center px-[30px] py-[22px] disabled:bg-gray-500"
       >
         <p className="text-center">Search</p>
-        <Icon width={24} height={24} id="arrow-right-icon" />
+        <FiChevronRight />
       </button>
     </div>
   );

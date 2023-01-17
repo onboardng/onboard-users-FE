@@ -1,3 +1,4 @@
+import React from "react";
 import Icon from "../Icons";
 
 const InputBox = ({
@@ -22,7 +23,9 @@ const InputBox = ({
   touched,
   fullWidth,
   keyDown,
-  isError
+  isError,
+  defaultValue,
+  icon
 }: {
   fullWidth?: boolean;
   isRounded?: boolean;
@@ -46,6 +49,8 @@ const InputBox = ({
   touched?: boolean;
   keyDown?: (event: React.KeyboardEvent<HTMLInputElement>)=> void
   isError?: boolean;
+  defaultValue?: string
+  icon?: any
 }) => {
   return (
     <div className={`${fullWidth && "w-full"}`}>
@@ -54,28 +59,28 @@ const InputBox = ({
           {label} <span className="text-[#DA0000]">{label2}</span>
         </label>
       )}
-      <div className="flex gap-4 items-center justify-center relative md:justify-start w-full md:w-auto">
+      <div className={`flex gap-4 items-center ${classname && classname} justify-center relative md:justify-start w-full md:w-auto border-2 focus-within:border-primary rounded-[8px] border-[#DADAE7] pl-[15px]`}>
+        {icon && icon}
+        <div className={`${iconId ? "block" : "hidden"}`}>
+          <Icon width={width} height={height} id={iconId} />
+        </div>
+        <div className={`${iconId2 ? "block" : "hidden"} `}>
+          <Icon width={width} height={height} id={iconId2} />
+        </div>
         <input
           type={`${password ? (showPassword ? "text" : "password") : "text"}`}
           onChange={onChange}
           name={name}
           onBlur={onBlur}
           onKeyDown={keyDown}
-          defaultValue={value || ""}
+          value={value}
+          defaultValue={defaultValue || ""}
           placeholder={placeholder}
-          className={`focus:outline-none w-full ${whole ? "xl:w-full" : "md:w-[408px]"} ${classname && classname} ${
-            iconId ? "pl-[40px]" : "pl-[20px]"
-          } pr-[20px] py-[17px] border-[1.5px] ${isError ? "border-[#DA0000]" : "border-[#DADAE7]"} ${isRounded && "rounded-[8px]"}`}
+          className={`focus:outline-none bg-transparent border-none w-full rounded-[8px] ${whole ? "xl:w-full" : "md:w-full"} py-[17px] border-[1.5px] ${isError ? "border-[#DA0000]" : "border-[#DADAE7]"} ${isRounded && "rounded-[8px]"}`}
         />{" "}
         {password && (
           <i onClick={togglePassword} className={`text-gray-500 absolute right-[15px] fa-solid fa-eye${showPassword ? "" : "-slash"}`}></i>
         )}
-        <div className={`${iconId ? "block" : "hidden"} absolute left-[15px]`}>
-          <Icon width={width} height={height} id={iconId} />
-        </div>
-        <div className={`${iconId2 ? "block" : "hidden"} absolute right-[15px]`}>
-          <Icon width={width} height={height} id={iconId2} />
-        </div>
       </div>
       {error && touched && <div className="text-[0.7812rem] text-red-600 text-left font-normal">{error}</div>}
     </div>

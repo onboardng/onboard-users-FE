@@ -1,27 +1,105 @@
-import { Dispatch, SetStateAction } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useSearchParams } from 'react-router-dom'
 import Icon from "../Icons";
-import RatingLarge from "../ViewSchool/RatingLarge";
-import Rating from "../ViewSchool/Rating";
-import { useMediaQuery } from "usehooks-ts";
+import Card from "../Shared/Card";
+import { School, SchoolResponse } from "../../interfaces";
+import Pagination from "../Pagination/Pagination";
+import { useHttpRequest } from "../../hooks/useHttpRequest";
+
+const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
 const SearchMain = ({
   showEdit,
   setShowFilter,
   data,
+  school_query
 }: {
   showEdit: Dispatch<SetStateAction<boolean>>;
   setShowFilter: typeof showEdit;
-  data: any;
+  data: any
+  school_query?: string
 }) => {
-  const navigate = useNavigate();
-  const matches = useMediaQuery("(min-width: 768px)");
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchQuery = searchParams
+  // const school_name = searchQuery.get("school_name")
+  const country_name = searchQuery.get("country_name")
+  const course_name = searchQuery.get("course_name")
+  const program_name = searchQuery.get("program_name")
+
+  const [schools, setSchools] = useState<SchoolResponse | null>(null)
+  const [result, setResult] = useState<Array<School> | undefined>([])
+  
+  const destructureData = () => {
+    if(data) {
+      setSchools(data?.data)
+      setResult(data?.data?.foundSchools)
+    }
+  }
+
+  const { sendRequest } = useHttpRequest()
+  const getMoreUniversity = async(page: string) => {
+    const headers = { 'Content-Type': 'application/json' }
+    try {
+      const data = await sendRequest(`${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
+      if(!data || data === undefined) return
+      setSchools(data?.data)
+      setResult(data?.data?.foundSchools)
+    } catch(error) {}
+  }
+
+  const searchByName = async(name: string) => {
+    if(!name || name === undefined) return setResult(schools?.foundSchools)
+    const value = name.toLowerCase()
+    const filtered = schools?.foundSchools?.filter((school) => school?.name.toLowerCase().includes(value))
+    setResult(filtered)
+  }
+
+  const [page, setPage] = useState<number>(1)
+
+  useEffect(() => {
+    setPage(parseInt(searchParams?.get('page') || "1"));
+  }, [searchParams])
+
+  useEffect(() => {
+    schools && setResult(schools?.foundSchools)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    school_query && searchByName(school_query)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [school_query])
+
+  const onPageChange = (page: number) => {
+    setSearchParams({page: page.toString()})
+    window.scrollTo(0, 0)
+  }
+
+  const handlePagination = () => {
+    if(schools) {
+      if(schools?.no_of_schools > 10) {
+        return <Pagination onPageChange={onPageChange} pageSize={10} currentPage={page} totalCount={schools?.no_of_schools} />
+      } else {
+        return <></>
+      }
+    }
+  }
+
+  useEffect(() => {
+    getMoreUniversity(page.toString())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[page])
+
+  useEffect(() => {
+    destructureData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   return (
     <div className="md:w-[70%] w-full mx-5">
       <div className="py-7 px-5 flex md:flex-row flex-col items-center justify-between bg-white rounded-xl">
         <p className="text-md">
-          University in <b>Lagos Nigeria,</b> offering <b>BSc.</b> for <b>Political Science</b>
+          University {country_name && <b>in {country_name}</b>} offering {program_name && <b>{program_name} program in</b>} {course_name && <b>{course_name}</b>}
         </p>
         <div className="flex items-center gap-3 mt-4 md:mt-0 rounded-xl">
           <div
@@ -54,38 +132,18 @@ const SearchMain = ({
             </a>
           </div>
         </div>
-      </div>{" "}
-      <p className="my-5 text-lg">
-        {data?.length || "No"} {data?.length > 1 || !data ? "universities" : "university"} found
-      </p>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] mb-4">
-        {data?.map((value: any, index: number) => (
-          <div className="flex flex-col  md:h-[555px] bg-white gap-5" key={index}>
-            <div className="flex gap-4 justify-center bg-no-repeat bg-cover w-full md:h-[259px]">
-              <img src={value?.pictures?.[0]} alt="card" className="w-full" />
-            </div>
-            <div className="px-5">
-              <p className="text-[28px] font-semibold">{value?.name}</p>
-              <div className="flex gap-2 mt-[14px]">
-                {matches ? <RatingLarge rating={value?.ratings || 1} /> : <Rating rating={value?.ratings || 1} />}
-              </div>
-              <p className="mt-[8px] mb-[10px] text-sm text-gray-600">{value?.ratings || 0} ratings total</p>
-              <div className="flex gap-2 items-center">
-                <Icon width={18} height={20} id="location-icon-green" />
-                <p className="text-md">{value?.country}</p>{" "}
-              </div>
-              <button
-                onClick={() => navigate(`/schools/${value?.id}`, { state: { course_name: searchParams.get("course_name") || "" } })}
-                className="mt-10 mb-10 col-span-2 justify-center bg-green text-white flex gap-2 rounded-md items-center w-full md:px-[74.5px] py-[17px]"
-              >
-                <p className="text-center">View School</p>
-                <Icon width={24} height={24} id="arrow-right-icon" />
-              </button>
-            </div>
+      </div>
+      
+      <div className="w-full my-10">
+        {result && (
+          <div className="w-full flex flex-wrap items-center justify-between gap-[30px]">
+            {result?.map((school: School) => <Card key={school.id} {...school} />)}
           </div>
-        ))}
+        )}
       </div>
       <div id="bookhere"></div>
+      {/* pagination */}
+      {handlePagination()}
     </div>
   );
 };

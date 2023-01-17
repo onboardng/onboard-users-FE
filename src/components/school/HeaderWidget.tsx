@@ -1,3 +1,4 @@
+import React from "react";
 import SearchFields from "./SearchFields";
 
 const HeaderWidget = () => {

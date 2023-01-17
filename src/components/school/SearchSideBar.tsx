@@ -1,7 +1,24 @@
+import React, { ChangeEvent, useState } from "react";
 import Icon from "../Icons";
-import InputBox from "../InputBox";
+import Ratings from '../Shared/Ratings'
 
-const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
+interface Props {
+  showFilter?: boolean
+  setSchool_name?: any
+}
+
+const SearchSideBar:React.FC<Props> = ({showFilter, setSchool_name}) => {
+  const [rating, setRating] = useState<number>(0)
+  const [query, setQuery] = useState<string>("")
+
+  const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    
+    setQuery(e.target.value)
+    setSchool_name(e.target.value)
+  }
+  
+
   return (
     <div
       className={` bg-white rounded-xl  ${
@@ -15,16 +32,16 @@ const SearchSideBar = ({ showFilter }: { showFilter?: boolean }) => {
         <p className="text-[10px] text-[#6FA7B4] font-semibold">Clear all</p>
       </div>
       <div className="p-5">
-        <p className="text-[14px] mb-1">University name</p>
-        <InputBox placeholder="Enter name here" height={24} width={24} />
+        <div className="py-3">
+          <label className='text-[14px] text-[1B1B1B] leading-[22.4px]' htmlFor="query">University Name</label>
+          <div className="w-full h-[61px] border border-[#DADAE7] px-5 rounded-md">
+            <input type="text" value={query} onChange={onSearch} className="w-full h-full placeholder:text-[#DADAE7] border-none outline-none capitalize" />                  
+          </div>
+        </div>
         <p className="text-[14px] text-[#8B8BA4] mt-1">Press enter to search</p>
         <p className="mt-[30px] font-semibold">Rating</p>
-        <div className="flex gap-2 mt-[14px]">
-          {Array(5)
-            .fill("")
-            .map((_, index) => (
-              <Icon id="star-icon" width={18} height={17} key={index} />
-            ))}
+        <div className=" mt-[14px]">
+          <Ratings ratings={rating} size='large' />
         </div>
         <p className="text-xs mt-1 text-grey-500">Select a star to set rating parameter</p>
       </div>

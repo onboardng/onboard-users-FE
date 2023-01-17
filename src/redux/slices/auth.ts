@@ -3,9 +3,11 @@ import storageSession from "redux-persist/lib/storage/session";
 
 const initialState = {
   user: {
-    full_name: "",
+    first_name: "",
+    last_name: "",
     email: "",
     profile_picture: "",
+    avatar: "",
   },
   authorization: { access_token: "" },
 };
@@ -20,7 +22,9 @@ const authSlice = createSlice({
   reducers: {
     setLoginUser: (state, { payload }) => {
       state.user = payload?.data?.loginUser;
-      state.authorization.access_token = payload?.data.accesstoken;
+      state.authorization.access_token = payload?.data?.accesstoken;
+      localStorage.setItem('user', JSON.stringify(payload?.data?.loginUser))
+      localStorage.setItem('access_token', JSON.stringify(payload?.data?.accesstoken))
     },
   },
 });

@@ -1,7 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(216, 216, 216);
+  border-radius: 40px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  width: 100vw;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input {
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.modal {
+  z-index: 100000000 !important;
+}
+
+.star-input {
+  display: none;
+}
+
+.pop-up {
+  z-index: 10000 !important;
+  backdrop-filter: blur(4px);
 }

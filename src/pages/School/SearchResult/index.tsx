@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import Icon from "../../../components/Icons";
 import AddSection from "../../../components/school/AdSection";
@@ -21,7 +21,10 @@ const SearchResult = () => {
   const [showFilter, setShowFilter] = useState(false);
   const matches = useMediaQuery("(min-width: 768px)");
   let searchQuery = Object.fromEntries([...searchParams]);
-  const { data, isLoading } = useSearchCourseQuery({ page, limit: 10, ...searchQuery });
+  // TODO: #5 fix search to match all fields
+  const { data, isLoading } = useSearchCourseQuery({ page, limit: 10, ...searchQuery});
+
+  const [school_name, setSchool_name] = useState<string>('')
 
   useEffect(() => {
     if (matches) {
@@ -64,8 +67,8 @@ const SearchResult = () => {
           <PageLoader />
         ) : (
           <>
-            <SearchSideBar showFilter={showFilter} />
-            <SearchMain data={data?.data?.schools} showEdit={showEdit} setShowFilter={setShowFilter} />
+            <SearchSideBar showFilter={showFilter} setSchool_name={setSchool_name} />
+            {data && <SearchMain data={data} showEdit={showEdit} setShowFilter={setShowFilter} school_query={school_name} />}
           </>
         )}
       </div>
