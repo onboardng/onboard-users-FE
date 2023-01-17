@@ -1,0 +1,1 @@
+import{S as s}from"./Spinner.2b7c3478.js";import{b as t,F as e}from"./index.2629f38d.js";const i=({loader:r,children:n,...o})=>t("button",{type:"submit",...o,children:r?t(s,{}):t(e,{children:n})});export{i as B};
