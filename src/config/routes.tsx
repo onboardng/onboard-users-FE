@@ -1,5 +1,5 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { lazy, Suspense, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import PageLoader from "../components/Loader/PageLoader";
 import { persistor } from "../redux/store";
@@ -18,11 +18,31 @@ const AllRoutes = () => {
   const TrackSchoolBooking = lazy(() => import("../pages/School/TrackSchoolBooking"));
   const ForgotPassword = lazy(() => import("../pages/Authentication/ForgotPassword"));
   const ResetPassword = lazy(() => import("../pages/Authentication/ResetPassword"));
+  const location = useLocation()
+
+  // const options = { autoConfig: true, debug: false };
+  // ReactPixel.init(pixelId, undefined, options)
+
+  useEffect(() => {
+    // const advancedMatchingOptions:AdvancedMatching = {};
+    const options = { autoConfig: true, debug: false };
+    import('react-facebook-pixel')
+      .then((pixel) => pixel.default)
+      .then((ReactPixel) => {
+        ReactPixel.init('1866981493679392', undefined, options);
+        // The next line might need to be enabled as per GDPR guidelines
+        // ReactPixel.revokeConsent()
+        ReactPixel.pageView();
+
+        window.addEventListener('DOMContentLoaded', () => {
+          ReactPixel.pageView();
+        });
+      });
+  }, [location]);
   
   return (
     <PersistGate loading={null} persistor={persistor}>
       <Suspense fallback={<PageLoader />}>
-        <BrowserRouter>
           <Routes>
             <Route path="/" element={<SchoolHomePage />} />
             <Route path="/login" element={<Login />} />
@@ -38,7 +58,6 @@ const AllRoutes = () => {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
-        </BrowserRouter>
       </Suspense>
     </PersistGate>
   );

@@ -9,6 +9,7 @@ import { iniitalSignupValues, SignupSchema } from "../../schemas/AuthSchema";
 import { useLazyGoogleSignInQuery, useSignupUserMutation } from "../../redux/services";
 import { toast } from "react-toastify";
 import Button from "../../components/Button/Button";
+import ReactPixel from "react-facebook-pixel"
 
 const Register = () => {
   const [signup, { data, isLoading, isSuccess, isError, error }] = useSignupUserMutation();
@@ -18,6 +19,8 @@ const Register = () => {
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
+
+  const handlePixel = () => ReactPixel.trackCustom('Register')
 
   useEffect(() => {
     if(!googleLoading && googleSuccess){
@@ -36,6 +39,7 @@ const Register = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Registration Successful");
+      handlePixel()
       navigate("/verify");
       resetForm();
     }

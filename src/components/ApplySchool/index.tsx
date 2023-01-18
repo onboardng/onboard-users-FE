@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import ReactPixel from "react-facebook-pixel"
 
 import { useHttpRequest } from "../../hooks/useHttpRequest";
 import { countryCodes } from "../../utils/selectOptions";
@@ -34,6 +35,7 @@ const ApplySchoolCom:React.FC = () => {
 
   const [required_documents, setRequiredDocuments] = useState<Array<DocObj>>([])
 
+  const handlePixel = () => ReactPixel.trackCustom(`Applied to: ${course?.university_name}`)
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     formState({...inputs, [e.target.name]: e.target.value})
   }
@@ -47,6 +49,7 @@ const ApplySchoolCom:React.FC = () => {
 
   const handleSubmit = async(e: FormEvent) => {
     e.preventDefault()
+    handlePixel()
 
     if(!first_name || !last_name || !email || !phone_number) return toast.error('Please fill all fields.')
     for(let i = 0; i < required_documents?.length; i++) {

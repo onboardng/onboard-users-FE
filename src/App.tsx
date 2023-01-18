@@ -3,10 +3,13 @@ import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "reactjs-popup/dist/index.css";
 import { useDispatch } from "react-redux";
+import ReactGA from 'react-ga4'
 
 import { setLoginUser } from "./redux/slices/auth";
 import AllRoutes from "./config/routes";
 import "./App.css";
+
+ReactGA.initialize("G-NMTGMDBSX2")
 
 function App() {
   const dispatch = useDispatch();
