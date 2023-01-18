@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { CAROUSEL_DATA } from '../../CAROUSEL_DATA'
+import { CAROUSEL_DATA  } from '../CAROUSEL_DATA'
 
 const AdCarousel = () => {
     const [current, setCurrent] = useState<number>(0)
@@ -14,7 +14,7 @@ const AdCarousel = () => {
 
   return (
     <div className='w-full overflow-hidden' >
-        {CAROUSEL_DATA.map((image, index) => (
+        {CAROUSEL_DATA.map((image: any, index: number) => (
             <div key={index} className={`w-full ${index === current ? 'block' : 'hidden'}`}>
                 {index === current && <img src={image.image} alt={image.name} className='w-full animate-slide-in transition-all ease-in-out' />}
             </div>
