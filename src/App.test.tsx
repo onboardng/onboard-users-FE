@@ -8,8 +8,14 @@ test('renders learn react link', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test('renders home page', () => {
+test('renders search button on home page', () => {
   render(<App />);
   const buttonElement = screen.getByText(/search/i);
+  expect(buttonElement).toBeInTheDocument();
+})
+
+test('renders subscribe button on home page', () => {
+  render(<App />);
+  const buttonElement = screen.getByText(/subscribe/i);
   expect(buttonElement).toBeInTheDocument();
 })
