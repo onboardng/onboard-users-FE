@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import Button from "../../components/Button/Button";
 import { useDispatch } from "react-redux";
 import { setLoginUser } from "../../redux/slices/auth";
+import ReactPixel from 'react-facebook-pixel'
 
 import { useHttpRequest } from "../../hooks/useHttpRequest";
 import PageLoader from "../../components/Loader/PageLoader";
@@ -28,10 +29,13 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
 
+  const handlePixel = () => ReactPixel.trackCustom('Login')
+
   const { values, handleChange, handleSubmit, handleBlur, touched, errors, resetForm } = useFormik({
     initialValues: initialSigninValues,
     validationSchema: LoginSchema,
     onSubmit: (values) => {
+      handlePixel();
       login(values);
     },
   });

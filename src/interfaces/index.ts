@@ -49,25 +49,28 @@ export interface UniversityProps {
     pictures: Array<string>
     ratings?: number
     total_admission: number
-    updated_at?: string | Date
+    updated_at: string | Date
+    world_ranking: number
 }
 
 export interface Program {
     UniversityId: string
-    added_b: string
+    added_by: string
+    country: string
     created_at: string | Date
     delete: boolean
     description: string
     duration: number
     id: string
     name: string
-    university_name: string 
+    university_name: string
     updated_at: string | Date
 }
 
 export interface UniversityResponse {
     university: UniversityProps
     available_programs: Array<Program>
+    country_profile: CountryProfile
 }
 
 export interface Course {
@@ -93,11 +96,12 @@ export interface Course {
 
 export interface PaginationProps {
     currentPage: number
-    hasNextPage?: boolean
-    hasPrevPage?: boolean
+    hasNextPage: boolean
+    hasPrevPage: boolean
     pageCount: number
     perPage: number
     no_of_schools: number
+    total: number
     totalDocs: number
     totalPages: number
 }
@@ -312,5 +316,25 @@ interface ProgramType {
     id: string
     name: string
     university_name: string
+    updated_at: Date | string
+}
+
+export interface CountryProfile {
+    id: string
+    name: string
+    average_rent: string
+    average_monthly_expenses: string
+    health_insurance: string
+    health_insurance_description: string
+    job_availability: string
+    certificate_recognition: number
+    average_income_per_hour: string
+    required_working_hours_per_day: string
+    popular_jobs: Array<string>
+    expert_take: string
+    currency: String
+    additional_section: Array<any>
+    deleted: boolean
+    created_at: Date | string
     updated_at: Date | string
 }
