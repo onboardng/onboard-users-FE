@@ -1,0 +1,1 @@
+import{j as d,b as e}from"./index.2629f38d.js";const i=({children:s,setModal:o,...a})=>d("div",{className:"fixed w-screen bg-modal2 h-screen md:hidden bottom-[0] z-[50] overflow-hidden",children:[e("div",{className:"h-[45%] overflow-hidden"}),e("div",{className:"h-[55%] ",children:s})]});export{i as M};

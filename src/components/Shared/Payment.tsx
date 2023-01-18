@@ -17,6 +17,8 @@ const PaymentModal:React.FC<Payment> = ({amount_payable, application_id, email, 
   const { authorization: { access_token } } = useSelector((store: RootState) => store.authStore)
   const handlePixel = () => ReactPixel.trackCustom('Made Payment')
 
+  const handlePixel = () => ReactPixel.trackCustom('Made Payment')
+
   const handlePayment = async() => {
     handlePixel()
     const headers = {

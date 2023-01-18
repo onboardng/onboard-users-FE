@@ -1,0 +1,1 @@
+import{I as t}from"./index.ac1e03eb.js";import{b as e}from"./index.2629f38d.js";const s=({close:o})=>e("div",{onClick:o,className:"justify-center flex cursor-pointer rounded-full bg-white h-10 w-10 gap-2 items-center absolute z-50 -top-[50px] md:-top-[40px] right-[25px] md:-right-[40px]",children:e(t,{width:14,height:14,id:"close-green-icon"})});export{s as M};
