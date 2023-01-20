@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from 'react-router-dom'
 import Icon from "../Icons";
 import Card from "../Shared/Card";
@@ -28,9 +28,11 @@ const SearchMain = ({
 
   const [schools, setSchools] = useState<SchoolResponse | null>(null)
   const [result, setResult] = useState<Array<School> | undefined>([])
+  const [page, setPage] = useState<number>(1)
   
   const destructureData = () => {
     if(data) {
+      console.log(data)
       setSchools(data?.data)
       setResult(data?.data?.foundSchools)
     }
@@ -39,13 +41,18 @@ const SearchMain = ({
   const { sendRequest } = useHttpRequest()
   const getMoreUniversity = async(page: string) => {
     const headers = { 'Content-Type': 'application/json' }
-    try {
-      const data = await sendRequest(`${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
-      if(!data || data === undefined) return
-      setSchools(data?.data)
-      setResult(data?.data?.foundSchools)
-    } catch(error) {}
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useCallback(async() => {
+      try {
+        const data = await sendRequest(`${baseUrl}/course/big-search?limit=10&page=${page}`,'GET', null, headers)
+        if(!data || data === undefined) return
+        setSchools(data?.data)
+        setResult(data?.data?.foundSchools)
+      } catch(error) {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[page])
   }
+  getMoreUniversity(page.toString())
 
   const searchByName = async(name: string) => {
     if(!name || name === undefined) return setResult(schools?.foundSchools)
@@ -53,8 +60,6 @@ const SearchMain = ({
     const filtered = schools?.foundSchools?.filter((school) => school?.name.toLowerCase().includes(value))
     setResult(filtered)
   }
-
-  const [page, setPage] = useState<number>(1)
 
   useEffect(() => {
     setPage(parseInt(searchParams?.get('page') || "1"));
@@ -84,11 +89,6 @@ const SearchMain = ({
       }
     }
   }
-
-  useEffect(() => {
-    getMoreUniversity(page.toString())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[page])
 
   useEffect(() => {
     destructureData()
