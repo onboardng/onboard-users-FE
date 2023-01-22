@@ -31,14 +31,14 @@ const Subscribe = () => {
         error && toast.error(`${error}`)
     },[error])
   return (
-    <div className='bg-[#DCDCFF] mx-4 md:mx-12 space-x-0 md:mt-0 mt-10' >
-        <div className='flex justify-center py-5 md:py-14' >
-            <section className='text-center p-[20px] md:p-[50px]' >
+    <div className='w-full bg-[#DCDCFF] mx-0 md:mx-12 space-x-0 md:mt-0 mt-10' >
+        <div className='w-full flex justify-center py-5 md:py-14' >
+            <section className='w-full text-center p-[20px] md:p-[50px]' >
                 <h3 className='font-semibold text-[20px] leading-[28px] md:text-[28px] md:leading-[39.2px] ' >Interested in Travel deals?</h3>
                 <h5 className='font-bold text-[16px] leading-[25.6px] md:text-[20px] md:leading-[32px] ' >We’ll be notifying you as they drop</h5>
                 <form onSubmit={handleSubmit} className='md:flex md:justify-center py-5 md:py-10' >
-                    <div className="flex gap-5 flex-col xl:flex-row justify-center xl:justify-start xl:items-center items-center relative">
-                        <div className='w-[350px] h-[60px] flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary pl-[15px] rounded-lg'>
+                    <div className="w-full flex gap-5 flex-col xl:flex-row justify-center xl:justify-start xl:items-center items-center relative">
+                        <div className='w-[350px] max-w-full h-[60px] flex items-center gap-4 bg-white border-2 border-[#DADAE7] focus-within:border-primary pl-[15px] rounded-lg'>
                             <Envelope />
                             <input type="email" value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} placeholder='Enter email address' className='w-full h-full bg-transparent outline-none border-none' />
                         </div>

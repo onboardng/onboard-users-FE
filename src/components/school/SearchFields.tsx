@@ -70,7 +70,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
             onBlur={() => setShow(false)}
             onFocus={() => setShow(true)}
             handleChange={formik.handleChange}
-            value={formik.values.school_name}
+            value={formik.values.school_name.toLowerCase()}
             name="school_name"
             label="School name"
             iconId="school-icon"
@@ -101,7 +101,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
           <div className="flex flex-col gap-3 w-full">
             <h2 className="text-[14px] md:text-[16px]">Country</h2>
             <LargeSelectBox
-              value={formik.values.country_name}
+              value={formik.values.country_name.toLowerCase()}
               matches={matches}
               name="country_name"
               placeholder="Enter Country"
@@ -117,7 +117,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
           <div className="flex flex-col gap-3 w-full">
             <h2 className="text-[14px] md:text-[16px]">Program</h2>
             <LargeSelectBox
-              value={formik.values.program_name}
+              value={formik.values.program_name.toLowerCase()}
               matches={matches}
               name="program"
               placeholder="Select Program"
@@ -132,7 +132,7 @@ const SearchFields = ({ setEdit }: { setEdit?: Function }) => {
             <h2 className="text-[14px] md:text-[16px]">Course</h2>
             <input
               name="course_name"
-              value={formik.values.course_name}
+              value={formik.values.course_name.toLowerCase()}
               onChange={formik.handleChange}
               type="text"
               placeholder="Select Course"

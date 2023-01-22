@@ -41,17 +41,17 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
     <>
     {courseData && (
       <div
-        className="w-screen h-[950px] bg-gray-300 bg-opacity-40 fixed top-0 left-0 grid place-items-center pop-up"
+        className="w-full h-screen md:h-[950px] flex items-center justify-center bg-gray-300 bg-opacity-40 fixed top-0 left-0 overflow-hidden pop-up"
         onScroll={() => {}}
         onClick={() => close()}>
-        <div onClick={(e: MouseEvent<HTMLElement>) => e.stopPropagation()} className="w-[800px] bg-white p-[30px] rounded-2xl modal-pop">
-          <h4 className="font-medium text-xl leading-[38px] capitalize">{courseData?.name}</h4>
-          <p className="first-letter:capitalize font-medium text-base text-[#8B8BA4] leading-[22px] my-5">{courseData?.description}</p>
+        <div onClick={(e: MouseEvent<HTMLElement>) => e.stopPropagation()} className="w-full md:w-[800px] bg-white p-3 md:p-[30px] rounded-2xl modal-pop">
+          <p className="font-medium text-sm md:text-xl leading-[38px] capitalize">{courseData?.name}</p>
+          <p className="first-letter:capitalize font-medium text-xs md:text-base text-[#8B8BA4] leading-[16px] md:leading-[22px] my-1 md:my-5">{courseData?.description}</p>
           <hr className="w-full h-[1px] bg-[#DADAE7] mb-5" />
           <div className="w-full flex flex-col gap-[10px]">
             <div className="flex items-center gap-3">
               <ClockAlt />
-              <div className="font-medium text-sm leading-[26px]">
+              <div className="font-medium text-xs md:text-sm leading-[20px]  md:leading-[26px]">
                 <>
                 Course Duration: {courseData?.duration} {courseData?.duration && courseData?.duration <= 1 ? 'Year' : 'Years'}
                 </>
@@ -59,7 +59,7 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
             </div>
             <div className="flex items-center gap-3">
               <Calendar />
-              <div className="font-medium text-sm leading-[26px]">
+              <div className="font-medium text-xs md:text-sm leading-[20px]  md:leading-[26px]">
                 <>
                 Application opens: {courseData?.application_opening && new Date(courseData?.application_opening).toDateString()}
                 </>
@@ -67,7 +67,7 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
             </div>
             <div className="flex items-center gap-3">
               <Calendar />
-              <div className="font-medium text-sm leading-[26px]">
+              <div className="font-medium text-xs md:text-sm leading-[20px]  md:leading-[26px]">
                 <>
                 Application closes: {courseData?.application_closing && new Date(courseData?.application_closing).toDateString()}
                 </>
@@ -75,25 +75,25 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
             </div>
             <div className="flex items-center gap-3">
               <MoneyBill />
-              <div className="font-medium text-sm leading-[26px]">
+              <div className="font-medium text-xs md:text-sm leading-[20px]  md:leading-[26px]">
                 <>
                 Estimated Admission Fee: ${courseData?.tuition} (~NGN {(courseData?.price_in_naira).toLocaleString('en-US')})
                 </>
               </div>
             </div>
           </div>
-          <hr className="w-full h-[1px] bg-[#DADAE7] my-5" />
+          <hr className="w-full h-[1px] bg-[#DADAE7] my-1 md:my-5" />
           <div className="w-full flex flex-col gap-[10px]">
-            <p className="font-bold text-base leading-[22px] py-5">Document Requirements</p>
-            <div className="w-full flex flex-col gap-[10px]">
+            <p className="font-bold text-[12px] md:text-sm leading-[16px] md:leading-[22px] my-1 md:my-5">Document Requirements</p>
+            <div className="w-full flex flex-col gap-1 md:gap-[10px]">
               {courseData?.program === 'undergraduate' && courseData?.required_documents?.undergraduate?.map((doc: string, index: number) => (
-                <p key={index} className='font-medium text-base leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
+                <p key={index} className='font-medium text-[12px] md:text-sm leading-[16px] md:leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
               ))}
               {courseData?.program === 'graduate' && courseData?.required_documents?.undergraduate?.map((doc: string, index: number) => (
-                <p key={index} className='font-medium text-base leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
+                <p key={index} className='font-medium text-[12px] md:text-sm leading-[16px] md:leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
               ))}
               {courseData?.program === 'postgraduate' && courseData?.required_documents?.undergraduate?.map((doc: string, index: number) => (
-                <p key={index} className='font-medium text-base leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
+                <p key={index} className='font-medium text-[12px] md:text-sm leading-[16px] md:leading-[22px] uppercase'>{doc.split('_').join(' ')}</p>
               ))}
             </div>
           </div>
@@ -104,7 +104,7 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
                 await close();
                 navigate(`/schools/${courseData?.id}/apply`);
               }}
-              className="w-[119px] h-[60px] bg-primary text-white rounded-[4px] flex items-center justify-center gap-[17px] cursor-pointer"
+              className="w-full md:w-[119px] h-[48px] md:h-[60px] bg-primary text-white rounded-[4px] flex items-center justify-center gap-[17px] cursor-pointer"
             >
               <p className="text-center">Apply </p>
               <FiChevronRight />
