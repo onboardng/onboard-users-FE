@@ -96,7 +96,7 @@ const SearchMain = ({
   },[])
 
   return (
-    <div className="md:w-[70%] w-full mx-5">
+    <div className="md:w-[70%] w-full mx-1 md:mx-5">
       <div className="py-7 px-5 flex md:flex-row flex-col items-center justify-between bg-white rounded-xl">
         <p className="text-md">
           University {country_name && <b>in {country_name}</b>} offering {program_name && <b>{program_name} program in</b>} {course_name && <b>{course_name}</b>}

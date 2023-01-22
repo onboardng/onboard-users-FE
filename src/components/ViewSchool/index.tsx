@@ -30,9 +30,13 @@ const CustomTabs = styled(Tabs)({
   '&.MuiTabs-root': {
     width: 'auto',
     display: 'flex',
+    flexWrap: "wrap",
     alignItems: 'center',
     gap: '20px',
     margin: '30px 0 20px',
+    "@media screen and (max-width: 400px)": {
+      gap: "10px",
+    }
   },
   '& .MuiTabs-indicator': {
     display: 'none',
@@ -56,6 +60,10 @@ const CustomTab = styled(Tab)({
     '& svg': {
       fill: '#BFBFD4',
     },
+    "@media screen and (max-width: 400px)": {
+      minWidth: "100px",
+      fontSize: "12px",
+    }
   },
   '&.Mui-selected': {
     background: '#6FA7B4',
@@ -80,6 +88,10 @@ const CustomTab2 = styled(Tab)({
     fontSize: '14px',
     textTransform: 'capitalize',
     margin: '0 20px 0 0',
+    "@media screen and (max-width: 400px)": {
+      minWidth: "90px",
+      fontSize: "10px",
+    }
   },
   '&.Mui-selected': {
     border: '1px solid #6FA7B4',
@@ -191,14 +203,14 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     {isAddingReview && <AddRating onClose={() => setIsAddingReview(false)} id={id} />}
     {openPopup.open && <ApplySchool close={() => closePop()} course={openPopup.course} courseId={openPopup.courseId} />}
     {universityData && (
-      <div className='w-full flex flex-row gap-[32px] px-5'>
-        <div className='flex flex-col items-center'>
-          <div className='w-[571px] h-[400px] rounded-[8px] border-[1px] border-gray-200 mb-4'>
+      <div className='w-full flex flex-col md:flex-row gap-[32px] px-5'>
+        <div className='flex flex-col items-center mt-4 md:mt-0'>
+          <div className='w-[571px] max-w-full h-[200px] md:h-[400px] rounded-[8px] border-[1px] border-gray-200 mb-4'>
             <img src={universityData?.university?.pictures[imageCount]} alt={universityData?.university?.name} className='w-full h-full rounded-[8px] object-cover' />
           </div>
           <div className='w-full flex items-center gap-[21px] overflow-x-scroll'>
             {universityData?.university?.pictures.map((pic, index) => (
-              <img key={index} src={pic} alt={universityData?.university?.name} onClick={() => handleImageSwitch(index)} className='w-[98px] h-[98px] rounded-md object-cover cursor-pointer' />
+              <img key={index} src={pic} alt={universityData?.university?.name} onClick={() => handleImageSwitch(index)} className='w-[40px] md:w-[98px] h-[40px] md:h-[98px] rounded-md object-cover cursor-pointer' />
             ))}
           </div>
           <div className='w-full flex items-center justify-between bg-[#E7FAFF] p-[20px] mt-[23px]'>
@@ -213,13 +225,15 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
         </div>
         {/* second div */}
         <div className='flex flex-grow flex-col'>
-          <p className='font-[600] text-[40px] leading-[56px] text-black capitalize mb-[14px]'>{universityData?.university?.name}</p>
-          <div className='flex items-center gap-2 mb-[10px] font-medium'>
+          <p className='font-[600] text-[24px] md:text-[40px] leading-[38px] md:leading-[56px] text-black capitalize mb-[14px]'>
+            {universityData?.university?.name}
+          </p>
+          <div className='flex items-center gap-1 md:gap-2 mb-[10px] font-medium text-[16px] md:text-lg '>
             <Globe fill='#6FA7B4' /># {universityData?.university?.world_ranking}
           </div>
           <div className='flex items-center gap-[8px] my-[20px]'>
             <HiMapPin className='text-primary text-xl' />
-            <p className='font-medium text-lg leading-8'>{universityData?.university.address}, {universityData?.university?.country}</p>
+            <p className='font-medium text-[16px] md:text-lg leading-8'>{universityData?.university.address}, {universityData?.university?.country}</p>
           </div>
           <div className='w-full'>
             <p className='w-full font-[500] text-base leading-[22px]'>{universityData.university.description}</p>
@@ -260,7 +274,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
               ):(
                 <>
                 {courses && result?.map((course, index) => (
-                  <div key={index} className='w-full flex flex-col p-[20px] bg-white rounded-[10px]'>
+                  <div key={index} className='w-full hidden md:flex flex-col p-[20px] bg-white rounded-[10px]'>
                     <div className='w-full flex items-center justify-between'>
                       <div className='flex flex-col w-[60%]'>
                         <p className='font-[500] text-lg leading-8 capitalize mb-[5px]'>{course?.name}</p>
@@ -279,6 +293,19 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                   </div>
                 </div>
                 ))}
+                {courses && result?.map((course, index) => (
+                  <div key={index} className='w-full flex md:hidden flex-col p-[20px] bg-white rounded-[10px]'>
+                    <p className='font-medium text-sm leading-[26px] capitalize mb-[10px'>{course?.name}</p>
+                    <p className='font-medium text-base text-[#8B8BA4] leading-[22px] capitalize'>
+                      Application closes on {course?.application_closing && new Date(course?.application_closing).toDateString()}
+                    </p>
+                    <hr className='w-full h-[1px] bg-[#DADAE7] mt-[15px]' />
+                    <p className='font-medium text-base text-[#8B8BA4] leading-[22px] my-5 first-letter:capitalize'>{course?.description}</p>
+                    <button type='button' onClick={() => setOpenPopup({open: true, course: course, courseId: course?.id})} className='w-full h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
+                      apply now <FiChevronRight />
+                    </button>
+                  </div>
+                ))}
                 </>
               )}
             </div>
@@ -292,7 +319,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
               <div className='w-full flex flex-col gap-5 py-5 mt-[44px]'>
                 <div className="w-full flex flex-col">
                   <p className='font-medium text-lg leading-[32px]'>Spendings</p>
-                  <div className="flex items-center justify-between gap-[33px]">
+                  <div className="flex flex-wrap items-center justify-between gap-[33px]">
                     <Block icon={<Bed fill='#6FA7B4' />} title='Average rent' text={universityData?.country_profile?.average_rent} />
                     <Block icon={<Bus/>} title='Average monthly expenses' text={universityData?.country_profile?.average_monthly_expenses} />
                     <Block icon={<Hospital/>} title='Health insurance' text={universityData?.country_profile?.health_insurance} />

@@ -1,4 +1,6 @@
 import React from "react";
+import { FiLinkedin } from "react-icons/fi";
+
 import Icon from "../Icons";
 
 const Footer = () => {
@@ -37,15 +39,15 @@ const Footer = () => {
         <div className="md:flex md:items-center text-white md:mt-10">
           <aside>
             <div className="flex">
-              <span className="px-1">
-                <Icon width={24} height={21} id="twitter-icon" />
-              </span>
-              <span className="px-1">
+              <a href="https://www.linkedin.com/company/kadir-travels/" rel="noreferrer" className="px-1">
+                <FiLinkedin className="text-xl font-light fill-white" />
+              </a>
+              <a href="https://www.facebook.com/KadirTravels?mibextid=LQQJ4d" rel="noreferrer" className="px-1">
                 <Icon width={24} height={24} id="facebook-icon" />
-              </span>
-              <span className="px-1">
+              </a>
+              <a href="https://instagram.com/onboard_ng?igshid=MWI4MTIyMDE=" rel="noreferrer" className="px-1">
                 <Icon width={24} height={24} id="instagram-icon" />
-              </span>
+              </a>
             </div>
             <div>
               <p className="font-normal text-[16px] pt-2">© {new Date().getFullYear()} Onboard All Rights Reserved.</p>

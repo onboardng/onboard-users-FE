@@ -18,7 +18,6 @@ const SearchSideBar:React.FC<Props> = ({showFilter, setSchool_name}) => {
     setSchool_name(e.target.value)
   }
   
-
   return (
     <div
       className={` bg-white rounded-xl  ${
