@@ -23,6 +23,7 @@ const baseUrl = process.env.REACT_APP_BACKEND_API as string
 interface PopupProps {
   open: boolean
   course: Course | null
+  currency: string | undefined
   courseId: string | undefined
 }
 
@@ -99,8 +100,15 @@ const CustomTab2 = styled(Tab)({
   },
 })
 
+const programs:any = {
+  "advancedlearning": "Vocational Studies",
+  "postgraduate": "Ph.D",
+  "graduate": "Masters",
+  "undergraduate": "Undergraduate",
+}
+
 const ViewSchool:React.FC<{id: string}> = ({id}) => {
-  const [openPopup, setOpenPopup] = useState<PopupProps>({open: false, course: null, courseId: ""});
+  const [openPopup, setOpenPopup] = useState<PopupProps>({open: false, course: null, currency: "", courseId: ""});
   const { authorization: { access_token }} = useSelector((store: RootState) => store.authStore);
   const [universityData, setUniversityData] = useState<UniversityResponse | null>(null);
   const [paginationEl, setPaginationEl] = useState<PaginationProps | null>(null);
@@ -117,7 +125,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [tab, setTab] = useState<number>(0);
   const courseReq = useHttpRequest();
 
-  const closePop = () => setOpenPopup({open: false, course: null, courseId: ""});
+  const closePop = () => setOpenPopup({open: false, course: null, currency: "", courseId: ""});
   const handleTabSwitch2 = (e: SyntheticEvent, value: number) => setTab2(value);
   const handleTabSwitch = (e: SyntheticEvent, value: number) => setTab(value);
   const handleImageSwitch = (index: number) => setImageCount(index);
@@ -196,12 +204,14 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
+  const currency = universityData?.country_profile?.currency
+
   if(loading) return <PageLoader />
 
   return (
     <>
     {isAddingReview && <AddRating onClose={() => setIsAddingReview(false)} id={id} />}
-    {openPopup.open && <ApplySchool close={() => closePop()} course={openPopup.course} courseId={openPopup.courseId} />}
+    {openPopup.open && <ApplySchool close={() => closePop()} currency={currency} course={openPopup.course} courseId={openPopup.courseId} />}
     {universityData && (
       <div className='w-full flex flex-col md:flex-row gap-[32px] px-5'>
         <div className='flex flex-col items-center mt-4 md:mt-0'>
@@ -250,7 +260,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
               <div className='w-full flex items-center gap-5 mt-5 mb-[22px]'>
                 <CustomTabs value={tab2} onChange={handleTabSwitch2}>
                   {universityData?.available_programs?.map((_, index) => (
-                    <CustomTab2 key={index} label={_.name} onClick={() => handleProgramSwitch(_.name)} />
+                    <CustomTab2 key={index} label={programs[_.name]} onClick={() => handleProgramSwitch(_.name)} />
                   ))}
                 </CustomTabs>
               </div>
@@ -282,7 +292,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                           Application closes on {course?.application_closing && new Date(course?.application_closing).toDateString()}
                         </p>
                       </div>
-                      <button onClick={() => setOpenPopup({open: true, course: course, courseId: course?.id})} className='w-[158px] h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
+                      <button onClick={() => setOpenPopup({open: true, course: course, currency: "", courseId: course?.id})} className='w-[158px] h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
                         apply now
                         <FiChevronRight />
                       </button>
@@ -301,7 +311,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                     </p>
                     <hr className='w-full h-[1px] bg-[#DADAE7] mt-[15px]' />
                     <p className='font-medium text-base text-[#8B8BA4] leading-[22px] my-5 first-letter:capitalize'>{course?.description}</p>
-                    <button type='button' onClick={() => setOpenPopup({open: true, course: course, courseId: course?.id})} className='w-full h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
+                    <button type='button' onClick={() => setOpenPopup({open: true, course: course, currency: currency, courseId: course?.id})} className='w-full h-[60px] flex items-center justify-center gap-2 bg-primary text-white rounded-[4px] capitalize'>
                       apply now <FiChevronRight />
                     </button>
                   </div>
