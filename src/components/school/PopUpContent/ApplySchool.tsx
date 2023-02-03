@@ -9,15 +9,23 @@ import PageLoader from '../../Loader/PageLoader'
 interface Props {
   close: () => void
   course: Course | null
+  currency?: string
   courseId: string | undefined
 }
 
 const baseUrl = process.env.REACT_APP_BACKEND_API as string
 
-const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
+const ApplySchool:React.FC<Props> = ({close, course, currency, courseId}) => {
   const [courseData, setCourseData] = useState<Courses | null>(null)
   const {loading, sendRequest} = useHttpRequest()
   const navigate = useNavigate();
+
+  const CURRENCYLIST:any = {
+    "EUR": "€",
+    "USD": "$",
+    "GBP": "£",
+    "NGN": "₦",
+  }
 
   const getCourseDetails = async(courseId: string) => {
     const headers = {
@@ -77,7 +85,7 @@ const ApplySchool:React.FC<Props> = ({close, course, courseId}) => {
               <MoneyBill />
               <div className="font-medium text-xs md:text-sm leading-[20px]  md:leading-[26px]">
                 <>
-                Estimated Admission Fee: ${courseData?.tuition} (~NGN {(courseData?.price_in_naira).toLocaleString('en-US')})
+                Estimated Admission Fee: {currency && CURRENCYLIST[currency]} {courseData?.tuition} (~₦ {(courseData?.price_in_naira).toLocaleString('en-US')})
                 </>
               </div>
             </div>

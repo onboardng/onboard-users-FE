@@ -332,7 +332,7 @@ export interface CountryProfile {
     required_working_hours_per_day: string
     popular_jobs: Array<string>
     expert_take: string
-    currency: String
+    currency: string
     additional_section: Array<any>
     deleted: boolean
     created_at: Date | string
