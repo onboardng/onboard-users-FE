@@ -31,11 +31,21 @@ const CustomTabs = styled(Tabs)({
   '&.MuiTabs-root': {
     width: 'auto',
     display: 'flex',
-    flexWrap: "wrap",
     alignItems: 'center',
     gap: '20px',
     margin: '30px 0 20px',
+    "& .MuiTabs-flexContainer": {
+      "@media screen and (max-width: 400px)": {
+        width: "100%",
+        minHeight: "fit-content",
+        display: "grid",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gap: "10px",
+      },
+    },
     "@media screen and (max-width: 400px)": {
+      width: "100%",
+      minHeight: "fit-content",
       gap: "10px",
     }
   },
