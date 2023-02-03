@@ -49,7 +49,7 @@ const ApplySchool:React.FC<Props> = ({close, course, currency, courseId}) => {
     <>
     {courseData && (
       <div
-        className="w-full h-screen md:h-[950px] flex items-center justify-center bg-gray-300 bg-opacity-40 fixed top-0 left-0 overflow-hidden pop-up"
+        className="w-[95%] h-screen md:h-[950px] flex items-center justify-center bg-gray-300 bg-opacity-40 fixed top-0 left-0 overflow-hidden pop-up"
         onScroll={() => {}}
         onClick={() => close()}>
         <div onClick={(e: MouseEvent<HTMLElement>) => e.stopPropagation()} className="w-full md:w-[800px] bg-white p-3 md:p-[30px] rounded-2xl modal-pop">
