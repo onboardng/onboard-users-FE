@@ -166,7 +166,6 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
       setPaginationEl(allCourses)
       setCourses(allCourses?.data?.rows)
     } catch (error) {}
-    window.location.reload()
   }
 
   useEffect(() => {
@@ -187,7 +186,6 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     setSearchParams({page: page.toString()})
     getUniversityInfo(id)
     window.scrollTo(0, 0)
-    // window.location.reload()
   }
 
   const handlePagination = () => {

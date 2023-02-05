@@ -32,7 +32,7 @@ const SearchMain = ({
   
   const destructureData = () => {
     if(data) {
-      console.log(data)
+      // console.log(data)
       setSchools(data?.data)
       setResult(data?.data?.foundSchools)
     }
@@ -78,6 +78,7 @@ const SearchMain = ({
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
     window.scrollTo(0, 0)
+    window.location.reload()
   }
 
   const handlePagination = () => {
