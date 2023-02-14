@@ -18,6 +18,9 @@ const AllRoutes = () => {
   const TrackSchoolBooking = lazy(() => import("../pages/School/TrackSchoolBooking"));
   const ForgotPassword = lazy(() => import("../pages/Authentication/ForgotPassword"));
   const ResetPassword = lazy(() => import("../pages/Authentication/ResetPassword"));
+  const AboutUs = lazy(() => import("../pages/Admin/AboutUs"));
+  const ContactUs = lazy(() => import("../pages/Admin/ContactUs"));
+
   const location = useLocation()
 
   // const options = { autoConfig: true, debug: false };
@@ -45,6 +48,8 @@ const AllRoutes = () => {
       <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<SchoolHomePage />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/verify" element={<Welcome />} />
             <Route path="/register" element={<Register />} />
