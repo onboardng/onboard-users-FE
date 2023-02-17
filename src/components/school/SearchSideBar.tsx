@@ -9,13 +9,11 @@ interface Props {
 
 const SearchSideBar:React.FC<Props> = ({showFilter, setSchool_name}) => {
   const [rating, setRating] = useState<number>(0)
-  const [query, setQuery] = useState<string>("")
 
   const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    
-    setQuery(e.target.value)
-    setSchool_name(e.target.value)
+    const value = e.target.value
+    if(!value) return;
+    setSchool_name(value);
   }
   
   return (
@@ -34,7 +32,7 @@ const SearchSideBar:React.FC<Props> = ({showFilter, setSchool_name}) => {
         <div className="py-3">
           <label className='text-[14px] text-[1B1B1B] leading-[22.4px]' htmlFor="query">University Name</label>
           <div className="w-full h-[61px] border border-[#DADAE7] px-5 rounded-md">
-            <input type="text" value={query} onChange={onSearch} className="w-full h-full placeholder:text-[#DADAE7] border-none outline-none capitalize" />                  
+            <input type="text" onChange={onSearch} className="w-full h-full placeholder:text-[#DADAE7] border-none outline-none capitalize" />                  
           </div>
         </div>
         <p className="text-[14px] text-[#8B8BA4] mt-1">Press enter to search</p>
