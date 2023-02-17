@@ -55,11 +55,14 @@ const SearchMain = ({
   getMoreUniversity(page.toString())
 
   const searchByName = async(name: string) => {
-    if(!name || name === undefined) return setResult(schools?.foundSchools)
-    const value = name.toLowerCase()
-    const filtered = schools?.foundSchools?.filter((school) => school?.name.toLowerCase().includes(value))
-    setResult(filtered)
-  }
+    if(!name || name === undefined) return;
+    try {
+      const data = await sendRequest(`${baseUrl}/university/search?search=${name}`, "GET",);
+      if(!data || data === undefined) return;
+      console.log(data);
+      setResult(data?.data);
+    } catch(error) {};
+  };
 
   useEffect(() => {
     setPage(parseInt(searchParams?.get('page') || "1"));
@@ -68,7 +71,7 @@ const SearchMain = ({
   useEffect(() => {
     schools && setResult(schools?.foundSchools)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  },[school_query])
 
   useEffect(() => {
     school_query && searchByName(school_query)

@@ -1,11 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import { FiLinkedin } from "react-icons/fi";
 
 import Icon from "../Icons";
 
 const Footer = () => {
   const services = ["Flights", "Hotels", "Schools", "Visas"];
-  const onboard = ["About Us", "Contact Us"];
+  const onboard = [
+    {name: "About Us", url: "/about"},
+    {name: "Contact Us", url: "/contact"},
+  ];
+
   return (
     <div className="bg-[#6FA7B4] p-5 md:p-10 set-bg-img">
       <div className="flex md:flex-row flex-col md:justify-between w-full h-full">
@@ -26,11 +31,11 @@ const Footer = () => {
             </aside>
             <aside>
               <p className="font-bold text-[16px] leading-[25.6px] pb-3">Onboard</p>
-              <ul>
-                {onboard?.map((service) => (
-                  <li className="font-medium text-[14px] leading-[22.4px]" key={service}>
-                    {service}
-                  </li>
+              <ul className="flex flex-col">
+                {onboard?.map((_, index) => (
+                  <Link to={_.url} key={index} className="font-medium text-[14px] leading-[22.4px]">
+                    {_.name}
+                  </Link>
                 ))}
               </ul>
             </aside>

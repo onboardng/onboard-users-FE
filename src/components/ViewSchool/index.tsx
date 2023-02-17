@@ -125,7 +125,6 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false);
   const [courses, setCourses] = useState<Array<Course | null>>([]);
   const [program, setProgram] = useState<string>('undergraduate');
-  const [result, setResult] = useState<Array<Course | null>>([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [imageCount, setImageCount] = useState<number>(0);
   const {loading, sendRequest} = useHttpRequest();
@@ -161,16 +160,30 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     try {
       const data = await courseReq.sendRequest(`${baseUrl}/course/in-uni/${id}/by-prg-name?limit=10&page=${page}&program_name=${program}`, 'GET', null, headers)
       if(!data || data === undefined) return
-      // console.log(data)
       const { data: { allCourses }} = data
       setPaginationEl(allCourses)
       setCourses(allCourses?.data?.rows)
     } catch (error) {}
   }
+  
+  const searchCourses = async(name: string) => {
+    if(!name || name === undefined) return;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${access_token}`
+    }
+    try {
+      const data = await courseReq.sendRequest(`${baseUrl}/course/search/${id}?search=${name}`, 'GET', null, headers)
+      if(!data || data === undefined) return;
+      setCourses(data?.data);
+      // console.log(data?.data);
+    } catch (error) {}
+  }
 
   useEffect(() => {
-    setResult(courses)
-  },[courses])
+    query && searchCourses(query);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[query])
 
   useEffect(() => {
     getCourses(program)
@@ -199,14 +212,6 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     setQuery(e.target.value)
-    filterCourses(e.target.value)
-  }
-
-  const filterCourses = (query: string) => {
-    if(!query || query === '') return setResult(courses)
-    const value = query.toLowerCase()
-    const data = courses?.filter((course) => course?.name?.toLowerCase().includes(value))
-    setResult(data)
   }
 
   useEffect(() => {
@@ -266,7 +271,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
           </div>
           <hr className='w-full h-[1px] bg-[#DADAE7]' />
           <TabPanel value={tab} index={0}>
-            <div className='w-full flex flex-col'>
+            <div className='w-full flex flex-col mb-5'>
               <div className='w-full flex items-center gap-5 mt-5 mb-[22px]'>
                 <CustomTabs value={tab2} onChange={handleTabSwitch2}>
                   {universityData?.available_programs?.map((_, index) => (
@@ -293,7 +298,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                 </div>
               ):(
                 <>
-                {courses && result?.map((course, index) => (
+                {courses && courses?.map((course, index) => (
                   <div key={index} className='w-full hidden md:flex flex-col p-[20px] bg-white rounded-[10px]'>
                     <div className='w-full flex items-center justify-between'>
                       <div className='flex flex-col w-[60%]'>
@@ -313,7 +318,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
                   </div>
                 </div>
                 ))}
-                {courses && result?.map((course, index) => (
+                {courses && courses?.map((course, index) => (
                   <div key={index} className='w-full flex md:hidden flex-col p-[20px] bg-white rounded-[10px]'>
                     <p className='font-medium text-sm leading-[26px] capitalize mb-[10px'>{course?.name}</p>
                     <p className='font-medium text-base text-[#8B8BA4] leading-[22px] capitalize'>
@@ -332,7 +337,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
           </TabPanel>
           <TabPanel value={tab} index={1}>
             {universityData?.country_profile === null ? (
-              <div className='w-full flex items-center justify-between mt-[44px]'>
+              <div className='w-full flex items-center justify-between mt-[44px] mb-5'>
                 <p className='font-medium text-lg leading-[32px]'>Country Profile not available</p>
               </div>
             ): (
