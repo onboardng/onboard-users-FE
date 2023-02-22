@@ -12,7 +12,7 @@ export const LIST = [
     {
         icon: <Twitter />,
         name: '@onboardtravels',
-        url: 'https://www.twitter.com/',
+        url: 'https://www.twitter.com/@onboardng',
     },
     {
         icon: <Facebook />,
