@@ -12,10 +12,27 @@ const AboutUs = () => {
           <img src="/svgs/OnboardLogoBlue.svg" alt="onboard logo" className="w-[70%]" />
         </div>
         <div className="w-[808px] max-w-full flex flex-col">
-          <p className="font-semibold text-[40px] leading-[56px] mb-[30px]">We are your travels solutions</p>
-          <p className="font-medium text-lg leading-[32px] mb-[30px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit eros, aliquam vel mollis et, tincidunt ut nisi. Vivamus eget erat sed sapien tempor volutpat. Sed auctor, magna quis congue bibendum, urna est consequat libero, at aliquam diam nisl eget lectus. Nulla facilisi. Praesent velit augue, porttitor sed lacinia in, scelerisque ac eros. In hac habitasse platea dictumst. Donec et turpis velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut euismod semper ligula ut hendrerit. Aliquam erat volutpat.
-          </p>
+          <div className="flex flex-col my-10">
+            <p className="font-semibold text-[40px] leading-[56px] mb-[30px]">We are your travels solutions</p>
+            <p className="font-medium text-lg leading-[32px] mb-[30px]">
+              Onboard NG is a modern one-stop education and travel solutions offering study abroad assistance and guidance to candidate students from Africa and around the globe. We exist as a TravelTech undertaking with years of experience and an increasingly level of success stories under our belt. <br />
+              Furthermore, Our Travel space is also dedicated to rendering affordable and effective travel assistance, bridging the gap and demystifying borders. <br />
+              Our platform seeks to not only help students advance their academic pursuits, but to also provide hitch free travel packages while offering affordable educational options from our partner institutions in several countries. <br />
+              Our services are also full-proof and certified with favorable reviews over the years. Much more than that OnBoard NG is a growing community of diverse individuals making a change in different spheres around the
+            </p>
+          </div>
+          <div className="flex flex-col my-10">
+            <p className="font-semibold text-[40px] leading-[56px] mb-[30px]">Our Mission</p>
+            <p className="font-medium text-lg leading-[32px] mb-[30px]">
+              Creating opportunities with no boundaries.
+            </p>
+          </div>
+          <div className="flex flex-col my-10">
+            <p className="font-semibold text-[40px] leading-[56px] mb-[30px]">Our Vision</p>
+            <p className="font-medium text-lg leading-[32px] mb-[30px]">
+              To create wholesome experiences by building bridges and opening borders.
+            </p>
+          </div>
         </div>
       </div>
       <Footer />
