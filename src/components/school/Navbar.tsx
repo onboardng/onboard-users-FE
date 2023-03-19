@@ -76,7 +76,8 @@ const Navbar = ({ home }: { home?: boolean }) => {
                       </p>
                     </aside>
                   </Link>
-                  <Link to='details' className="text-[#1B1B1B] flex mt-5 mb-5">Update details</Link>
+                  <Link to='/details' className="text-[#1B1B1B] flex mt-5 mb-5">Update details</Link>
+                  <Link to='/bookings' className="text-[#1B1B1B] flex mt-5 mb-5">Bookings</Link>
                   <li className="text-[#1B1B1B] flex mt-5 mb-5 cursor-pointer" onClick={() => setOpenModal(true)}>
                     <span className="ml-2">Log out</span>
                   </li>

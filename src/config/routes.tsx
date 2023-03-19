@@ -22,7 +22,10 @@ const AllRoutes = () => {
   const AboutUs = lazy(() => import("../pages/Admin/AboutUs"));
   const ContactUs = lazy(() => import("../pages/Admin/ContactUs"));
   const DirectApply = lazy(() => import("../pages/School/DirectApply"));
-  const location = useLocation()
+  const Bookings = lazy(() => import("../pages/School/Bookings"));
+  const Booking = lazy(() => import("../pages/School/Booking"));
+
+  const location = useLocation();
 
   // const options = { autoConfig: true, debug: false };
   // ReactPixel.init(pixelId, undefined, options)
@@ -59,6 +62,8 @@ const AllRoutes = () => {
             <Route path="/user" element={<Profile />} />
             <Route path="/search" element={<SchoolSearchPage />} />
             <Route path="/apply" element={<DirectApply />} />
+            <Route path="/bookings" element={<Bookings />} />
+            <Route path="/bookings/:id" element={<Booking />} />
             <Route path="/schools/:id" element={<ViewSchool />} />
             <Route path="/schools/:id/apply" element={<ApplySchool />} />
             <Route path="/schools/success" element={<ApplicationSuccessful />} />
