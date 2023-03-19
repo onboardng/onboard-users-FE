@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useOnClickOutside from "../../hooks/useClickOutside";
 import { RootState } from "../../redux/store";
 import Icon from "../Icons";
-import Modal from "../../components/Shared/Modal"
+import Modal from "../Shared/Modal"
 
 const Navbar = ({ home }: { home?: boolean }) => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
           !home ? "bg-white sticky top-0 z-[10] px-[57px] py-3" : "mx-[57px]"
         }`}
       >
-        <div className="hidden md:block cursor-pointer" onClick={() => navigate("/")}>
+        <div className="hidden md:block cursor-pointer" onClick={() => navigate("/home-page")}>
           <img src={`${!home ? "/svgs/OnboardLogoBlue.svg" : "/svgs/Onboard Logo - White 1.svg"}`} alt="logo" />
         </div>
         {!authorization?.access_token ? (

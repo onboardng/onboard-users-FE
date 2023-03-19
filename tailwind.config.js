@@ -26,6 +26,7 @@ module.exports = {
         "hero-pattern": "url('/public/static/images/HeroImage.png')",
         filter: "linear-gradient(180deg, rgba(0, 35, 125, 0.6) 0%, rgba(0, 0, 0, 1) 100%)",
         register: "url('/public/static/images/aeroplane.png')",
+        apply: "url('../src/assets/apply-bg.png')",
       }),
 
       keyframes: {
@@ -66,6 +67,11 @@ module.exports = {
           "0%": { opacity: 0 },
           "100% ": { opacity: 1 },
         },
+        zoom: {
+          "0%": { transform: "scale(100%)" },
+          "50%": { transform: "scale(110%)" },
+          "100%": { transform: "scale(100%)" },
+        }
       },
       animation: {
         "slide-in": "slide-in 0.5s forwards",
@@ -73,6 +79,7 @@ module.exports = {
         "fade-in": "fade-in 2s forwards ",
         "fade-out": "fade-out 2s forwards ",
         "ltr-linear-infinite": "ltr-linear-infinite 10s linear infinite",
+        zoom: "zoom 10s ease-in-out infinite",
       },
     },
   },

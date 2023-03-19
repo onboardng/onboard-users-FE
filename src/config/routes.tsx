@@ -5,6 +5,7 @@ import PageLoader from "../components/Loader/PageLoader";
 import { persistor } from "../redux/store";
 
 const AllRoutes = () => {
+  const Main = lazy(() => import("../pages/Main"));
   const Welcome = lazy(() => import("../pages/Authentication/Verify"));
   const Register = lazy(() => import("../pages/Authentication/Register"));
   const UserDetails = lazy(() => import("../pages/Authentication/BasicDetails"));
@@ -20,7 +21,7 @@ const AllRoutes = () => {
   const ResetPassword = lazy(() => import("../pages/Authentication/ResetPassword"));
   const AboutUs = lazy(() => import("../pages/Admin/AboutUs"));
   const ContactUs = lazy(() => import("../pages/Admin/ContactUs"));
-
+  const DirectApply = lazy(() => import("../pages/School/DirectApply"));
   const location = useLocation()
 
   // const options = { autoConfig: true, debug: false };
@@ -47,7 +48,8 @@ const AllRoutes = () => {
     <PersistGate loading={null} persistor={persistor}>
       <Suspense fallback={<PageLoader />}>
           <Routes>
-            <Route path="/" element={<SchoolHomePage />} />
+            <Route path="/" element={<Main />} />
+            <Route path="/home-page" element={<SchoolHomePage />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/login" element={<Login />} />
@@ -56,6 +58,7 @@ const AllRoutes = () => {
             <Route path="/details" element={<UserDetails />} />
             <Route path="/user" element={<Profile />} />
             <Route path="/search" element={<SchoolSearchPage />} />
+            <Route path="/apply" element={<DirectApply />} />
             <Route path="/schools/:id" element={<ViewSchool />} />
             <Route path="/schools/:id/apply" element={<ApplySchool />} />
             <Route path="/schools/success" element={<ApplicationSuccessful />} />

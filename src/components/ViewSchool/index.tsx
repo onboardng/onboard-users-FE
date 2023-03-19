@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 import { Bed, BriefcaseMoney, Bus, ClipboardText, Clock, Hospital, Wallet } from '../../assets/icons'
 import { Course, PaginationProps, UniversityResponse } from '../../interfaces'
 import ApplySchool from '../school/PopUpContent/ApplySchool'
-import PageLoader from "../../components/Loader/PageLoader"
+import PageLoader from "../Loader/PageLoader"
 import { useHttpRequest } from '../../hooks/useHttpRequest'
 import { BookOpen, Globe } from '../../assets/icons'
 import Pagination from '../Pagination/Pagination'
