@@ -228,7 +228,7 @@ const ViewSchool:React.FC<{id: string}> = ({id}) => {
     {isAddingReview && <AddRating onClose={() => setIsAddingReview(false)} id={id} />}
     {openPopup.open && <ApplySchool close={() => closePop()} currency={currency} course={openPopup.course} courseId={openPopup.courseId} />}
     {universityData && (
-      <div className='w-full flex flex-col md:flex-row gap-[32px] px-5'>
+      <div className='w-full flex flex-col md:flex-row gap-[32px] px-5 mb-5'>
         <div className='flex flex-col items-center mt-4 md:mt-0'>
           <div className='w-[571px] max-w-full h-[200px] md:h-[400px] rounded-[8px] border-[1px] border-gray-200 mb-4'>
             <img src={universityData?.university?.pictures[imageCount]} alt={universityData?.university?.name} className='w-full h-full rounded-[8px] object-cover' />
