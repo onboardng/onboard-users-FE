@@ -1,8 +1,8 @@
-import { schoolApi } from "./../services/schoolApi";
+import { schoolApi } from "../services/schoolApi";
 import { reduxBatch } from "@manaflair/redux-batch";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore } from "redux-persist";
-import { courseApi } from "./../services/courseApi";
+import { courseApi } from "../services/courseApi";
 import { rootReducer } from "../root-reducer";
 import { authApi } from "../services/index";
 import { Action, ThunkDispatch } from "@reduxjs/toolkit";

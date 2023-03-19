@@ -44,7 +44,7 @@ const Login = () => {
     if (isSuccess) {
       toast.success("Login successful");
       dispatch(setLoginUser(data));
-      navigate("/");
+      navigate("/home-page");
     }
     if (isError && error && "status" in error) {
       toast.error(error?.data?.message);
@@ -61,7 +61,7 @@ const Login = () => {
       if(!data || data === undefined) return
       toast.success("Login successful");
       dispatch(setLoginUser(data));
-      navigate("/");
+      navigate("/home-page");
     } catch (error) {}
   }
 

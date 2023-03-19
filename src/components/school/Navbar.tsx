@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useOnClickOutside from "../../hooks/useClickOutside";
 import { RootState } from "../../redux/store";
 import Icon from "../Icons";
-import Modal from "../../components/Shared/Modal"
+import Modal from "../Shared/Modal"
 
 const Navbar = ({ home }: { home?: boolean }) => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Navbar = ({ home }: { home?: boolean }) => {
           !home ? "bg-white sticky top-0 z-[10] px-[57px] py-3" : "mx-[57px]"
         }`}
       >
-        <div className="hidden md:block cursor-pointer" onClick={() => navigate("/")}>
+        <div className="hidden md:block cursor-pointer" onClick={() => navigate("/home-page")}>
           <img src={`${!home ? "/svgs/OnboardLogoBlue.svg" : "/svgs/Onboard Logo - White 1.svg"}`} alt="logo" />
         </div>
         {!authorization?.access_token ? (
@@ -76,7 +76,8 @@ const Navbar = ({ home }: { home?: boolean }) => {
                       </p>
                     </aside>
                   </Link>
-                  <Link to='details' className="text-[#1B1B1B] flex mt-5 mb-5">Update details</Link>
+                  <Link to='/details' className="text-[#1B1B1B] flex mt-5 mb-5">Update details</Link>
+                  <Link to='/bookings' className="text-[#1B1B1B] flex mt-5 mb-5">Bookings</Link>
                   <li className="text-[#1B1B1B] flex mt-5 mb-5 cursor-pointer" onClick={() => setOpenModal(true)}>
                     <span className="ml-2">Log out</span>
                   </li>

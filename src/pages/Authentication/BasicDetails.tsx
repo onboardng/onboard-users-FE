@@ -25,7 +25,7 @@ const BasicDetails = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Profile updated successfully");
-      navigate("/");
+      navigate("/home-page");
     }
     if (isError && error && "status" in error) {
       toast.error(error?.data?.message);
