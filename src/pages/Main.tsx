@@ -13,8 +13,8 @@ const Main = () => {
             <p className="text-xs md:text-sm text-white">What would you like to experience?</p>
         </div>
         <a href="https://schools.onboardng.com" target="_blank" rel="noreferrer" className="w-full md:w-1/2 h-1/2 md:h-full grid place-items-center relative overflow-hidden bg-black/50">
-            <img src={travel} alt="" className="w-full h-full object-cover absolute top-0 left-0 hover:scale-125 transition duration-1000 ease-in-out" />
-            <div className="grid place-items-center z-10 main-div ">
+            <img src={travel} alt="" className="w-full h-full object-cover absolute top-0 left-0 hover:scale-125 transition duration-1000 ease-in-out filter -contrast-50" />
+            <div className="grid place-items-center z-10 main-div">
                 <div className="flex flex-col items-center">
                     <img src={image} alt="" className="" />
                     <p className="text-xl text-white font-semibold">Travels</p>
@@ -22,7 +22,7 @@ const Main = () => {
             </div>
         </a>
         <Link to="/home-page" className="w-full md:w-1/2 h-1/2 md:h-full grid place-items-center relative overflow-hidden bg-black/50">
-            <img src={school} alt="" className="w-full h-full object-cover absolute top-0 left-0 hover:scale-125 transition duration-1000 ease-in-out" />
+            <img src={school} alt="" className="w-full h-full object-cover absolute top-0 left-0 hover:scale-125 transition duration-1000 ease-in-out filter -contrast-50" />
             <div className="grid place-items-center z-10 main-div">
                 <div className="flex flex-col items-center">
                     <img src={image} alt="" className="" />
