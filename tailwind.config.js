@@ -27,6 +27,8 @@ module.exports = {
         filter: "linear-gradient(180deg, rgba(0, 35, 125, 0.6) 0%, rgba(0, 0, 0, 1) 100%)",
         register: "url('/public/static/images/aeroplane.png')",
         apply: "url('../src/assets/apply-bg.png')",
+        school: "url('../src/assets/main-school.png')",
+        travel: "url('../src/assets/main-travel.png')",
       }),
 
       keyframes: {
