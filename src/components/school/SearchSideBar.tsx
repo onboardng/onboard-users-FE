@@ -38,7 +38,7 @@ const SearchSideBar:React.FC<Props> = ({showFilter, setSchool_name}) => {
         <p className="text-[14px] text-[#8B8BA4] mt-1">Press enter to search</p>
         <p className="mt-[30px] font-semibold">Rating</p>
         <div className=" mt-[14px]">
-          <Ratings ratings={rating} size='large' />
+          <Ratings ratings={rating} size='large' setRatings={setRating} />
         </div>
         <p className="text-xs mt-1 text-grey-500">Select a star to set rating parameter</p>
       </div>

@@ -107,14 +107,26 @@ export interface PaginationProps {
 }
 
 export interface School {
+    CountryId: string | null
+    address: string
+    amount_payable: number
+    certificate_recognition: number
     country: string
-    created_at: string
+    created_at: Date | string
+    currency: string
+    deleted: boolean
     description: string
     id: string
+    isDraft: boolean
     name: string
-    pictures?: Array<string>
+    percentage_payable: number
+    pictures: Array<string>
     ratings: number
-    updated_at: string | Date
+    required_documents: Array<Array<string>>
+    service_charge: number
+    total_admissions: number
+    updated_at: Date | string
+    world_ranking: string
 }
 
 export interface SchoolResponse extends PaginationProps {

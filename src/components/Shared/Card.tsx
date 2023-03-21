@@ -11,6 +11,7 @@ import Carousel from './Carousel'
 
 const Card:React.FC<School> = ({country, created_at, description, id, name, pictures, ratings, updated_at}) => {
     const [largeView, setLargeView] = useState<boolean>(false)
+    const [rating, setRating] = useState<number>(0 || ratings)
 
   return (
     <>
@@ -33,7 +34,7 @@ const Card:React.FC<School> = ({country, created_at, description, id, name, pict
                 {name.length > 20 ? `${name.substring(0,20)}...` : name}
             </p>
             <div className='flex flex-col mt-[14px] mb-[6px]'>
-                <Ratings ratings={ratings} disabled />
+                <Ratings ratings={ratings} disabled setRatings={setRating} />
             </div>
             <div className='flex items-center gap-[13px]'>
                 <HiMapPin className='text-primary' />
