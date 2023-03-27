@@ -1,23 +1,37 @@
-import React, { useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetAllUniverisitiesQuery } from "../../redux/services";
-import { IRootQueryParams, ListUniversitiesResponse, UniversityData } from "../../utils/interfaces";
-import Icon from "../Icons";
-import PageLoader from "../Loader/PageLoader";
+import React, { useEffect, useState } from "react";
 
-const initialQueryParams: IRootQueryParams = { page: 1, limit: 10 };
+import { useHttpRequest } from "../../hooks";
+import PageLoader from "../Loader/PageLoader";
+import Icon from "../Icons";
+import { School } from "../../interfaces";
+
+const url = process.env.REACT_APP_BACKEND_API
 
 const Explore = () => {
+  const [universities, setUniversities] = useState<Array<School>>([]);
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllUniverisitiesQuery(initialQueryParams);
 
-  const universities = useMemo<ListUniversitiesResponse>(() => {
-    return data?.data?.universities.data;
-  }, [data?.data?.universities.data]);
+  const {loading, sendRequest} = useHttpRequest()
 
-  if (isLoading) {
-    return <PageLoader />;
+  const getAllUniverisities = async() => {
+    try {
+      const data = await sendRequest(`${url}/university/all?limit=10&page=1`, "GET", null, {
+        "Content-Type": "application/json"
+      })
+      if(!data || data === undefined) return
+      const {data:{universities:{data:{rows}}}} = data
+      setUniversities(rows)
+    } catch (error) {}
   }
+
+  useEffect(() => {
+    getAllUniverisities()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+
+  if (loading) return <PageLoader />
 
   return (
     <div className="bg-white mt-[50px]">
@@ -25,7 +39,7 @@ const Explore = () => {
         <h4 className="text-[20px] md:text-[28px]  font-medium md:leading-[39px]">Top schools around the world.</h4>
         <p className="text-[16px] md:text-[20px] md:leading-[32px] mt-2.5 mb-12">Explore with us.</p>
         <div className="w-full flex flex-wrap items-center justify-center gap-[15px]">
-          {universities?.rows?.slice(0, 4).map((school: Partial<UniversityData>, index) => (
+          {universities?.slice(0, 4).map((school, index) => (
             <div className="flex flex-col justify-center items-center gap-5 relative" key={index}>
               <div className="flex gap-4 justify-center items-center bg-filter bg-no-repeat bg-cover bg-blend-multiply w-[250px] relative rounded-[6px] overflow-hidden ">
                 <img src={school.pictures?.[0] || "/static/images/school.png"} alt="card" className="w-full h-[150px] opacity-50 rounded-[6px]" />

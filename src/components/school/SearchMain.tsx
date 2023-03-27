@@ -19,26 +19,26 @@ const SearchMain = ({
   data: any
   school_query?: string
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const searchQuery = searchParams
-  // const school_name = searchQuery.get("school_name")
-  const country_name = searchQuery.get("country_name")
-  const course_name = searchQuery.get("course_name")
-  const program_name = searchQuery.get("program_name")
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams;
+  // const school_name = searchQuery.get("school_name");
+  const country_name = searchQuery.get("country_name");
+  const program_name = searchQuery.get("program_name");
+  const course_name = searchQuery.get("course_name");
 
-  const [schools, setSchools] = useState<SchoolResponse | null>(null)
-  const [result, setResult] = useState<Array<School> | undefined>([])
-  const [page, setPage] = useState<number>(1)
+  const [schools, setSchools] = useState<SchoolResponse | null>(null);
+  const [result, setResult] = useState<Array<School> | undefined>([]);
+  const [page, setPage] = useState<number>(1);
+  const { sendRequest } = useHttpRequest();
   
   const destructureData = () => {
     if(data) {
-      // console.log(data)
+      console.log(data)
       setSchools(data?.data)
       setResult(data?.data?.foundSchools)
     }
-  }
+  };
 
-  const { sendRequest } = useHttpRequest()
   const getMoreUniversity = async(page: string) => {
     const headers = { 'Content-Type': 'application/json' }
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -51,38 +51,37 @@ const SearchMain = ({
       } catch(error) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[page])
-  }
-  getMoreUniversity(page.toString())
+  };
+  getMoreUniversity(page.toString());
 
   const searchByName = async(name: string) => {
     if(!name || name === undefined) return;
     try {
       const data = await sendRequest(`${baseUrl}/university/search?search=${name}`, "GET",);
       if(!data || data === undefined) return;
-      console.log(data);
       setResult(data?.data);
     } catch(error) {};
   };
 
   useEffect(() => {
     setPage(parseInt(searchParams?.get('page') || "1"));
-  }, [searchParams])
+  }, [searchParams]);
 
   useEffect(() => {
     schools && setResult(schools?.foundSchools)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[school_query])
+  },[school_query]);
 
   useEffect(() => {
     school_query && searchByName(school_query)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [school_query])
+  }, [school_query]);
 
   const onPageChange = (page: number) => {
     setSearchParams({page: page.toString()})
     window.scrollTo(0, 0)
     window.location.reload()
-  }
+  };
 
   const handlePagination = () => {
     if(schools) {
@@ -92,12 +91,12 @@ const SearchMain = ({
         return <></>
       }
     }
-  }
+  };
 
   useEffect(() => {
     destructureData()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[]);
 
   return (
     <div className="md:w-[70%] w-full mx-1 md:mx-5">
@@ -141,7 +140,7 @@ const SearchMain = ({
       <div className="w-full my-10">
         {result && (
           <div className="w-full flex flex-wrap items-center justify-between gap-[30px]">
-            {result?.map((school: School) => <Card key={school.id} {...school} />)}
+            {result?.filter((school: School) => school.isDraft === false).map((school: School) => <Card key={school.id} {...school} />)}
           </div>
         )}
       </div>
