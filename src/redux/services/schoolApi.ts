@@ -6,8 +6,8 @@ export const schoolApi = createApi({
   tagTypes: ["universities", "reviews"],
   baseQuery: baseQueryWithReauth as BaseQueryFn<string | FetchArgs, unknown, CustomError, Record<string, any>>,
   endpoints: (builder) => ({
-    getAllUniverisities: builder.query<any, { page: number; limit: number }>({
-      query: ({ page, limit }) => createRequestWithParams(`university/all/`, { page, limit }),
+    getAllUniverisities: builder.query<any, { page: number; limit: number, is_draft: boolean }>({
+      query: ({ page, limit, is_draft }) => createRequestWithParams(`university/all/`, { page, limit, is_draft }),
       providesTags: (result, _error, _arg) =>
         result?.data
           ? [...result?.data.universities.data.rows.map(({ id }: { id: string }) => ({ type: "universities", id })), "universities"]
