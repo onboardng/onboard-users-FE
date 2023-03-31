@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { IoChevronBack, IoChevronForward, IoTrash } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -6,21 +6,22 @@ import { toast } from 'react-toastify';
 import { useFormInputs, useHttpRequest } from '../../hooks';
 import PageLoader from '../../components/Loader/PageLoader';
 import InputField from '../../components/Shared/InputField';
+import { Envelope, Upload } from '../../assets/icons';
 import Navbar from '../../components/school/Navbar';
 import Footer from '../../components/school/Footer';
-import { Envelope, Upload } from '../../assets/icons';
 
-const initialState = {firstName: "", lastName: "", email: "", phone: "", course1: "", course2: "", course3: ""}
+const initialState = {first_name: "", last_name: "", email: "", phone_number: "", course0: "", course1: "", course2: ""}
 const url = process.env.REACT_APP_BACKEND_API
 
 const DirectApply = () => {
   const {handleChange, inputs} = useFormInputs(initialState);
   const {error, loading, sendRequest} =useHttpRequest();
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<Array<File>>([]);
   const [response, setResponse] = useState(null);
   const navigate = useNavigate();
 
-  const {firstName, lastName, email, phone, course1, course2, course3} = inputs
+  const {first_name, last_name, email, phone_number, course0, course1, course2} = inputs
+  const courses:Array<string> = []
 
   const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
     if(!e.target.files) return
@@ -28,33 +29,40 @@ const DirectApply = () => {
     const {type, size} = file;
     if((size /1024/1024) > 5) return toast.error("Please select a file of less than 5MB");
     if(type === "application/pdf") {
-      setFile(file);
+      setFiles(current => [...current, file]);
     } else return toast.error("Only PDF files are allowed.");
-  }
+  };
 
   const handleSubmit = async(e: FormEvent) => {
     e.preventDefault()
+    courses.push(course0)
+    courses.push(course1)
+    courses.push(course2)
     const formData = new FormData()
-    formData.append("firstName", firstName)
-    formData.append("lastName", lastName)
+    formData.append("first_name", first_name)
+    formData.append("last_name", last_name)
     formData.append("email", email)
-    formData.append("phone", phone)
-    formData.append("course1", course1)
-    formData.append("course2", course2)
-    formData.append("course3", course3)
+    formData.append("phone_number", phone_number)
+    for(let i = 0; i < courses?.length; i++) {
+      formData.append(`courses[${i}]`, courses[i])
+    }
+    for(let i = 0; i < files.length; i++) {
+      formData.append("certificate", files[i], files[i].name)
+    }
     try {
-      const data = await sendRequest(`${url}/`, "POST", formData);
+      const data = await sendRequest(`${url}/apply-now/create`, "POST", formData);
       if(!data || data === undefined) return
-      console.log(data);
+      const {message} = data
       setResponse(data);
+      toast.success(`${message}`)
     } catch (error) {}
+    setFiles([])
   };
 
   const click = () => document.getElementById("doc-input")?.click();
 
-  const deleteFile = (e: MouseEvent<SVGElement>) => {
-    e.stopPropagation()
-    setFile(null);
+  const deleteFile = (value: number) => {
+    setFiles(current => current.filter((_, index) => index !== value))
   };
 
   useEffect(() => {
@@ -101,21 +109,21 @@ const DirectApply = () => {
             <InputField
               label='First Name'
               type='text'
-              name='firstName'
+              name='first_name'
               onChange={handleChange}
               placeholder='Name Here'
             />
             <InputField
               label='Last Name'
               type='text'
-              name='lastName'
+              name='last_name'
               onChange={handleChange}
               placeholder='Name Here'
             />
             <InputField
               label='Phone Number'
               type='text'
-              name='phone'
+              name='phone_number'
               onChange={handleChange}
               placeholder='Phone Number Here'
             />
@@ -142,39 +150,37 @@ const DirectApply = () => {
             <InputField
               label='Course 1'
               type='text'
-              name='course1'
+              name='course0'
               onChange={handleChange}
               placeholder='Course Name'
             />
             <InputField
               label='Course 2'
               type='text'
-              name='course2'
+              name='course1'
               onChange={handleChange}
               placeholder='Course Name'
             />
             <InputField
               label='Course 3'
               type='text'
-              name='course3'
+              name='course2'
               onChange={handleChange}
               placeholder='Course Name'
             />
             <hr className="mt-10 mb-5 border border-[#DADAE7]" />
             <p className='font-semibold text-[18px]'>Certificate</p>
             <p className='font-medium text-[12px] text-[#8B8BA4]'>Upload your school certificate</p>
+            {files && files.map((file, index) => (
+              <div key={index} className="w-full flex items-center justify-between">
+                <p className='text-primary'>{file?.name}</p>
+                <IoTrash onClick={() => deleteFile(index)} className="text-lg hover:text-red-500 cursor-pointer" />
+              </div>
+            ))}
             <div className='w-full h-[74px] flex items-center justify-center border border-primary rounded-[4px] px-[15px] py-[25px] cursor-pointer' onClick={() => click()}>
               <input type="file" id="doc-input" onChange={handleFileSelect} className="hidden" />
               <div className='w-full flex items-center gap-4'>
-                <Upload />
-                {file ? (
-                  <div className="w-full flex items-center justify-between">
-                    <p className='text-primary'>{file.name}</p>
-                    <IoTrash onClick={deleteFile} className="hover:text-red-500" />
-                  </div>
-                ):(
-                  <p className='text-primary'>Click here to upload or drag files here</p>
-                )}
+                <Upload /> <p className='text-primary'>Click here to upload or drag files here</p>
               </div>
             </div>
             <div className='w-full flex items-center justify-end mt-[30px]'>
